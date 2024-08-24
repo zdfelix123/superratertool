@@ -9,6 +9,7 @@ export interface Column {
   disabled?: boolean;
   hide?: boolean;
   options?: Option[];
+  badge?:Badge;
 }
 
 export interface Option {
@@ -23,9 +24,10 @@ export enum QuestionType {
   DATEPICKER
 }
 
-export enum MagiRoleBadge {
+export enum Badge {
   NEW_ROLE,
-  NEWBIE
+  NEWBIE,
+  UNDEFINED,
 }
 
 const ONBOARDING_STATUS: Option[] = [
