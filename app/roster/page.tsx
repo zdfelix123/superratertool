@@ -12,11 +12,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { USER_TAB_CONFIG, PROJECT_TAB_CONFIG, Column, QuestionType } from "../common/constants";
+import { titleToNumber } from "../common/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useEffect, useState } from "react";
 
 const Roster = () => {
-  const [columns, setColumns] = useState([] as Column[]);
+  const [userTabs, setUserTabs] = useState([...USER_TAB_CONFIG]);
   useEffect(() => {
     const fetchData = async () => {
       const req = new Request(`/api/roster?range=Sheet1!A2:AH2`);
@@ -29,7 +30,10 @@ const Roster = () => {
       })
         .then((res) => res.json())
         .then((res) => {
-          console.log("result", res.data);
+          const data = res.data.values[0];
+          const userTabsWithVal = [...userTabs].map(tab=>({...tab, value: data[titleToNumber(tab.columnNum)-1]}));
+          setUserTabs(userTabsWithVal)
+          console.log("result", res.data.values[0]);
           return res.data.values;
         });
     };
@@ -46,11 +50,11 @@ const Roster = () => {
         <Card>
           <CardHeader></CardHeader>
           <CardContent className="grid grid-cols-4">
-            {USER_TAB_CONFIG.map((c) => (
+            {userTabs.map((c) => (
               <div className="space-y-1 ml-2" key={c.columnNum}>
                 {c.type === QuestionType.INPUT && (<div>
                   <Label htmlFor="name">{c.label}</Label>
-                  <Input id="name" placeholder={c.placeHolder} />
+                  <Input id="name" placeholder={c.placeHolder} defaultValue={c.value} />
                 </div>)}
               </div>
             ))}

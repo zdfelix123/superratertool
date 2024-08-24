@@ -4,7 +4,7 @@ export interface Column {
   label?: string;
   value?: string;
   placeHolder?: string;
-  columnNum?: string;
+  columnNum: string;
   disabled?: boolean;
   hide?: boolean;
 }
