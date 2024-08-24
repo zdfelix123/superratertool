@@ -97,11 +97,11 @@ const Roster = () => {
         </TabsContent>
       </Tabs>
       <div className="mt-4 flex flex-row justify-center">
-        <div>
+        <div className="cursor-pointer">
           <SlArrowLeft onClick={() => handleNav(-1)} />
         </div>
         <div className="ml-4 mr-4">{rowNum}</div>
-        <div>
+        <div className="cursor-pointer">
           <SlArrowRight onClick={() => handleNav(1)} />
         </div>
       </div>
