@@ -1,4 +1,4 @@
-
+import { Badge } from "./constants";
 export function titleToNumber(columnTitle: string): number {
     let result = 0
 
@@ -24,4 +24,10 @@ export function validateDate(value: string){
         return Date.parse(value  + 'T00:00:00')
     }
     return Date.parse(value);
+}
+
+export function getBadge(idx: number, value:string): Badge{
+    if (idx === 2 && value.toLowerCase() === 'new role') return Badge.NEW_ROLE;
+    if (idx === 2 && value.toLowerCase() === 'newbie') return Badge.NEWBIE;
+    return Badge.UNDEFINED;
 }

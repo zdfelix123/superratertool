@@ -7,7 +7,7 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { USER_TAB_CONFIG, PROJECT_TAB_CONFIG } from "../common/constants";
-import { titleToNumber } from "../common/utils";
+import { titleToNumber, getBadge } from "../common/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useEffect, useState } from "react";
 import Question from "../components/Question";
@@ -37,6 +37,7 @@ const Roster = () => {
             ...tab,
             value: data[titleToNumber(tab.columnNum) - 1],
             placeHolder: "Please enter ...",
+            badge: getBadge(titleToNumber(tab.columnNum) - 1, data[titleToNumber('AG') - 1]),
           }));
           setUserTabs(userTabsWithVal);
           const projectTabsWithVal = [...projectTabs].map((tab) => ({
