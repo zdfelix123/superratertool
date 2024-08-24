@@ -4,14 +4,10 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { USER_TAB_CONFIG, PROJECT_TAB_CONFIG, Column, QuestionType } from "../common/constants";
+import { USER_TAB_CONFIG, PROJECT_TAB_CONFIG } from "../common/constants";
 import { titleToNumber } from "../common/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useEffect, useState } from "react";
