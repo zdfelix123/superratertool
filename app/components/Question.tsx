@@ -19,7 +19,6 @@ const Question = ({ column, rowNumber }: QuestionProps) => {
 
     const handleTextChange = async (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
         setValue(e.target.value);
-        console.log("text changed");
         if (!column.columnNum) {
             return;
         }

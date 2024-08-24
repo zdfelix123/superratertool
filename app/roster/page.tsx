@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -30,7 +29,7 @@ const Roster = () => {
         .then((res) => res.json())
         .then((res) => {
           const data = res.data.values[0];
-          const userTabsWithVal = [...userTabs].map(tab => ({ ...tab, value: data[titleToNumber(tab.columnNum) - 1] }));
+          const userTabsWithVal = [...userTabs].map(tab => ({ ...tab, value: data[titleToNumber(tab.columnNum) - 1], placeHolder:"Please enter ..." }));
           setUserTabs(userTabsWithVal)
           const projectTabsWithVal = [...projectTabs].map(tab => ({ ...tab, value: data[titleToNumber(tab.columnNum) - 1] }));
           setProjectTabs(projectTabsWithVal)

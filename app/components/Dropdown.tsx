@@ -36,7 +36,6 @@ const Dropdown = ({ column, rowNumber}: DropDownProps) => {
     const handleTextChange = async (currentValue:string) => {
         setValue(currentValue === value ? "" : currentValue)
         setOpen(false)
-        console.log("text changed");
         if (!column.columnNum) {
             return;
         }
