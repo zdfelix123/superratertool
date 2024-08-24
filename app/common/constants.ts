@@ -224,6 +224,30 @@ export const USER_TAB_CONFIG: Column[] = [
     type: QuestionType.SELECTOR,
     options: EDUCATION
   },
+  {
+    label: "Vendor Onboarded Date",
+    columnNum: "J",
+    placeHolder: "Please select ...",
+    type: QuestionType.DATEPICKER
+  },
+  {
+    label: "Production Ready Date",
+    columnNum: "L",
+    placeHolder: "Please select ...",
+    type: QuestionType.DATEPICKER
+  },
+  {
+    label: "Est. Date of Prod. Start",
+    columnNum: "M",
+    placeHolder: "Please select ...",
+    type: QuestionType.DATEPICKER
+  },
+  {
+    label: "Released from Onboarding",
+    columnNum: "AA",
+    placeHolder: "Please select ...",
+    type: QuestionType.DATEPICKER
+  },
 ];
 
 export const PROJECT_TAB_CONFIG: Column[] = [

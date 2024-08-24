@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea"
 import Dropdown from "./Dropdown";
+import Datepicker from "./Datepicker";
 interface QuestionProps {
     column: Column;
     rowNumber: number;
@@ -50,6 +51,10 @@ const Question = ({ column, rowNumber }: QuestionProps) => {
             {column.type == QuestionType.SELECTOR && (<div>
                 <div>{column.label}</div>
                 <Dropdown column={column} rowNumber={rowNumber}></Dropdown>
+            </div>)}
+            {column.type == QuestionType.DATEPICKER && (<div>
+                <div>{column.label}</div>
+                <Datepicker column={column} rowNumber={rowNumber}></Datepicker>
             </div>)}
         </div>
     );
