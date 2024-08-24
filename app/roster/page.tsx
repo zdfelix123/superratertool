@@ -52,7 +52,7 @@ const Roster = () => {
           <CardHeader></CardHeader>
           <CardContent className="grid grid-cols-4">
             {userTabs.map((c) => (
-              <div className="space-y-1 ml-2" key={c.columnNum}>
+              <div className="space-y-1 ml-4" key={c.columnNum}>
                 <Question column={c} rowNumber={rowNum} />
               </div>
             ))}
@@ -67,7 +67,7 @@ const Roster = () => {
           <CardHeader></CardHeader>
           <CardContent className="grid grid-cols-4">
             {projectTabs.map((c) => (
-              <div className="space-y-1 ml-2" key={c.columnNum}>
+              <div className="space-y-1 ml-4" key={c.columnNum}>
                 <Question column={c} rowNumber={rowNum} />
               </div>
             ))}

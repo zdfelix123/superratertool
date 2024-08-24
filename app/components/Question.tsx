@@ -4,6 +4,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { Column, QuestionType } from "../common/constants";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea"
 interface QuestionProps {
     column: Column;
     rowNumber: number;
@@ -15,7 +16,7 @@ const Question = ({ column, rowNumber }: QuestionProps) => {
         setValue(column.value);
     }, [column.value]);
 
-    const handleTextChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const handleTextChange = async (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
         setValue(e.target.value);
         console.log("text changed");
         // if (!column.columnNum) {
@@ -37,10 +38,14 @@ const Question = ({ column, rowNumber }: QuestionProps) => {
     };
 
     return (
-        <div>
+        <div className="mt-8">
             {column.type == QuestionType.INPUT && (<div>
                 <Label htmlFor="name">{column.label}</Label>
                 <Input id="name" placeholder={column.placeHolder} value={value} onChange={(e) => handleTextChange(e)} />
+            </div>)}
+            {column.type == QuestionType.TEXTAREA && (<div>
+                <Label htmlFor="name">{column.label}</Label>
+                <Textarea id="name" placeholder={column.placeHolder} value={value} onChange={(e) => handleTextChange(e)} />
             </div>)}
         </div>
     );

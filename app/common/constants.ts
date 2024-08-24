@@ -30,21 +30,6 @@ export const USER_TAB_CONFIG: Column[] = [
     type: QuestionType.INPUT
   },
   {
-    label: "GlobalLogic Email",
-    columnNum: "AC",
-    placeHolder: "Please enter ...",
-    type: QuestionType.INPUT
-  },
-  {
-    label: "Google Email",
-    columnNum: "Z",
-    placeHolder: "Please enter ...",
-    type: QuestionType.INPUT
-  },
-];
-
-export const PROJECT_TAB_CONFIG: Column[] = [
-  {
     label: "Pod",
     columnNum: "E",
     placeHolder: "Please enter ...",
@@ -57,8 +42,53 @@ export const PROJECT_TAB_CONFIG: Column[] = [
     type: QuestionType.INPUT
   },
   {
+    label: "GlobalLogic Email",
+    columnNum: "AC",
+    placeHolder: "Please enter ...",
+    type: QuestionType.INPUT
+  },
+  {
+    label: "Google Email",
+    columnNum: "Z",
+    placeHolder: "Please enter ...",
+    type: QuestionType.INPUT
+  },
+  {
+    label: "Major/Area of Study",
+    columnNum: "S",
+    placeHolder: "Please enter ...",
+    type: QuestionType.TEXTAREA
+  },
+  {
+    label: "Technical Language Skills",
+    columnNum: "X",
+    placeHolder: "Please enter ...",
+    type: QuestionType.TEXTAREA
+  },
+  {
+    label: "Notes",
+    columnNum: "F",
+    placeHolder: "Please enter ...",
+    type: QuestionType.TEXTAREA
+  },
+];
+
+export const PROJECT_TAB_CONFIG: Column[] = [
+  {
     label: "Assigned Project (based on q type)",
     columnNum: "V",
+    placeHolder: "Please enter ...",
+    type: QuestionType.INPUT
+  },
+  {
+    label: "Prod Lead",
+    columnNum: "O",
+    placeHolder: "Please enter ...",
+    type: QuestionType.INPUT
+  },
+  {
+    label: "Prod Lead Ldap",
+    columnNum: "P",
     placeHolder: "Please enter ...",
     type: QuestionType.INPUT
   },
