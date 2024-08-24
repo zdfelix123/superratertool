@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { Check, ChevronsUpDown } from "lucide-react"
-import { useEffect, useState } from "react";
+import { ChangeEvent,useEffect, useState } from "react";
  
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -23,11 +23,37 @@ import { Column } from "../common/constants";
 
 interface DropDownProps {
     column: Column;
+    rowNumber: number;
   }
 
-const Dropdown = ({ column }: DropDownProps) => {
+const Dropdown = ({ column, rowNumber}: DropDownProps) => {
     const [open, setOpen] = useState(false)
     const [value, setValue] = useState(column.value ||"")
+    useEffect(() => {
+        setValue(column.value ||"");
+    }, [column.value]);
+
+    const handleTextChange = async (currentValue:string) => {
+        setValue(currentValue === value ? "" : currentValue)
+        setOpen(false)
+        console.log("text changed");
+        if (!column.columnNum) {
+            return;
+        }
+        const req = new Request(
+            `/api/roster?range=${column.columnNum}${rowNumber}`
+        );
+        const response = await fetch(req, {
+            method: "PUT",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(currentValue),
+        });
+
+        return response;
+    };
    
     return (
       <Popover open={open} onOpenChange={setOpen}>
@@ -54,10 +80,7 @@ const Dropdown = ({ column }: DropDownProps) => {
                   <CommandItem
                     key={o.value}
                     value={o.value}
-                    onSelect={(currentValue) => {
-                      setValue(currentValue === value ? "" : currentValue)
-                      setOpen(false)
-                    }}
+                    onSelect={(currentValue) => handleTextChange(currentValue)}
                   >
                     <Check
                       className={cn(

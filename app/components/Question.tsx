@@ -50,7 +50,7 @@ const Question = ({ column, rowNumber }: QuestionProps) => {
             </div>)}
             {column.type == QuestionType.SELECTOR && (<div>
                 <div>{column.label}</div>
-                <Dropdown column={column}></Dropdown>
+                <Dropdown column={column} rowNumber={rowNumber}></Dropdown>
             </div>)}
         </div>
     );
