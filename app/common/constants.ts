@@ -7,6 +7,12 @@ export interface Column {
   columnNum: string;
   disabled?: boolean;
   hide?: boolean;
+  options?: Option[];
+}
+
+export interface Option {
+  value: string;
+  label: string;
 }
 
 export enum QuestionType {
@@ -15,6 +21,14 @@ export enum QuestionType {
   INPUT,
   DATEPICKER
 }
+
+const ONBOARDING_STATUS: Option[] = [
+  { value: "Production Ready", label: "Production Ready" },
+  { value: "Pre-Initial Training", label: "Pre-Initial Training" },
+  { value: "Initial Training", label: "Initial Training" },
+  { value: "Onboarding", label: "Onboarding" },
+  { value: "Blocked", label: "Blocked" },
+];
 
 export const USER_TAB_CONFIG: Column[] = [
   {
@@ -71,6 +85,13 @@ export const USER_TAB_CONFIG: Column[] = [
     placeHolder: "Please enter ...",
     type: QuestionType.TEXTAREA
   },
+  {
+    label: "Onboarding Status",
+    columnNum: "K",
+    placeHolder: "Please enter ...",
+    type: QuestionType.SELECTOR,
+    options: ONBOARDING_STATUS
+  },
 ];
 
 export const PROJECT_TAB_CONFIG: Column[] = [
@@ -93,3 +114,5 @@ export const PROJECT_TAB_CONFIG: Column[] = [
     type: QuestionType.INPUT
   },
 ];
+
+

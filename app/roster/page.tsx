@@ -58,7 +58,6 @@ const Roster = () => {
             ))}
           </CardContent>
           <CardFooter>
-            <Button>Save changes</Button>
           </CardFooter>
         </Card>
       </TabsContent>
@@ -73,7 +72,6 @@ const Roster = () => {
             ))}
           </CardContent>
           <CardFooter>
-            <Button>Save password</Button>
           </CardFooter>
         </Card>
       </TabsContent>
