@@ -1,7 +1,7 @@
 "use client";
 
 import { ChangeEvent, useEffect, useState } from "react";
-import { Column } from "../common/constants";
+import { Column, QuestionType } from "../common/constants";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 interface QuestionProps {
@@ -38,8 +38,10 @@ const Question = ({ column, rowNumber }: QuestionProps) => {
 
     return (
         <div>
-            <Label htmlFor="name">{column.label}</Label>
-            <Input id="name" placeholder={column.placeHolder} value={value} onChange={(e) => handleTextChange(e)} />
+            {column.type == QuestionType.INPUT && (<div>
+                <Label htmlFor="name">{column.label}</Label>
+                <Input id="name" placeholder={column.placeHolder} value={value} onChange={(e) => handleTextChange(e)} />
+            </div>)}
         </div>
     );
 };
