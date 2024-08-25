@@ -2,18 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-
 /* Fix overlay transparent problem */
-[data-radix-popper-content-wrapper] { background-color: white !important; } 
+[data-radix-popper-content-wrapper] {
+  background-color: white !important;
+}
 
 :root {
-    --ring-border-color: #e5e7eb;
-  }
+  --ring-border-color: #e5e7eb;
+}
 
 .ring-1 {
-    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--ring-border-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0
+    calc(1px + var(--tw-ring-offset-width)) var(--ring-border-color);
 }
 
 .relative > div {
-    background-color: white;
+  background-color: white;
 }
