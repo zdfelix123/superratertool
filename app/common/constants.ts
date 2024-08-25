@@ -252,13 +252,13 @@ export const USER_TAB_CONFIG: Column[] = [
     type: QuestionType.SELECTOR,
     options: EDUCATION
   },
-  {
-    label: "All Associated Roles",
-    columnNum: "W",
-    placeHolder: "Please select ...",
-    type: QuestionType.MULTISELECT,
-    options: ROLES
-  },
+  // {
+  //   label: "All Associated Roles",
+  //   columnNum: "W",
+  //   placeHolder: "Please select ...",
+  //   type: QuestionType.MULTISELECT,
+  //   options: ROLES
+  // },
   {
     label: "Vendor Onboarded Date",
     columnNum: "J",
