@@ -21,7 +21,8 @@ export enum QuestionType {
   SELECTOR,
   TEXTAREA,
   INPUT,
-  DATEPICKER
+  DATEPICKER,
+  MULTISELECT
 }
 
 export enum Badge {
@@ -43,6 +44,31 @@ const EDUCATION: Option[] = [
   { value: "Masters", label: "Masters" },
   { value: "Bachelors", label: "Bachelors" },
   { value: "Other", label: "Other" },
+];
+
+const ROLES: Option[] = [
+  { value: "SR", label: "SR" },
+  { value: "Reviewer", label: "Reviewer" },
+  { value: "Sr. Reviewer", label: "Sr. Reviewer" },
+  { value: "Lead", label: "Lead" },
+  { value: "PO", label: "PO" },
+  { value: "PAO", label: "PAO" },
+  { value: "Sr. PAO", label: "Sr. PAO" },
+  { value: "Program Lead", label: "Program Lead" },
+  { value: "Pod Lead", label: "Pod Lead" },
+  { value: "Sr. Pod Lead", label: "Sr. Pod Lead" },
+  { value: "Pod Manager", label: "Pod Manager" },
+  { value: "Onboarding Lead", label: "Onboarding Lead" },
+  { value: "Sr. Onboarding Lead", label: "Sr. Onboarding Lead" },
+  { value: "Interviewer", label: "Interviewer" },
+  { value: "Interview Lead", label: "Interview Lead" },
+  { value: "Interview Manager", label: "Interview Manager" },
+  { value: "Culture & Inclusion", label: "Culture & Inclusion" },
+  { value: "Data Manager", label: "Data Manager" },
+  { value: "Business Analyst", label: "Business Analyst" },
+  { value: "Data Analyst", label: "Data Analyst" },
+  { value: "Evaluator", label: "Evaluator" },
+  { value: "Golden Evaluator", label: "Golden Evaluator" },
 ];
 
 const PRODUCTIONROLE: Option[] = [
@@ -226,6 +252,13 @@ export const USER_TAB_CONFIG: Column[] = [
     type: QuestionType.SELECTOR,
     options: EDUCATION
   },
+  // {
+  //   label: "All Associated Roles",
+  //   columnNum: "W",
+  //   placeHolder: "Please select ...",
+  //   type: QuestionType.MULTISELECT,
+  //   options: ROLES
+  // },
   {
     label: "Vendor Onboarded Date",
     columnNum: "J",

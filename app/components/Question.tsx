@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Dropdown from "./Dropdown";
 import Datepicker from "./Datepicker";
+import Multiselect from "./Multiselect";
 import { BsPersonBadge } from "react-icons/bs";
 import { formatDate } from "../common/utils";
 interface QuestionProps {
@@ -30,9 +31,7 @@ const Question = ({ column, rowNumber }: QuestionProps) => {
     const req1 = new Request(
       `/api/roster?range=${column.columnNum}${rowNumber}`
     );
-    const req2 = new Request(
-      `/api/roster?range=AI${rowNumber}`
-    );
+    const req2 = new Request(`/api/roster?range=AI${rowNumber}`);
     const response1 = await fetch(req1, {
       method: "PUT",
       headers: {
@@ -48,7 +47,9 @@ const Question = ({ column, rowNumber }: QuestionProps) => {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(`Field: ${column.label}, Date:${ formatDate(new Date(Date.now()))}`),
+      body: JSON.stringify(
+        `Field: ${column.label}, Date:${formatDate(new Date(Date.now()))}`
+      ),
     });
 
     return response1;
@@ -69,7 +70,7 @@ const Question = ({ column, rowNumber }: QuestionProps) => {
               )}
               {column.badge === Badge.NEWBIE && (
                 <div className="flex flex-row ml-4">
-                  <BsPersonBadge color="pink"/>
+                  <BsPersonBadge color="pink" />
                   <div className="text-pink-400 text-sm">Newbie</div>
                 </div>
               )}
@@ -96,14 +97,20 @@ const Question = ({ column, rowNumber }: QuestionProps) => {
       )}
       {column.type == QuestionType.SELECTOR && (
         <div>
-          <div>{column.label}</div>
+          <div className="text-sm font-medium">{column.label}</div>
           <Dropdown column={column} rowNumber={rowNumber}></Dropdown>
         </div>
       )}
       {column.type == QuestionType.DATEPICKER && (
         <div>
-          <div>{column.label}</div>
+          <div className="text-sm font-medium">{column.label}</div>
           <Datepicker column={column} rowNumber={rowNumber}></Datepicker>
+        </div>
+      )}
+      {column.type == QuestionType.MULTISELECT && (
+        <div>
+          <div className="text-sm font-medium">{column.label}</div>
+          <Multiselect column={column} rowNumber={rowNumber}></Multiselect>
         </div>
       )}
     </div>
