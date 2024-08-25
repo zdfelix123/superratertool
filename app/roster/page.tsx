@@ -11,6 +11,7 @@ import { titleToNumber, getBadge } from "../common/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useEffect, useState } from "react";
 import Question from "../components/Question";
+import History from "../components/History";
 import { SlArrowLeft } from "react-icons/sl";
 import { SlArrowRight } from "react-icons/sl";
 
@@ -97,6 +98,9 @@ const Roster = () => {
           </Card>
         </TabsContent>
       </Tabs>
+      <div className="mt-4 flex flex-row ml-8">
+        <History/>
+      </div>
       <div className="mt-4 flex flex-row justify-center">
         <div className="cursor-pointer">
           <SlArrowLeft onClick={() => handleNav(-1)} />

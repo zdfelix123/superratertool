@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import Dropdown from "./Dropdown";
 import Datepicker from "./Datepicker";
 import { BsPersonBadge } from "react-icons/bs";
+import { formatDate } from "../common/utils";
 interface QuestionProps {
   column: Column;
   rowNumber: number;
@@ -26,10 +27,13 @@ const Question = ({ column, rowNumber }: QuestionProps) => {
     if (!column.columnNum) {
       return;
     }
-    const req = new Request(
+    const req1 = new Request(
       `/api/roster?range=${column.columnNum}${rowNumber}`
     );
-    const response = await fetch(req, {
+    const req2 = new Request(
+      `/api/roster?range=AI${rowNumber}`
+    );
+    const response1 = await fetch(req1, {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -38,7 +42,16 @@ const Question = ({ column, rowNumber }: QuestionProps) => {
       body: JSON.stringify(e.target.value),
     });
 
-    return response;
+    const response2 = await fetch(req2, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(`Field: ${column.columnNum}${rowNumber}, Date:${ formatDate(new Date(Date.now()))}`),
+    });
+
+    return response1;
   };
 
   return (
