@@ -61,7 +61,7 @@ const Dropdown = ({ column, rowNumber }: DropDownProps) => {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(`Field: ${column.columnNum}${rowNumber}, Date:${ formatDate(new Date(Date.now()))}`),
+      body: JSON.stringify(`Field: ${column.label}, Date:${ formatDate(new Date(Date.now()))}`),
     });
 
     return response1;

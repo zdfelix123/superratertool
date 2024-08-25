@@ -99,7 +99,7 @@ const Roster = () => {
         </TabsContent>
       </Tabs>
       <div className="mt-4 flex flex-row ml-8">
-        <History/>
+        <History rowNumber={rowNum}/>
       </div>
       <div className="mt-4 flex flex-row justify-center">
         <div className="cursor-pointer">
