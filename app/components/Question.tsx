@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Dropdown from "./Dropdown";
 import Datepicker from "./Datepicker";
+import Multiselect from "./Multiselect";
 import { BsPersonBadge } from "react-icons/bs";
 import { formatDate } from "../common/utils";
 interface QuestionProps {
@@ -96,14 +97,20 @@ const Question = ({ column, rowNumber }: QuestionProps) => {
       )}
       {column.type == QuestionType.SELECTOR && (
         <div>
-          <div>{column.label}</div>
+          <div className="text-sm font-medium">{column.label}</div>
           <Dropdown column={column} rowNumber={rowNumber}></Dropdown>
         </div>
       )}
       {column.type == QuestionType.DATEPICKER && (
         <div>
-          <div>{column.label}</div>
+          <div className="text-sm font-medium">{column.label}</div>
           <Datepicker column={column} rowNumber={rowNumber}></Datepicker>
+        </div>
+      )}
+            {column.type == QuestionType.MULTISELECT && (
+        <div>
+          <div className="text-sm font-medium">{column.label}</div>
+          <Multiselect column={column} rowNumber={rowNumber}></Multiselect>
         </div>
       )}
     </div>
