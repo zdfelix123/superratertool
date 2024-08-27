@@ -103,7 +103,7 @@ const PRODUCTIONROLE: Option[] = [
 
 ];
 
-const PROJECTWORKTYPE: Option[] = [
+export const PROJECTWORKTYPE: Option[] = [
   { value: "Magi - Eval 1", label: "Magi - Eval 1" },
   { value: "Magi - Writing 1", label: "Magi - Writing 1" },
   { value: "Gemit - Admin", label: "Gemit - Admin" },

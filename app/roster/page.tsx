@@ -6,12 +6,19 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import { USER_TAB_CONFIG, PROJECT_TAB_CONFIG } from "../common/constants";
+import {
+  USER_TAB_CONFIG,
+  PROJECT_TAB_CONFIG,
+  PROJECTWORKTYPE,
+  Option,
+  Column,
+} from "../common/constants";
 import { titleToNumber, getBadge } from "../common/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useEffect, useState } from "react";
 import Question from "../components/Question";
 import History from "../components/History";
+import Barchart from "../components/Barchart";
 import { SlArrowLeft } from "react-icons/sl";
 import { SlArrowRight } from "react-icons/sl";
 
@@ -48,6 +55,18 @@ const Roster = () => {
             ...tab,
             value: data[titleToNumber(tab.columnNum) - 1],
           }));
+          if (data[titleToNumber("I") - 1]) {
+            const prefix = data[titleToNumber("I") - 1].slice(0, 4);
+            const options = PROJECTWORKTYPE.filter((o: Option) =>
+              o.label.startsWith(prefix)
+            );
+            const project = projectTabsWithVal.find(
+              (c: Column) => c.columnNum === "H"
+            );
+            if (!!project) {
+              project.options = options;
+            }
+          }
           setProjectTabs(projectTabsWithVal);
           console.log("result", res.data.values[0]);
           return res.data.values;
@@ -63,10 +82,24 @@ const Roster = () => {
     setRowNum(rowNum + nextPage);
   };
 
+  const handleBaseProjectChange = (baseProject: string) => {
+    const prefix = baseProject.slice(0, 4);
+    const options = PROJECTWORKTYPE.filter((o: Option) =>
+      o.label.startsWith(prefix)
+    );
+    const project = projectTabs.find((c: Column) => c.columnNum === "H");
+    if (!!project) {
+      project.options = options;
+      setProjectTabs(projectTabs);
+    }
+  };
+
   return (
     <div>
       <Card>
-        <CardHeader className="text-xl">Super Rater Basic Information</CardHeader>
+        <CardHeader className="text-xl">
+          Super Rater Basic Information
+        </CardHeader>
         <CardContent className="grid grid-cols-4">
           {userTabs.map((c) => (
             <div className="space-y-1 ml-4" key={c.columnNum}>
@@ -81,11 +114,17 @@ const Roster = () => {
         <CardContent className="grid grid-cols-4">
           {projectTabs.map((c) => (
             <div className="space-y-1 ml-4" key={c.columnNum}>
-              <Question column={c} rowNumber={rowNum} />
+              <Question
+                column={c}
+                rowNumber={rowNum}
+                onBaseProjectChange={handleBaseProjectChange}
+              />
             </div>
           ))}
         </CardContent>
-        <CardFooter></CardFooter>
+        <CardFooter>
+          <Barchart />
+        </CardFooter>
       </Card>
       <div className="mt-4 flex flex-row ml-8">
         <History rowNumber={rowNum} />

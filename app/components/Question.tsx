@@ -13,9 +13,10 @@ import { formatDate } from "../common/utils";
 interface QuestionProps {
   column: Column;
   rowNumber: number;
+  onBaseProjectChange?: Function;
 }
 
-const Question = ({ column, rowNumber }: QuestionProps) => {
+const Question = ({ column, rowNumber, onBaseProjectChange }: QuestionProps) => {
   const [value, setValue] = useState(column.value);
   const [error,setError] =useState('');
   useEffect(() => {
@@ -115,7 +116,7 @@ const Question = ({ column, rowNumber }: QuestionProps) => {
       {column.type == QuestionType.SELECTOR && (
         <div>
           <div className="text-sm font-medium">{column.label}</div>
-          <Dropdown column={column} rowNumber={rowNumber}></Dropdown>
+          <Dropdown column={column} rowNumber={rowNumber} onBaseProjectChange={onBaseProjectChange}></Dropdown>
         </div>
       )}
       {column.type == QuestionType.DATEPICKER && (
