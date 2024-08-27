@@ -17,13 +17,29 @@ interface QuestionProps {
 
 const Question = ({ column, rowNumber }: QuestionProps) => {
   const [value, setValue] = useState(column.value);
+  const [error,setError] =useState('');
   useEffect(() => {
     setValue(column.value);
   }, [column.value]);
 
+  const validateEmail=(email:string, domain:string)=>{ 
+    email = email.trim().toLowerCase();
+    return email.endsWith(domain);
+  }
+
   const handleTextChange = async (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => {
+    setError('');
+    if (!!column.validation){
+      if (column.validation.type === 'email'){
+        if (!validateEmail(e.target.value, column.validation.regex)){
+          console.log("this is called");
+          setError(`Invalid Email Address, Should End With ${column.validation.regex} `);
+          return;
+        }
+      }
+    }
     setValue(e.target.value);
     if (!column.columnNum) {
       return;
@@ -82,6 +98,7 @@ const Question = ({ column, rowNumber }: QuestionProps) => {
             value={value}
             onChange={(e) => handleTextChange(e)}
           />
+          {error && (<div className='text-sm text-red-500'>{error}</div>)}
         </div>
       )}
       {column.type == QuestionType.TEXTAREA && (

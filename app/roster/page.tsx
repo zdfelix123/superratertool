@@ -38,7 +38,10 @@ const Roster = () => {
             ...tab,
             value: data[titleToNumber(tab.columnNum) - 1],
             placeHolder: "Please enter ...",
-            badge: getBadge(titleToNumber(tab.columnNum) - 1, data[titleToNumber('AG') - 1]),
+            badge: getBadge(
+              titleToNumber(tab.columnNum) - 1,
+              data[titleToNumber("AG") - 1]
+            ),
           }));
           setUserTabs(userTabsWithVal);
           const projectTabsWithVal = [...projectTabs].map((tab) => ({
@@ -62,44 +65,30 @@ const Roster = () => {
 
   return (
     <div>
-      <Tabs defaultValue="user" className="mt-4">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="user" className="text-xl">
-            Super Rater Basic Information
-          </TabsTrigger>
-          <TabsTrigger value="project" className="text-xl">
-            Project Information
-          </TabsTrigger>
-        </TabsList>
-        <TabsContent value="user">
-          <Card>
-            <CardHeader></CardHeader>
-            <CardContent className="grid grid-cols-4">
-              {userTabs.map((c) => (
-                <div className="space-y-1 ml-4" key={c.columnNum}>
-                  <Question column={c} rowNumber={rowNum} />
-                </div>
-              ))}
-            </CardContent>
-            <CardFooter></CardFooter>
-          </Card>
-        </TabsContent>
-        <TabsContent value="project">
-          <Card>
-            <CardHeader></CardHeader>
-            <CardContent className="grid grid-cols-4">
-              {projectTabs.map((c) => (
-                <div className="space-y-1 ml-4" key={c.columnNum}>
-                  <Question column={c} rowNumber={rowNum} />
-                </div>
-              ))}
-            </CardContent>
-            <CardFooter></CardFooter>
-          </Card>
-        </TabsContent>
-      </Tabs>
+      <Card>
+        <CardHeader className="text-xl">Super Rater Basic Information</CardHeader>
+        <CardContent className="grid grid-cols-4">
+          {userTabs.map((c) => (
+            <div className="space-y-1 ml-4" key={c.columnNum}>
+              <Question column={c} rowNumber={rowNum} />
+            </div>
+          ))}
+        </CardContent>
+        <CardFooter></CardFooter>
+      </Card>
+      <Card>
+        <CardHeader className="text-xl">Project Information</CardHeader>
+        <CardContent className="grid grid-cols-4">
+          {projectTabs.map((c) => (
+            <div className="space-y-1 ml-4" key={c.columnNum}>
+              <Question column={c} rowNumber={rowNum} />
+            </div>
+          ))}
+        </CardContent>
+        <CardFooter></CardFooter>
+      </Card>
       <div className="mt-4 flex flex-row ml-8">
-        <History rowNumber={rowNum}/>
+        <History rowNumber={rowNum} />
       </div>
       <div className="mt-4 flex flex-row justify-center">
         <div className="cursor-pointer">
