@@ -10,6 +10,12 @@ export interface Column {
   hide?: boolean;
   options?: Option[];
   badge?:Badge;
+  validation?:Validation;
+}
+
+export interface Validation {
+  type: string;
+  regex: string;
 }
 
 export interface Option {
@@ -212,31 +218,17 @@ export const USER_TAB_CONFIG: Column[] = [
     label: "GlobalLogic Email",
     columnNum: "AC",
     placeHolder: "Loading ...",
-    type: QuestionType.INPUT
+    type: QuestionType.INPUT,
+    validation: {
+      type: 'email',
+      regex:'globallogic'
+    }
   },
   {
     label: "Google Email",
     columnNum: "Z",
     placeHolder: "Loading ...",
     type: QuestionType.INPUT
-  },
-  {
-    label: "Major/Area of Study",
-    columnNum: "S",
-    placeHolder: "Loading ...",
-    type: QuestionType.TEXTAREA
-  },
-  {
-    label: "Technical Language Skills",
-    columnNum: "X",
-    placeHolder: "Loading ...",
-    type: QuestionType.TEXTAREA
-  },
-  {
-    label: "Notes",
-    columnNum: "F",
-    placeHolder: "Loading ...",
-    type: QuestionType.TEXTAREA
   },
   {
     label: "Onboarding Status",
@@ -258,6 +250,13 @@ export const USER_TAB_CONFIG: Column[] = [
     placeHolder: "Please select ...",
     type: QuestionType.MULTISELECT,
     options: ROLES
+  },
+  {
+    label: "Production Role",
+    columnNum: "N",
+    placeHolder: "Please select ...",
+    type: QuestionType.SELECTOR,
+    options: PRODUCTIONROLE
   },
   {
     label: "Vendor Onboarded Date",
@@ -283,15 +282,33 @@ export const USER_TAB_CONFIG: Column[] = [
     placeHolder: "Please select ...",
     type: QuestionType.DATEPICKER
   },
+  {
+    label: "Major/Area of Study",
+    columnNum: "S",
+    placeHolder: "Loading ...",
+    type: QuestionType.TEXTAREA
+  },
+  {
+    label: "Technical Language Skills",
+    columnNum: "X",
+    placeHolder: "Loading ...",
+    type: QuestionType.TEXTAREA
+  },
+  {
+    label: "Notes",
+    columnNum: "F",
+    placeHolder: "Loading ...",
+    type: QuestionType.TEXTAREA
+  },
 ];
 
 export const PROJECT_TAB_CONFIG: Column[] = [
   {
-    label: "Current Task",
-    columnNum: "G",
+    label: "Base Project",
+    columnNum: "I",
     placeHolder: "Please select ...",
     type: QuestionType.SELECTOR,
-    options: CURRENTTASK
+    options: BASEPROJECT
   },
   {
     label: "Project - Work Type",
@@ -301,18 +318,11 @@ export const PROJECT_TAB_CONFIG: Column[] = [
     options: PROJECTWORKTYPE
   },
   {
-    label: "Base Project",
-    columnNum: "I",
+    label: "Current Task",
+    columnNum: "G",
     placeHolder: "Please select ...",
     type: QuestionType.SELECTOR,
-    options: BASEPROJECT
-  },
-  {
-    label: "Production Role",
-    columnNum: "N",
-    placeHolder: "Please select ...",
-    type: QuestionType.SELECTOR,
-    options: PRODUCTIONROLE
+    options: CURRENTTASK
   },
   {
     label: "Assigned Project (q type)",
