@@ -221,14 +221,18 @@ export const USER_TAB_CONFIG: Column[] = [
     type: QuestionType.INPUT,
     validation: {
       type: 'email',
-      regex:'globallogic'
+      regex:'globallogic.com'
     }
   },
   {
     label: "Google Email",
     columnNum: "Z",
     placeHolder: "Loading ...",
-    type: QuestionType.INPUT
+    type: QuestionType.INPUT,
+    validation: {
+      type: 'email',
+      regex:'google.com'
+    }
   },
   {
     label: "Onboarding Status",
