@@ -221,7 +221,7 @@ export const USER_TAB_CONFIG: Column[] = [
     type: QuestionType.INPUT,
     validation: {
       type: 'email',
-      regex:'globallogic.com'
+      regex:'@globallogic.com'
     }
   },
   {
@@ -231,7 +231,7 @@ export const USER_TAB_CONFIG: Column[] = [
     type: QuestionType.INPUT,
     validation: {
       type: 'email',
-      regex:'google.com'
+      regex:'@google.com'
     }
   },
   {
