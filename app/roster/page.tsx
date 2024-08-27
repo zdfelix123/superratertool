@@ -18,7 +18,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useEffect, useState } from "react";
 import Question from "../components/Question";
 import History from "../components/History";
-import Barchart from "../components/Barchart";
+import HCBarchart from "../components/HCBarchart";
 import { SlArrowLeft } from "react-icons/sl";
 import { SlArrowRight } from "react-icons/sl";
 
@@ -123,7 +123,7 @@ const Roster = () => {
           ))}
         </CardContent>
         <CardFooter>
-          <Barchart />
+          <HCBarchart />
         </CardFooter>
       </Card>
       <div className="mt-4 flex flex-row ml-8">

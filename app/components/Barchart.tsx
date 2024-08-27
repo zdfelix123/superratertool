@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as d3 from 'd3';
 import { DSVRowString } from 'd3';
 
@@ -9,7 +9,27 @@ interface Data {
 }
 
 const Barchart = () => {
+    const [data, setData] = useState("");
     useEffect(() => {
+        const fetchData = async () => {
+            const req = new Request(
+              `/api/roster?range=Sheet1!AM2`
+            );
+            await fetch(req, {
+              method: "GET",
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+              },
+            })
+              .then((res) => res.json())
+              .then((res) => {
+                const data = res.data.values[0];
+                console.log("data",data);
+                return res.data.values;
+              });
+          };
+          fetchData();
         d3.select("#chart").select("svg").remove();
         // set the dimensions and margins of the graph
         var margin = { top: 30, right: 30, bottom: 70, left: 60},

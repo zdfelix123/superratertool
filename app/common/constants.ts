@@ -37,6 +37,12 @@ export enum Badge {
   UNDEFINED,
 }
 
+export interface BarChartData {
+  baseProject: string;
+  budgetedHC: number;
+  actualHC: number;
+}
+
 const ONBOARDING_STATUS: Option[] = [
   { value: "Production Ready", label: "Production Ready" },
   { value: "Pre-Initial Training", label: "Pre-Initial Training" },
