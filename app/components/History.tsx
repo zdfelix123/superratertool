@@ -24,8 +24,7 @@ const History = ({rowNumber}:HistoryProps) => {
             return;      
           };
           const updatedInfo = res.data.values[0][0];
-          setLastUpdated(updatedInfo)
-          console.log("result", res.data.values[0]);
+          setLastUpdated(updatedInfo);
           return res.data.values;
         });
     };
