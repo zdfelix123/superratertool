@@ -25,7 +25,7 @@ import { formatDate } from "../common/utils";
 interface DropDownProps {
   column: Column;
   rowNumber: number;
-  onBaseProjectChange: Function;
+  onBaseProjectChange?: Function;
 }
 
 const Dropdown = ({ column, rowNumber, onBaseProjectChange }: DropDownProps) => {
@@ -37,7 +37,9 @@ const Dropdown = ({ column, rowNumber, onBaseProjectChange }: DropDownProps) => 
 
   const handleTextChange = async (currentValue: string) => {
     setValue(currentValue === value ? "" : currentValue)
-    onBaseProjectChange(currentValue === value ? "" : currentValue)
+    if (onBaseProjectChange){
+      onBaseProjectChange(currentValue === value ? "" : currentValue)
+    }
     setOpen(false)
     if (!column.columnNum) {
       return;
