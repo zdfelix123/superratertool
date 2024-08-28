@@ -32,16 +32,15 @@ const Question = ({ column, rowNumber, onBaseProjectChange }: QuestionProps) => 
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => {
     setError('');
+    setValue(e.target.value);
     if (!!column.validation){
       if (column.validation.type === 'email'){
         if (!validateEmail(e.target.value, column.validation.regex)){
-          console.log("this is called");
           setError(`Invalid Email Address, Should End With ${column.validation.regex} `);
           return;
         }
       }
     }
-    setValue(e.target.value);
     if (!column.columnNum) {
       return;
     }

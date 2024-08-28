@@ -36,3 +36,10 @@ export function createMapFromStr(input: string){
     
 
 }
+
+export function stringToArr(input: string){
+    if (!input) return [];
+    input = input.replace(/"/g, '');
+    return input.split(', ');
+
+}
