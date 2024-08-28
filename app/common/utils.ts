@@ -27,6 +27,7 @@ export function validateDate(value: string){
 }
 
 export function getBadge(idx: number, value:string): Badge{
+    if (!value) return Badge.UNDEFINED;
     if (idx === 2 && value.toLowerCase() === 'new role') return Badge.NEW_ROLE;
     if (idx === 2 && value.toLowerCase() === 'newbie') return Badge.NEWBIE;
     return Badge.UNDEFINED;
