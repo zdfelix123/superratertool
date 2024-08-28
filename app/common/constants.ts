@@ -195,6 +195,13 @@ const BASEPROJECT: Option[] = [
 
 const CURRENTTASK: Option[] = getCurrentTaskOptions();
 
+export const TOP_FILTER_CONFIG: Column = {
+  columnNum: "C",
+  placeHolder: "Select A Super Rator",
+  type: QuestionType.SELECTOR,
+  options: []
+}
+
 export const USER_TAB_CONFIG: Column[] = [
   {
     label: "Super Rater Name",

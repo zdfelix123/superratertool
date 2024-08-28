@@ -26,9 +26,10 @@ interface DropDownProps {
   column: Column;
   rowNumber: number;
   onBaseProjectChange?: Function;
+  onNameChange?:Function;
 }
 
-const Dropdown = ({ column, rowNumber, onBaseProjectChange }: DropDownProps) => {
+const Dropdown = ({ column, rowNumber, onBaseProjectChange, onNameChange }: DropDownProps) => {
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState(column.value || "")
   useEffect(() => {
@@ -40,10 +41,14 @@ const Dropdown = ({ column, rowNumber, onBaseProjectChange }: DropDownProps) => 
     if (onBaseProjectChange){
       onBaseProjectChange(currentValue === value ? "" : currentValue)
     }
+    if (onNameChange){
+      onNameChange(currentValue === value ? "" : currentValue)
+    }
     setOpen(false)
     if (!column.columnNum) {
       return;
     }
+    if (rowNumber < 2) return;
     const req1 = new Request(
       `/api/roster?range=${column.columnNum}${rowNumber}`
     );
@@ -82,13 +87,13 @@ const Dropdown = ({ column, rowNumber, onBaseProjectChange }: DropDownProps) => 
         >
           {value
             ? (column.options || []).find((o) => o.value === value)?.label
-            : "Select option..."}
+            : column.placeHolder}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
         <Command>
-          <CommandInput placeholder="Search option..." />
+          <CommandInput placeholder={column.placeHolder} />
           <CommandList>
             <CommandEmpty>No option found.</CommandEmpty>
             <CommandGroup>

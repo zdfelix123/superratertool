@@ -19,6 +19,7 @@ import { useEffect, useState } from "react";
 import Question from "../components/Question";
 import History from "../components/History";
 import HCBarchart from "../components/HCBarchart";
+import Topfilter from "../components/Topfilter";
 import { SlArrowLeft } from "react-icons/sl";
 import { SlArrowRight } from "react-icons/sl";
 
@@ -94,11 +95,18 @@ const Roster = () => {
     }
   };
 
+  const handleNameChange =(rownumber: number)=>{
+    setRowNum(rownumber + 2);
+  }
+
   return (
     <div>
       <Card>
-        <CardHeader className="text-xl">
-          Super Rater Basic Information
+        <div className="ml-8 mt-8">
+          <Topfilter onNameChange={handleNameChange} />
+        </div>
+        <CardHeader className="text-xl flex flex-row items-center">
+          <div>Super Rater Basic Information</div>
         </CardHeader>
         <CardContent className="grid grid-cols-4">
           {userTabs.map((c) => (
