@@ -43,7 +43,7 @@ const HCBarchart = ({ prefix }: HCBarchart) => {
             budgetedHC: Number(r[1]),
             actualHC: Number(r[2]),
           })).filter((o:BarChartData)=>o.baseProject.startsWith(prefix));
-          setChartData(chartData);
+          setChartData(chartData.slice(0, 15));
           return res.data.values;
         });
     };
