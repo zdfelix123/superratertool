@@ -31,7 +31,6 @@ const Topfilter = ({ onNameChange }: TopfilterProps) => {
           }
           const data = stringToArr(res.data.values[0][0]);
           setData(data);
-          console.log("top filter data", data);
           const options = data
             .filter((name: string) => name !== "")
             .map((name: string) => ({
