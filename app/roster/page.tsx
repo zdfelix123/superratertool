@@ -27,6 +27,7 @@ const Roster = () => {
   const [userTabs, setUserTabs] = useState([...USER_TAB_CONFIG]);
   const [projectTabs, setProjectTabs] = useState([...PROJECT_TAB_CONFIG]);
   const [rowNum, setRowNum] = useState(2);
+  const [prefix, setPrefix] = useState('');
   useEffect(() => {
     const fetchData = async () => {
       const req = new Request(
@@ -85,6 +86,7 @@ const Roster = () => {
 
   const handleBaseProjectChange = (baseProject: string) => {
     const prefix = baseProject.slice(0, 4);
+    setPrefix(prefix);
     const options = PROJECTWORKTYPE.filter((o: Option) =>
       o.label.startsWith(prefix)
     );
@@ -131,7 +133,7 @@ const Roster = () => {
           ))}
         </CardContent>
         <CardFooter>
-          <HCBarchart />
+          <HCBarchart prefix={prefix}/>
         </CardFooter>
       </Card>
       <div className="mt-4 flex flex-row ml-8">

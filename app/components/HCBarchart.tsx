@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import {
   ChartConfig,
   ChartContainer,
@@ -8,7 +8,9 @@ import {
   ChartLegendContent,
 } from "@/components/ui/chart";
 import { BarChartData } from "../common/constants";
-
+interface HCBarchart {
+  prefix: string;
+}
 
 const chartConfig = {
   budgetedHC: {
@@ -21,8 +23,8 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const HCBarchart = () => {
-    const [chartData, setChartData] = useState([] as BarChartData[]);
+const HCBarchart = ({ prefix }: HCBarchart) => {
+  const [chartData, setChartData] = useState([] as BarChartData[]);
   useEffect(() => {
     const fetchData = async () => {
       const req = new Request(`/api/roster?range=Sheet2!C4:E32`);
@@ -36,14 +38,17 @@ const HCBarchart = () => {
         .then((res) => res.json())
         .then((res) => {
           const data = res.data.values;
-          const chartData = data.map((r:string[])=>({baseProject: r[0], budgetedHC: Number(r[1]), actualHC: Number(r[2])}));
-          setChartData(chartData.slice(0, 15));
-          console.log("bar chart data", chartData);
+          const chartData = data.map((r: string[]) => ({
+            baseProject: r[0],
+            budgetedHC: Number(r[1]),
+            actualHC: Number(r[2]),
+          })).filter((o:BarChartData)=>o.baseProject.startsWith(prefix));
+          setChartData(chartData);
           return res.data.values;
         });
     };
     fetchData();
-  }, []);
+  }, [prefix]);
   return (
     <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
       <BarChart accessibilityLayer data={chartData}>
@@ -55,9 +60,20 @@ const HCBarchart = () => {
           axisLine={false}
           tickFormatter={(value) => value}
         />
+        <YAxis />
         <ChartLegend content={<ChartLegendContent />} />
-        <Bar dataKey="budgetedHC" fill="var(--color-budgetedHC)" radius={4} />
-        <Bar dataKey="actualHC" fill="var(--color-actualHC)" radius={4} />
+        <Bar
+          dataKey="budgetedHC"
+          fill="var(--color-budgetedHC)"
+          radius={4}
+          label={{ position: "top" }}
+        />
+        <Bar
+          dataKey="actualHC"
+          fill="var(--color-actualHC)"
+          radius={4}
+          label={{ position: "top" }}
+        />
       </BarChart>
     </ChartContainer>
   );
