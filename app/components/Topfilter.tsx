@@ -8,9 +8,10 @@ import {
 } from "../common/constants";
 interface TopfilterProps {
   onNameChange: Function;
+  onBaseProjectChange: Function;
 }
 
-const Topfilter = ({ onNameChange }: TopfilterProps) => {
+const Topfilter = ({ onNameChange, onBaseProjectChange }: TopfilterProps) => {
   const [config, setConfig] = useState(TOP_FILTER_CONFIG);
   const [data, setData] = useState([] as Project[]);
   const [projectConfig, setProjectConfig] = useState(PROJECT_TAB_CONFIG[1]);
@@ -58,6 +59,7 @@ const Topfilter = ({ onNameChange }: TopfilterProps) => {
     const prefix = value.slice(0, 4);
     const options = (PROJECT_TAB_CONFIG[1].options||[]).filter(o=>o.value.startsWith(prefix));
     setProjectConfig({...projectConfig, options});
+    onBaseProjectChange(prefix);
   }
 
   const handleProjectChange=(value: string)=>{

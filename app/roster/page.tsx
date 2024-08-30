@@ -97,6 +97,10 @@ const Roster = () => {
     }
   };
 
+  const handleTopFilterBaseProjectChange = (prefix: string)=>{
+    setPrefix(prefix);
+  }
+
   const handleNameChange = (rownumber: number) => {
     setRowNum(rownumber + 2);
   };
@@ -113,7 +117,7 @@ const Roster = () => {
       </Card>
       <Card>
         <div className="ml-8 mt-8">
-          <Topfilter onNameChange={handleNameChange} />
+          <Topfilter onNameChange={handleNameChange} onBaseProjectChange={handleTopFilterBaseProjectChange}/>
         </div>
         <CardHeader className="text-xl flex flex-row items-center">
           <div>Super Rater Basic Information</div>
