@@ -27,7 +27,7 @@ const Roster = () => {
   const [userTabs, setUserTabs] = useState([...USER_TAB_CONFIG]);
   const [projectTabs, setProjectTabs] = useState([...PROJECT_TAB_CONFIG]);
   const [rowNum, setRowNum] = useState(2);
-  const [prefix, setPrefix] = useState('');
+  const [prefix, setPrefix] = useState("");
   useEffect(() => {
     const fetchData = async () => {
       const req = new Request(
@@ -97,12 +97,20 @@ const Roster = () => {
     }
   };
 
-  const handleNameChange =(rownumber: number)=>{
+  const handleNameChange = (rownumber: number) => {
     setRowNum(rownumber + 2);
-  }
+  };
 
   return (
     <div>
+      <Card>
+        <CardHeader className="text-xl flex flex-row items-center">
+          <div>Project Overview</div>
+        </CardHeader>
+        <CardContent>
+        <HCBarchart prefix={prefix} />
+        </CardContent>
+      </Card>
       <Card>
         <div className="ml-8 mt-8">
           <Topfilter onNameChange={handleNameChange} />
@@ -132,9 +140,7 @@ const Roster = () => {
             </div>
           ))}
         </CardContent>
-        <CardFooter>
-          <HCBarchart prefix={prefix}/>
-        </CardFooter>
+        <CardFooter></CardFooter>
       </Card>
       <div className="mt-4 flex flex-row ml-8">
         <History rowNumber={rowNum} />
