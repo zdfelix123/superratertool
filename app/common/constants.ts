@@ -22,6 +22,10 @@ export interface Option {
   value: string;
   label: string;
 }
+export interface Project {
+  name: string;
+  project: string;
+}
 
 export enum QuestionType {
   SELECTOR,
@@ -323,14 +327,14 @@ export const PROJECT_TAB_CONFIG: Column[] = [
   {
     label: "Base Project",
     columnNum: "I",
-    placeHolder: "Please select ...",
+    placeHolder: "Select A Base Project",
     type: QuestionType.SELECTOR,
     options: BASEPROJECT
   },
   {
     label: "Project - Work Type",
     columnNum: "H",
-    placeHolder: "Please select ...",
+    placeHolder: "Select A Project",
     type: QuestionType.SELECTOR,
     options: PROJECTWORKTYPE
   },

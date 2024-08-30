@@ -1,4 +1,4 @@
-import { Badge } from "./constants";
+import { Badge, Project } from "./constants";
 export function titleToNumber(columnTitle: string): number {
     let result = 0
 
@@ -42,5 +42,15 @@ export function stringToArr(input: string){
     if (!input) return [];
     input = input.replace(/"/g, '');
     return input.split(', ');
+}
 
+export function arrToObject(input: string[]): Project[]{
+    if (!input) return [];
+    const names = stringToArr(input[0]);
+    const projects = stringToArr(input[1]);
+    const res = [];
+    for (let i = 0; i < names.length; i++){
+        res.push({name: names[i], project: projects[i]});
+    }
+    return res;
 }
