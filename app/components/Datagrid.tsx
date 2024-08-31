@@ -32,6 +32,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { SuperRaterRow } from "../common/constants";
+
+interface DatagridProps {
+  data: SuperRaterRow[];
+}
 
 const data: Payment[] = [
   {

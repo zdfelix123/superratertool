@@ -20,11 +20,19 @@ const sheets = google.sheets({
 
 export async function GET(request: NextRequest) {
   const range = request.nextUrl.searchParams.get("range")!;
+  const batchGet = request.nextUrl.searchParams.get("batchGet");
+  if (batchGet =="batchGet"){
+    const response = await sheets.spreadsheets.values.batchGet({
+      spreadsheetId: process.env.GOOGLE_SHEET_ID,
+      ranges:["Sheet1!B2:C2"],
+    });
+    return NextResponse.json({ data: response.data, batchGet});
+  }
   const response = await sheets.spreadsheets.values.get({
     spreadsheetId: process.env.GOOGLE_SHEET_ID,
     range,
   });
-  return NextResponse.json({ data: response.data });
+  return NextResponse.json({ data: response.data});
 }
 
 export async function POST(request: NextRequest) {
@@ -67,34 +75,3 @@ export async function PUT(request: NextRequest) {
   }
 }
 
-export async function BATCHGETBYDATAFILTER(request: NextRequest) {
-  const range = request.nextUrl.searchParams.get("range")!;
-  try {
-    const body = await request.json();
-    const response = await sheets.spreadsheets.values.batchGetByDataFilter({
-      spreadsheetId: process.env.GOOGLE_SHEET_ID,
-      requestBody: {
-        valueRenderOption: 'FORMATTED_VALUE',
-        majorDimension: 'ROWS',
-        dataFilters: [{}],
-      },
-    });
-    return NextResponse.json({ data: response.data });
-  } catch (e) {
-    return NextResponse.json({ data: "500 error" });
-  }
-}
-
-export async function BATCHGET(request: NextRequest) {
-  const range = request.nextUrl.searchParams.get("range")!;
-  try {
-    const body = await request.json();
-    const response = await sheets.spreadsheets.values.batchGet({
-      spreadsheetId: process.env.GOOGLE_SHEET_ID,
-      ranges:[],
-    });
-    return NextResponse.json({ data: response.data });
-  } catch (e) {
-    return NextResponse.json({ data: "500 error" });
-  }
-}

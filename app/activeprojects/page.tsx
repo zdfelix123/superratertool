@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import Nav from "../components/Nav";
 import Datagrid from "../components/Datagrid";
-import Topfilter from "../components/Topfilter";
+import Topbatchfilter from "../components/Topbatchfilter";
 import React from "react";
 import { Button } from "@/components/ui/button";
 
@@ -16,6 +16,7 @@ const Activeprojects = () => {
   const handleNameChange = () => {};
 
   const handleTopFilterBaseProjectChange = () => {};
+  const handleTopFilterProjectChange = ()=>{};
   return (
     <div>
       <Card>
@@ -27,9 +28,11 @@ const Activeprojects = () => {
       <Card>
         <CardContent>
           <div className="ml-8 mt-8">
-            <Topfilter
+            <Topbatchfilter
               onNameChange={handleNameChange}
               onBaseProjectChange={handleTopFilterBaseProjectChange}
+              onProjectChange={handleTopFilterProjectChange}
+              hideNameFilter ={true}
             />
           </div>
           <Datagrid />

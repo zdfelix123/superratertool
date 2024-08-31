@@ -407,7 +407,7 @@ export interface SuperRaterRow{
 }
 
 export const SUPERRATEROW_MAP: SuperRaterRow = {
-  id: "0",
+  id: "Roster",
   superRaterName: "C",
   superRaterLDAP: "D",
   pod: "E",
@@ -431,6 +431,5 @@ export const SUPERRATEROW_MAP: SuperRaterRow = {
   assignedProject: "V",
   prodLead: "O",
   prodLeadLdap: "P"
-
 }
 
