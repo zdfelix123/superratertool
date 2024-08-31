@@ -1,7 +1,7 @@
 "use client";
 
 import { ChangeEvent, useEffect, useState } from "react";
-import { Column, QuestionType, Badge } from "../common/constants";
+import { Cell, QuestionType, Badge } from "../common/constants";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -10,13 +10,13 @@ import Datepicker from "./Datepicker";
 import Multiselect from "./Multiselect";
 import { BsPersonBadge } from "react-icons/bs";
 import { formatDate } from "../common/utils";
-interface QuestionProps {
-  column: Column;
+interface TableEntryProps {
+  column: Cell;
   rowNumber: number;
   onBaseProjectChange?: Function;
 }
 
-const Question = ({ column, rowNumber, onBaseProjectChange }: QuestionProps) => {
+const TableEntry = ({ column, rowNumber, onBaseProjectChange }: TableEntryProps) => {
   const [value, setValue] = useState(column.value);
   const [error,setError] =useState('');
   useEffect(() => {
@@ -75,26 +75,8 @@ const Question = ({ column, rowNumber, onBaseProjectChange }: QuestionProps) => 
     <div className="mt-8">
       {column.type == QuestionType.INPUT && (
         <div>
-          <div className="flex flex-row">
-            <Label htmlFor="name">{column.label}</Label>
-            <div>
-              {column.badge === Badge.NEW_ROLE && (
-                <div className="flex flex-row ml-4">
-                  <BsPersonBadge color="green" />
-                  <div className="text-green-400 text-sm">New</div>
-                </div>
-              )}
-              {column.badge === Badge.NEWBIE && (
-                <div className="flex flex-row ml-4">
-                  <BsPersonBadge color="pink" />
-                  <div className="text-pink-400 text-sm">Newbie</div>
-                </div>
-              )}
-            </div>
-          </div>
           <Input
             id="name"
-            placeholder={column.placeHolder}
             value={value}
             onChange={(e) => handleTextChange(e)}
           />
@@ -134,4 +116,4 @@ const Question = ({ column, rowNumber, onBaseProjectChange }: QuestionProps) => 
   );
 };
 
-export default Question;
+export default TableEntry;

@@ -60,3 +60,9 @@ export function getRowNumberFromId(input: string){
     const rowNum = input.split("-")[1].replace(".", "");
     return rowNum;
 }
+
+export function getRowNumber(input: string){
+    if (!input) return '';
+    const rowNum = input.replace(".", "");
+    return Number(rowNum);
+}

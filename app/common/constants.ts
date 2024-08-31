@@ -365,71 +365,63 @@ export const PROJECT_TAB_CONFIG: Column[] = [
   },
 ];
 
-export interface Cell {
-  id?: string;
-  type?: QuestionType;
-  value?: string;
-  placeHolder?: string;
-  columnNum: string;
-  disabled?: boolean;
-  hide?: boolean;
-  options?: Option[];
-  badge?:Badge;
-  validation?:Validation;
+export interface Cell extends Column {
+  disabled?: boolean
+  rowNum?: number
 }
 
 
 export interface SuperRaterRow{
   id: string;
-  superRaterName: string;
-  superRaterLDAP: string;
-  pod: string;
-  location: string;
-  globalLogicEmail: string;
-  googleEmail: string;
-  onboardingStatus: string;
-  highestLevelofEducation: string;
-  allAssociatedRoles: string;
-  productionRole: string;
-  vendorOnboardedDate: string;
-  productionReadyDate: string;
-  estDateofProdStart: string;
-  releasedfromOnboarding: string;
-  majorAreaofStudy: string;
-  technicalLanguageSkills: string;
-  notes: string;
-  baseProject: string;
-  project:string;
-  currentTask: string;
-  assignedProject: string;
-  prodLead: string;
-  prodLeadLdap: string
+  superRaterName: Cell;
+  superRaterLDAP: Cell;
+  pod: Cell;
+  location: Cell;
+  globalLogicEmail: Cell;
+  googleEmail: Cell;
+  onboardingStatus: Cell;
+  highestLevelofEducation: Cell;
+  allAssociatedRoles: Cell;
+  productionRole: Cell;
+  vendorOnboardedDate: Cell;
+  productionReadyDate: Cell;
+  estDateofProdStart: Cell;
+  releasedfromOnboarding: Cell;
+  majorAreaofStudy: Cell;
+  technicalLanguageSkills: Cell;
+  notes: Cell;
+  baseProject: Cell;
+  project: Cell;
+  currentTask: Cell;
+  assignedProject: Cell;
+  prodLead: Cell;
+  prodLeadLdap: Cell;
 }
 
 export const SUPERRATEROW_MAP: SuperRaterRow = {
   id: "Roster",
-  superRaterName: "C",
-  superRaterLDAP: "D",
-  pod: "E",
-  location: "Q",
-  globalLogicEmail: "AC",
-  googleEmail: "Z",
-  onboardingStatus: "K",
-  highestLevelofEducation: "R",
-  allAssociatedRoles:"W",
-  productionRole: "N",
-  vendorOnboardedDate: "J",
-  productionReadyDate: "L",
-  estDateofProdStart: "M",
-  releasedfromOnboarding: "AA",
-  majorAreaofStudy: "S",
-  technicalLanguageSkills: "X",
-  notes: "F",
-  baseProject: "I",
-  project:"H",
-  currentTask: "G",
-  assignedProject: "V",
-  prodLead: "O",
-  prodLeadLdap: "P"
+  superRaterName: {columnNum: "C", type: QuestionType.INPUT},
+  superRaterLDAP: {columnNum: "D", type: QuestionType.INPUT},
+  pod: { columnNum: "E", type: QuestionType.INPUT},
+  location: { columnNum: "Q", type: QuestionType.INPUT },
+  globalLogicEmail: { columnNum: "AC", type: QuestionType.INPUT },
+  googleEmail: { columnNum: "Z", type: QuestionType.INPUT },
+  onboardingStatus: { columnNum: "K", type: QuestionType.SELECTOR,  options: ONBOARDING_STATUS },
+  highestLevelofEducation: { columnNum: "R", type: QuestionType.SELECTOR, options: EDUCATION },
+  allAssociatedRoles: { columnNum: "W", type: QuestionType.MULTISELECT, options: ROLES },
+  productionRole: { columnNum: "N", type: QuestionType.SELECTOR, options: PRODUCTIONROLE },
+  vendorOnboardedDate: { columnNum: "J", type: QuestionType.DATEPICKER},
+  productionReadyDate: { columnNum: "L", type: QuestionType.DATEPICKER },
+  estDateofProdStart: { columnNum: "M", type: QuestionType.DATEPICKER },
+  releasedfromOnboarding: { columnNum: "AA", type: QuestionType.DATEPICKER},
+  majorAreaofStudy: { columnNum: "S", type: QuestionType.INPUT },
+  technicalLanguageSkills: { columnNum: "X", type: QuestionType.INPUT },
+  notes: { columnNum: "F", type: QuestionType.INPUT },
+  baseProject: { columnNum: "I", type: QuestionType.SELECTOR, options: BASEPROJECT},
+  project: { columnNum: "H", type: QuestionType.SELECTOR, options: PROJECTWORKTYPE},
+  currentTask: { columnNum: "G", type: QuestionType.SELECTOR, options: CURRENTTASK },
+  assignedProject: { columnNum: "V", type: QuestionType.INPUT },
+  prodLead: { columnNum: "O", type: QuestionType.INPUT },
+  prodLeadLdap: { columnNum: "P", type: QuestionType.INPUT }
 }
 
