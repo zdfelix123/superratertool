@@ -22,7 +22,7 @@ const Srroster = () => {
     const [srrosterRows, setSrrosterRows] = useState([] as SuperRaterRow[]);
     useEffect(() => {
         const fetchData = async () => {
-          const queryParams = "range=Sheet1!B2:AG16";
+          const queryParams = "range=Sheet1!B2:AG1568";
           const req = new Request(
             `/api/roster?${queryParams}`
           );
@@ -87,13 +87,13 @@ const Srroster = () => {
       </Card>
       <Card>
         <CardContent>
-          <div className="ml-8 mt-8">
+          {/* <div className="ml-8 mt-8">
             <Topbatchfilter
               onNameChange={handleNameChange}
               onBaseProjectChange={handleTopFilterBaseProjectChange}
               onProjectChange={handleTopFilterProjectChange}
             />
-          </div>
+          </div> */}
           <Datagrid data={srrosterRows} />
         </CardContent>
         <CardFooter className="flex flex-row">

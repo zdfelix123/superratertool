@@ -1,6 +1,6 @@
-"use client"
- 
-import * as React from "react"
+"use client";
+
+import * as React from "react";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -12,18 +12,18 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from "@tanstack/react-table"
-import { ArrowUpDown, ChevronDown} from "lucide-react"
- 
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
+} from "@tanstack/react-table";
+import { ArrowUpDown, ChevronDown } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -31,54 +31,15 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { SuperRaterRow } from "../common/constants";
+} from "@/components/ui/table";
+import { SuperRaterRow, SUPERRATEROW_MAP } from "../common/constants";
+import { getRowNumberFromId } from "../common/utils";
 
 interface DatagridProps {
   data: SuperRaterRow[];
 }
 
-const data: Payment[] = [
-  {
-    id: "m5gr84i9",
-    amount: 316,
-    status: "success",
-    email: "ken99@yahoo.com",
-  },
-  {
-    id: "3u1reuv4",
-    amount: 242,
-    status: "success",
-    email: "Abe45@gmail.com",
-  },
-  {
-    id: "derv1ws0",
-    amount: 837,
-    status: "processing",
-    email: "Monserrat44@gmail.com",
-  },
-  {
-    id: "5kma53ae",
-    amount: 874,
-    status: "success",
-    email: "Silas22@gmail.com",
-  },
-  {
-    id: "bhqecj4p",
-    amount: 721,
-    status: "failed",
-    email: "carmella@hotmail.com",
-  },
-]
- 
-export type Payment = {
-  id: string
-  amount: number
-  status: "pending" | "processing" | "success" | "failed"
-  email: string
-}
- 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<SuperRaterRow>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -101,54 +62,231 @@ export const columns: ColumnDef<Payment>[] = [
     enableSorting: false,
     enableHiding: false,
   },
+  // {
+  //   accessorKey: "superRaterName",
+  //   header: "Super Rater Name",
+  //   cell: ({ row }) => (
+  //     <div className="capitalize">{row.getValue("superRaterName")}</div>
+  //   ),
+  // },
+  // {
+  //   accessorKey: "amount",
+  //   header: () => <div className="text-right">Amount</div>,
+  //   cell: ({ row }) => {
+  //     const amount = parseFloat(row.getValue("amount"))
+
+  //     // Format the amount as a dollar amount
+  //     const formatted = new Intl.NumberFormat("en-US", {
+  //       style: "currency",
+  //       currency: "USD",
+  //     }).format(amount)
+
+  //     return <div className="text-right font-medium">{formatted}</div>
+  //   },
+  // }
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "id",
+    header: "Row Number",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("status")}</div>
+      <div className="capitalize">{getRowNumberFromId(row.getValue("id"))}</div>
     ),
   },
   {
-    accessorKey: "email",
+    accessorKey: "superRaterName",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Email
+          Super Rater Name
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+    cell: ({ row }) => (
+      <div className="capitalize">
+        {row.getValue("superRaterName")}
+      </div>
+    ),
   },
   {
-    accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
-    cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"))
- 
-      // Format the amount as a dollar amount
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(amount)
- 
-      return <div className="text-right font-medium">{formatted}</div>
+    accessorKey: "superRaterLDAP",
+    header: "Super Rater LDAP",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("superRaterLDAP")}</div>
+    ),
+  },
+  {
+    accessorKey: "baseProject",
+    header: "Base Project",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("baseProject")}</div>
+    ),
+  },
+  {
+    accessorKey: "project",
+    header: "Project",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("project")}</div>
+    ),
+  },
+  {
+    accessorKey: "currentTask",
+    header: "Current Task",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("currentTask")}</div>
+    ),
+  },
+  {
+    accessorKey: "assignedProject",
+    header: "Assigned Project",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("assignedProject")}</div>
+    ),
+  },
+  {
+    accessorKey: "prodLead",
+    header: "Prod Lead",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("prodLead")}</div>
+    ),
+  },
+  {
+    accessorKey: "prodLeadLdap",
+    header: "Prod Lead Ldap",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("prodLeadLdap")}</div>
+    ),
+  },
+  {
+    accessorKey: "pod",
+    header: "Pod",
+    cell: ({ row }) => <div className="capitalize">{row.getValue("pod")}</div>,
+  },
+  {
+    accessorKey: "location",
+    header: "Location",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("location")}</div>
+    ),
+  },
+  {
+    accessorKey: "globalLogicEmail",
+    header: "GlobalLogic Email",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("globalLogicEmail")}</div>
+    ),
+  },
+  {
+    accessorKey: "googleEmail",
+    header: "Google Email",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("googleEmail")}</div>
+    ),
+  },
+  {
+    accessorKey: "onboardingStatus",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Onboarding Status
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
     },
-  }
-]
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("onboardingStatus")}</div>
+    ),
+  },
+  {
+    accessorKey: "highestLevelofEducation",
+    header: "Highest Level of Education",
+    cell: ({ row }) => (
+      <div className="capitalize">
+        {row.getValue("highestLevelofEducation")}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "allAssociatedRoles",
+    header: "All Associated Roles",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("allAssociatedRoles")}</div>
+    ),
+  },
+  {
+    accessorKey: "productionRole",
+    header: "Production Role",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("productionRole")}</div>
+    ),
+  },
+  {
+    accessorKey: "vendorOnboardedDate",
+    header: "Vendor Onboarded Date",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("vendorOnboardedDate")}</div>
+    ),
+  },
+  {
+    accessorKey: "productionReadyDate",
+    header: "Production Ready Date",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("productionReadyDate")}</div>
+    ),
+  },
+  {
+    accessorKey: "estDateofProdStart",
+    header: "est Date of Prod Start",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("estDateofProdStart")}</div>
+    ),
+  },
+  {
+    accessorKey: "releasedfromOnboarding",
+    header: "Released from Onboarding",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("releasedfromOnboarding")}</div>
+    ),
+  },
+  {
+    accessorKey: "majorAreaofStudy",
+    header: "Major Area of Study",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("majorAreaofStudy")}</div>
+    ),
+  },
+  {
+    accessorKey: "technicalLanguageSkills",
+    header: "Technical Language Skills",
+    cell: ({ row }) => (
+      <div className="capitalize">
+        {row.getValue("technicalLanguageSkills")}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "notes",
+    header: "Notes",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("notes")}</div>
+    ),
+  },
+];
 
-const Datagrid = () => {
-  const [sorting, setSorting] = React.useState<SortingState>([])
+const Datagrid = ({ data }: DatagridProps) => {
+  const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
-  )
+  );
   const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
-  const [rowSelection, setRowSelection] = React.useState({})
- 
+    React.useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = React.useState({});
+
   const table = useReactTable({
     data,
     columns,
@@ -166,18 +304,41 @@ const Datagrid = () => {
       columnVisibility,
       rowSelection,
     },
-  })
- 
+  });
+
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
+          placeholder="Filter base project..."
+          value={
+            (table.getColumn("baseProject")?.getFilterValue() as string) ?? ""
           }
-          className="max-w-sm"
+          onChange={(event) =>
+            table.getColumn("baseProject")?.setFilterValue(event.target.value)
+          }
+          className="max-w-60 mr-4"
+        />
+        <Input
+          placeholder="Filter project or work type..."
+          value={(table.getColumn("project")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn("project")?.setFilterValue(event.target.value)
+          }
+          className="max-w-60 mr-4"
+        />
+        <Input
+          placeholder="Filter Super Rater Name..."
+          value={
+            (table.getColumn("superRaterName")?.getFilterValue() as string) ??
+            ""
+          }
+          onChange={(event) =>
+            table
+              .getColumn("superRaterName")
+              ?.setFilterValue(event.target.value)
+          }
+          className="max-w-60"
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -201,7 +362,7 @@ const Datagrid = () => {
                   >
                     {column.id}
                   </DropdownMenuCheckboxItem>
-                )
+                );
               })}
           </DropdownMenuContent>
         </DropdownMenu>
@@ -221,7 +382,7 @@ const Datagrid = () => {
                             header.getContext()
                           )}
                     </TableHead>
-                  )
+                  );
                 })}
               </TableRow>
             ))}
@@ -281,7 +442,7 @@ const Datagrid = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Datagrid
+export default Datagrid;
