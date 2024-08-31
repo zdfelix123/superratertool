@@ -7,7 +7,7 @@ export default function Home() {
       <div className="text-4xl mt-[20vh]">
         <div>Welcome to Core Machine Learning Group</div>
         <div className="flex flex-row justify-center mt-[25vh]">
-          <div className="mr-3">
+        <div className="mr-3">
             <Link
               href="/roster"
               className={buttonVariants({ variant: "outline" })}
@@ -15,9 +15,17 @@ export default function Home() {
               Roster
             </Link>
           </div>
+          <div className="mr-3">
+            <Link
+              href="/srroster"
+              className={buttonVariants({ variant: "outline" })}
+            >
+              Roster New
+            </Link>
+          </div>
           <div>
             <Link
-              href="/"
+              href="/activeprojects"
               className={buttonVariants({ variant: "outline" })}
             >
               Active Project

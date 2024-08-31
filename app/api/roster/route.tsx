@@ -66,3 +66,35 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json({ data: "500 error" });
   }
 }
+
+export async function BATCHGETBYDATAFILTER(request: NextRequest) {
+  const range = request.nextUrl.searchParams.get("range")!;
+  try {
+    const body = await request.json();
+    const response = await sheets.spreadsheets.values.batchGetByDataFilter({
+      spreadsheetId: process.env.GOOGLE_SHEET_ID,
+      requestBody: {
+        valueRenderOption: 'FORMATTED_VALUE',
+        majorDimension: 'ROWS',
+        dataFilters: [{}],
+      },
+    });
+    return NextResponse.json({ data: response.data });
+  } catch (e) {
+    return NextResponse.json({ data: "500 error" });
+  }
+}
+
+export async function BATCHGET(request: NextRequest) {
+  const range = request.nextUrl.searchParams.get("range")!;
+  try {
+    const body = await request.json();
+    const response = await sheets.spreadsheets.values.batchGet({
+      spreadsheetId: process.env.GOOGLE_SHEET_ID,
+      ranges:[],
+    });
+    return NextResponse.json({ data: response.data });
+  } catch (e) {
+    return NextResponse.json({ data: "500 error" });
+  }
+}

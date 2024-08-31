@@ -365,4 +365,72 @@ export const PROJECT_TAB_CONFIG: Column[] = [
   },
 ];
 
+export interface Cell {
+  id?: string;
+  type?: QuestionType;
+  value?: string;
+  placeHolder?: string;
+  columnNum: string;
+  disabled?: boolean;
+  hide?: boolean;
+  options?: Option[];
+  badge?:Badge;
+  validation?:Validation;
+}
+
+
+export interface SuperRaterRow{
+  id: string;
+  superRaterName: string;
+  superRaterLDAP: string;
+  pod: string;
+  location: string;
+  globalLogicEmail: string;
+  googleEmail: string;
+  onboardingStatus: string;
+  highestLevelofEducation: string;
+  allAssociatedRoles: string;
+  productionRole: string;
+  vendorOnboardedDate: string;
+  productionReadyDate: string;
+  estDateofProdStart: string;
+  releasedfromOnboarding: string;
+  majorAreaofStudy: string;
+  technicalLanguageSkills: string;
+  notes: string;
+  baseProject: string;
+  project:string;
+  currentTask: string;
+  assignedProject: string;
+  prodLead: string;
+  prodLeadLdap: string
+}
+
+export const SUPERRATEROW_MAP: SuperRaterRow = {
+  id: "0",
+  superRaterName: "C",
+  superRaterLDAP: "D",
+  pod: "E",
+  location: "Q",
+  globalLogicEmail: "AC",
+  googleEmail: "Z",
+  onboardingStatus: "K",
+  highestLevelofEducation: "R",
+  allAssociatedRoles:"W",
+  productionRole: "N",
+  vendorOnboardedDate: "J",
+  productionReadyDate: "L",
+  estDateofProdStart: "M",
+  releasedfromOnboarding: "AA",
+  majorAreaofStudy: "S",
+  technicalLanguageSkills: "X",
+  notes: "F",
+  baseProject: "I",
+  project:"H",
+  currentTask: "G",
+  assignedProject: "V",
+  prodLead: "O",
+  prodLeadLdap: "P"
+
+}
 
