@@ -14,9 +14,10 @@ interface TableEntryProps {
   column: Cell;
   rowNumber: number;
   onBaseProjectChange?: Function;
+  onInputChange: Function
 }
 
-const TableEntry = ({ column, rowNumber, onBaseProjectChange }: TableEntryProps) => {
+const TableEntry = ({ column, rowNumber, onBaseProjectChange, onInputChange }: TableEntryProps) => {
   const [value, setValue] = useState(column.value);
   const [error,setError] =useState('');
   useEffect(() => {
@@ -44,31 +45,10 @@ const TableEntry = ({ column, rowNumber, onBaseProjectChange }: TableEntryProps)
     if (!column.columnNum) {
       return;
     }
-    const req1 = new Request(
-      `/api/roster?range=${column.columnNum}${1 + (column.rowNum||0)}`
-    );
-    const req2 = new Request(`/api/roster?range=AI${1 + (column.rowNum||0)}`);
-    const response1 = await fetch(req1, {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(e.target.value),
+    onInputChange({
+      range: `Sheet1!${column.columnNum}${1 + (column.rowNum||0)}`,
+      value: e.target.value
     });
-
-    const response2 = await fetch(req2, {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(
-        `Field: ${column.label}, Date:${formatDate(new Date(Date.now()))}`
-      ),
-    });
-
-    return response1;
   };
 
   return (
@@ -97,20 +77,17 @@ const TableEntry = ({ column, rowNumber, onBaseProjectChange }: TableEntryProps)
       )}
       {column.type == QuestionType.SELECTOR && (
         <div>
-          <div className="text-sm font-medium">{column.label}</div>
-          <RosterDropdown column={column} rowNumber={rowNumber} onBaseProjectChange={onBaseProjectChange}></RosterDropdown>
+          <RosterDropdown column={column} rowNumber={column.rowNum ||0} onBaseProjectChange={onBaseProjectChange} onInputChange={onInputChange}></RosterDropdown>
         </div>
       )}
       {column.type == QuestionType.DATEPICKER && (
         <div>
-          <div className="text-sm font-medium">{column.label}</div>
-          <RosterDatepicker column={column} rowNumber={rowNumber}></RosterDatepicker>
+          <RosterDatepicker column={column} rowNumber={column.rowNum ||0} onInputChange={onInputChange}></RosterDatepicker>
         </div>
       )}
       {column.type == QuestionType.MULTISELECT && (
         <div>
-          <div className="text-sm font-medium">{column.label}</div>
-          <RosterMultiselect column={column} rowNumber={rowNumber}></RosterMultiselect>
+          <RosterMultiselect column={column} rowNumber={column.rowNum ||0} onInputChange={onInputChange}></RosterMultiselect>
         </div>
       )}
     </div>

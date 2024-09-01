@@ -13,9 +13,10 @@ import { getRowNumberFromId } from "../common/utils";
 interface TableProps {
   data: SuperRaterRow[];
   onCheckBoxChange: Function;
+  onInputChange: Function;
 }
 
-const Table = ({ data, onCheckBoxChange }: TableProps) => {
+const Table = ({ data, onCheckBoxChange, onInputChange }: TableProps) => {
   const [selectedRows, setSelectedRows] = useState(new Set());
   const handleCheckBox = (e: ChangeEvent<HTMLInputElement>, rowNum: number) => {
     if (e.target.checked) {
@@ -61,7 +62,7 @@ const Table = ({ data, onCheckBoxChange }: TableProps) => {
                       </div>
                     )}
                     <div className="capitalize min-w-40 mr-4">
-                      <TableEntry column={col} rowNumber={0} />
+                      <TableEntry column={col} rowNumber={0} onInputChange={onInputChange}/>
                     </div>
                   </td>
                 ))}

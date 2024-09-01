@@ -1,4 +1,4 @@
-import { getCurrentTaskOptions } from "./currentTaskData";
+import { getCurrentTaskOptions, getQTypeOptions } from "./currentTaskData";
 export interface Column {
   id?: string;
   type?: QuestionType;
@@ -60,6 +60,17 @@ const EDUCATION: Option[] = [
   { value: "Masters", label: "Masters" },
   { value: "Bachelors", label: "Bachelors" },
   { value: "Other", label: "Other" },
+];
+
+const WORKSTATUS: Option[] = [
+  { value: "Completed", label: "Completed" },
+  { value: "Active", label: "Active" },
+  { value: "Yet to Start", label: "Yet to Start" },
+  { value: "Completed - Need Metrics", label: "Completed - Need Metrics" },
+  { value: "On Hold", label: "On Hold" },
+  { value: "Double Check Empty", label: "Double Check Empty" },
+  { value: "Debugging", label: "Debugging" },
+  { value: "Canceled", label: "Canceled" },
 ];
 
 const ROLES: Option[] = [
@@ -533,6 +544,8 @@ export interface DataWithFilter {
   filtered: SuperRaterRow[];
 }
 
+
+
 export const SUPERRATER_TABLEHEADER = [
   "",
   "super Rater Name",
@@ -564,3 +577,111 @@ export const TABLE_CONFIG: Column[] = [
   { label: "Row Number", value: "id", columnNum: "B" },
   { label: "Super Rater Name", value: "superRaterName", columnNum: "C" },
 ];
+
+export interface ActiveProjectRow {
+  id: string;
+  bugId: Cell;
+  project: Cell;
+  workflow: Cell;
+  tasksubtype: Cell;
+  workspace: Cell;
+  qType: Cell;
+  status: Cell;
+  startDate: Cell;
+  endDate: Cell;
+  reviewCompleted: Cell;
+  averageHandlingTime: Cell;
+}
+
+export interface ProjectDataWithFilter{
+  data: ActiveProjectRow[];
+  filtered: ActiveProjectRow[];
+}
+
+export const ACTIVEPROJECT_CONFIG: ActiveProjectRow = {
+  id: "ActiveProject",
+  bugId: {
+    columnNum: "C",
+    type: QuestionType.INPUT,
+    disabled: true,
+    label: "Bug ID",
+  },
+  project: {
+    columnNum: "F",
+    type: QuestionType.SELECTOR,
+    disabled: true,
+    label: "Project",
+    options: BASEPROJECT,
+  },
+  workflow: { columnNum: "G", type: QuestionType.INPUT, disabled: true, label: "Work Flow"},
+  tasksubtype: { columnNum: "H", type: QuestionType.INPUT, disabled: true, label: "Task Subtype"},
+  workspace: {
+    columnNum: "I",
+    type: QuestionType.INPUT,
+    disabled: true,
+    label: "GlobalLogic Email"
+  },
+  qType: { columnNum: "J", type: QuestionType.SELECTOR, disabled: true, label: "Question Type", options: getQTypeOptions()},
+  status: {
+    columnNum: "M",
+    type: QuestionType.SELECTOR,
+    disabled: true,
+    label: "Status",
+    options: WORKSTATUS
+  },
+  startDate: {
+    columnNum: "N",
+    type: QuestionType.DATEPICKER,
+    disabled: true,
+    label: "Start Date"
+  },
+  endDate: {
+    columnNum: "P",
+    type: QuestionType.DATEPICKER,
+    disabled: true,
+    label: "End Date"
+  },
+  reviewCompleted: {
+    columnNum: "R",
+    type: QuestionType.INPUT,
+    disabled: true,
+    label: "Review Completed"
+  },
+  averageHandlingTime: {
+    columnNum: "U",
+    type: QuestionType.INPUT,
+    disabled: true,
+    label: "Average Handling Time"
+  }
+};
+
+export const ACTIVEPROJECT_TABLEHEADER = [
+  "",
+  "bug Id",
+  "project",
+  "work flow",
+  "task subtype",
+  "work space",
+  "question Type",
+  "status",
+  "start Date",
+  "end Date",
+  "review Completed",
+  "average Handling Time"
+];
+
+export enum Dimension {
+  DIMENSION_UNSPECIFIED,
+  ROWS,
+  COLUMNS,
+}
+
+export interface ValueRange {
+  range: string,
+  value: string
+}
+
+
+export type Record = {
+  [key: string]: ValueRange;
+};

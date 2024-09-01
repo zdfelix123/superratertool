@@ -19,14 +19,15 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Column } from "../common/constants";
+import { Column, Cell} from "../common/constants";
 import { formatDate } from "../common/utils";
 
 interface RosterDropDownProps {
-  column: Column;
+  column: Cell;
   rowNumber: number;
   onBaseProjectChange?: Function;
   onNameChange?: Function;
+  onInputChange:Function;
 }
 
 const RosterDropdown = ({
@@ -34,6 +35,7 @@ const RosterDropdown = ({
   rowNumber,
   onBaseProjectChange,
   onNameChange,
+  onInputChange,
 }: RosterDropDownProps) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(column.value || "");
@@ -53,32 +55,11 @@ const RosterDropdown = ({
     if (!column.columnNum) {
       return;
     }
-    if (rowNumber < 2) return;
-    const req1 = new Request(
-      `/api/roster?range=${column.columnNum}${rowNumber}`
-    );
-    const req2 = new Request(`/api/roster?range=AI${rowNumber}`);
-    const response1 = await fetch(req1, {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(currentValue),
+    if (rowNumber < 1) return;
+    onInputChange({
+      range: `Sheet1!${column.columnNum}${1 + (column.rowNum||0)}`,
+      value: currentValue
     });
-
-    const response2 = await fetch(req2, {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(
-        `Field: ${column.label}, Date:${formatDate(new Date(Date.now()))}`
-      ),
-    });
-
-    return response1;
   };
 
   return (

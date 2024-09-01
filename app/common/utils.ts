@@ -62,7 +62,7 @@ export function getRowNumberFromId(input: string){
 }
 
 export function getRowNumber(input: string){
-    if (!input) return '';
+    if (!input) return 0;
     const rowNum = input.replace(".", "");
     return Number(rowNum);
 }

@@ -27,7 +27,7 @@ const HCBarchart = ({ prefix }: HCBarchart) => {
   const [chartData, setChartData] = useState([] as BarChartData[]);
   useEffect(() => {
     const fetchData = async () => {
-      const req = new Request(`/api/roster?range=Sheet2!C4:E32`);
+      const req = new Request(`/api/roster?range=Sheet5!C4:E32`);
       await fetch(req, {
         method: "GET",
         headers: {
@@ -42,7 +42,7 @@ const HCBarchart = ({ prefix }: HCBarchart) => {
             baseProject: r[0],
             budgetedHC: Number(r[1]),
             actualHC: Number(r[2]),
-          })).filter((o:BarChartData)=>o.baseProject.startsWith(prefix));
+          })).filter((o:BarChartData)=>(o.baseProject||'').startsWith(prefix));
           setChartData(chartData.slice(0, 15));
           return res.data.values;
         });

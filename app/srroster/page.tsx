@@ -14,17 +14,20 @@ import {
   SuperRaterRow,
   SUPERRATEROW_MAP,
   DataWithFilter,
+  ValueRange,
+  Record
 } from "../common/constants";
 
 import { useEffect, useState } from "react";
 import { titleToNumber, getRowNumber } from "../common/utils";
-import { buttonVariants } from "@/components/ui/button";
+import loading from "../../public/loading.gif";
 
 const Srroster = () => {
   const [dataWithFilter, setDataWithFilter] = useState({} as DataWithFilter);
   const [selectedCheckbox, setselectedCheckbox] = useState([] as number[]);
   const [offset, setOffset] = useState(0);
   const [saveValues, setSaveValues] = useState(false);
+  const [updates, setUpdates] = useState({} as Record);
   useEffect(() => {
     const fetchData = async () => {
       const queryParams = "range=Sheet1!B2:AG1582";
@@ -248,7 +251,39 @@ const Srroster = () => {
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+
+    if (!Object.keys(updates).length){
+      return;
+    }
+    Object.values(updates).forEach(update=>{
+      const postData = async () => {
+        const req = new Request(
+          `/api/roster?range=${update.range}`
+        );
+        const response = await fetch(req, {
+          method: "PUT",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(update.value),
+        });
+        return response;
+      }
+      postData();
+    });
+
+  }, [saveValues]);
   const handleNameChange = () => {};
+
+  const handleInputChange = (vr: ValueRange)=>{
+    const prev = JSON.parse(JSON.stringify(updates));
+    console.log("updates", updates);
+    prev[vr.range] =vr;
+    setUpdates(prev);
+  }
 
   const handleTopFilterBaseProjectChange = (baseProject: string) => {
     const prefix = baseProject.slice(0, 4);
@@ -320,10 +355,17 @@ const Srroster = () => {
         />
       </div>
       {/* <Datagrid data={srrosterRows}/> */}
-      <Table
-        data={getTableData(dataWithFilter.filtered || [], offset)}
-        onCheckBoxChange={handleCheckBoxChange}
-      />
+      <div className="grid justify-items-center">
+        {dataWithFilter.filtered ? (
+          <Table
+            data={getTableData(dataWithFilter.filtered || [], offset)}
+            onCheckBoxChange={handleCheckBoxChange}
+            onInputChange={handleInputChange}
+          />
+        ) : (
+          <img className="w-32 mt-12 mb-12" src={loading.src} alt="loading" />
+        )}
+      </div>
       <CardFooter className="ml-8 flex flex-row justify-between">
         <div>
           <Button
@@ -342,12 +384,8 @@ const Srroster = () => {
           </Button>
         </div>
         <div className="flex flex-row mr-16">
-          <Button onClick={() => handleNav(-10)}>
-            Previous
-          </Button>
-          <Button onClick={() => handleNav(10)}>
-            Next
-          </Button>
+          <Button onClick={() => handleNav(-10)}>Previous</Button>
+          <Button onClick={() => handleNav(10)}>Next</Button>
         </div>
       </CardFooter>
     </div>
