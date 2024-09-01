@@ -94,7 +94,7 @@ export const columns: ColumnDef<SuperRaterRow>[] = [
   },
   {
     accessorKey: "superRaterName",
-    header: ({ column }) => {
+    header: ({ column}) => {
       return (
         <Button
           variant="ghost"
@@ -388,7 +388,7 @@ export const columns: ColumnDef<SuperRaterRow>[] = [
   },
 ];
 
-const Datagrid = ({ data }: DatagridProps) => {
+const Datagrid = ({ data}: DatagridProps) => {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []

@@ -7,7 +7,7 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import Nav from "../components/Nav";
-import Datagrid from "../components/Datagrid";
+import Projectdatagrid from "../components/Projectdatagrid";
 import Topbatchfilter from "../components/Topbatchfilter";
 import React from "react";
 import { Button } from "@/components/ui/button";
@@ -35,7 +35,7 @@ const Activeprojects = () => {
               hideNameFilter ={true}
             />
           </div>
-          <Datagrid />
+          <Projectdatagrid />
         </CardContent>
         <CardFooter className="flex flex-row">
           <Button className="bg-blue-100 mr-8">Edit</Button>

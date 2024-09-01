@@ -5,9 +5,9 @@ import { Cell, QuestionType, Badge } from "../common/constants";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import Dropdown from "./Dropdown";
-import Datepicker from "./Datepicker";
-import Multiselect from "./Multiselect";
+import RosterDropdown from "./RosterDropdown";
+import RosterDatepicker from "./RosterDatepicker";
+import RosterMultiselect from "./RosterMultiselect";
 import { BsPersonBadge } from "react-icons/bs";
 import { formatDate } from "../common/utils";
 interface TableEntryProps {
@@ -45,9 +45,9 @@ const TableEntry = ({ column, rowNumber, onBaseProjectChange }: TableEntryProps)
       return;
     }
     const req1 = new Request(
-      `/api/roster?range=${column.columnNum}${rowNumber}`
+      `/api/roster?range=${column.columnNum}${1 + (column.rowNum||0)}`
     );
-    const req2 = new Request(`/api/roster?range=AI${rowNumber}`);
+    const req2 = new Request(`/api/roster?range=AI${1 + (column.rowNum||0)}`);
     const response1 = await fetch(req1, {
       method: "PUT",
       headers: {
@@ -79,6 +79,7 @@ const TableEntry = ({ column, rowNumber, onBaseProjectChange }: TableEntryProps)
             id="name"
             value={value}
             onChange={(e) => handleTextChange(e)}
+            disabled={column.disabled}
           />
           {error && (<div className='text-sm text-red-500'>{error}</div>)}
         </div>
@@ -97,19 +98,19 @@ const TableEntry = ({ column, rowNumber, onBaseProjectChange }: TableEntryProps)
       {column.type == QuestionType.SELECTOR && (
         <div>
           <div className="text-sm font-medium">{column.label}</div>
-          <Dropdown column={column} rowNumber={rowNumber} onBaseProjectChange={onBaseProjectChange}></Dropdown>
+          <RosterDropdown column={column} rowNumber={rowNumber} onBaseProjectChange={onBaseProjectChange}></RosterDropdown>
         </div>
       )}
       {column.type == QuestionType.DATEPICKER && (
         <div>
           <div className="text-sm font-medium">{column.label}</div>
-          <Datepicker column={column} rowNumber={rowNumber}></Datepicker>
+          <RosterDatepicker column={column} rowNumber={rowNumber}></RosterDatepicker>
         </div>
       )}
       {column.type == QuestionType.MULTISELECT && (
         <div>
           <div className="text-sm font-medium">{column.label}</div>
-          <Multiselect column={column} rowNumber={rowNumber}></Multiselect>
+          <RosterMultiselect column={column} rowNumber={rowNumber}></RosterMultiselect>
         </div>
       )}
     </div>
