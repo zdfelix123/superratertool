@@ -54,3 +54,15 @@ export function arrToObject(input: string[]): Project[]{
     }
     return res;
 }
+
+export function getRowNumberFromId(input: string){
+    if (!input) return 0;
+    const rowNum = input.split("-")[1].replace(".", "");
+    return Number(rowNum);
+}
+
+export function getRowNumber(input: string){
+    if (!input) return 0;
+    const rowNum = input.replace(".", "");
+    return Number(rowNum);
+}

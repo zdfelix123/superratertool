@@ -1,4 +1,4 @@
-import { getCurrentTaskOptions } from "./currentTaskData";
+import { getCurrentTaskOptions, getQTypeOptions,getWorkFlowOptions} from "./currentTaskData";
 export interface Column {
   id?: string;
   type?: QuestionType;
@@ -9,8 +9,8 @@ export interface Column {
   disabled?: boolean;
   hide?: boolean;
   options?: Option[];
-  badge?:Badge;
-  validation?:Validation;
+  badge?: Badge;
+  validation?: Validation;
 }
 
 export interface Validation {
@@ -32,7 +32,7 @@ export enum QuestionType {
   TEXTAREA,
   INPUT,
   DATEPICKER,
-  MULTISELECT
+  MULTISELECT,
 }
 
 export enum Badge {
@@ -60,6 +60,17 @@ const EDUCATION: Option[] = [
   { value: "Masters", label: "Masters" },
   { value: "Bachelors", label: "Bachelors" },
   { value: "Other", label: "Other" },
+];
+
+const WORKSTATUS: Option[] = [
+  { value: "Completed", label: "Completed" },
+  { value: "Active", label: "Active" },
+  { value: "Yet to Start", label: "Yet to Start" },
+  { value: "Completed - Need Metrics", label: "Completed - Need Metrics" },
+  { value: "On Hold", label: "On Hold" },
+  { value: "Double Check Empty", label: "Double Check Empty" },
+  { value: "Debugging", label: "Debugging" },
+  { value: "Canceled", label: "Canceled" },
 ];
 
 const ROLES: Option[] = [
@@ -110,7 +121,6 @@ const PRODUCTIONROLE: Option[] = [
   { value: "Data Analyst", label: "Data Analyst" },
   { value: "Evaluator", label: "Evaluator" },
   { value: "Golden Evaluator", label: "Golden Evaluator" },
-
 ];
 
 export const PROJECTWORKTYPE: Option[] = [
@@ -157,12 +167,21 @@ export const PROJECTWORKTYPE: Option[] = [
   { value: "Magi - Writing 4", label: "Magi - Writing 4" },
   { value: "Magi - Eval 5", label: "Magi - Eval 5" },
   { value: "Onboarding", label: "Onboarding" },
-  { value: "Gemini Multilinguality - JA", label: "Gemini Multilinguality - JA" },
-  { value: "Gemini Multilinguality - DE", label: "Gemini Multilinguality - DE" },
-  { value: "Gemini Multilinguality - HI", label: "Gemini Multilinguality - HI" },
+  {
+    value: "Gemini Multilinguality - JA",
+    label: "Gemini Multilinguality - JA",
+  },
+  {
+    value: "Gemini Multilinguality - DE",
+    label: "Gemini Multilinguality - DE",
+  },
+  {
+    value: "Gemini Multilinguality - HI",
+    label: "Gemini Multilinguality - HI",
+  },
   { value: "Magi - HI US", label: "Magi - HI US" },
   { value: "Magi - TE US", label: "Magi - TE US" },
-  { value: "Magi - MR US", label: "Magi - MR US" }
+  { value: "Magi - MR US", label: "Magi - MR US" },
 ];
 
 const BASEPROJECT: Option[] = [
@@ -190,12 +209,23 @@ const BASEPROJECT: Option[] = [
   { value: "Magi - MR", label: "Magi - MR" },
   { value: "VideoInWords", label: "VideoInWords" },
   { value: "Magi - Gemini", label: "Magi - Gemini" },
-  { value: "Gemini Multilinguality - JA", label: "Gemini Multilinguality - JA" },
-  { value: "Gemini Multilinguality - DE", label: "Gemini Multilinguality - DE" },
-  { value: "Gemini Multilinguality - HI", label: "Gemini Multilinguality - HI" },
+  {
+    value: "Gemini Multilinguality - JA",
+    label: "Gemini Multilinguality - JA",
+  },
+  {
+    value: "Gemini Multilinguality - DE",
+    label: "Gemini Multilinguality - DE",
+  },
+  {
+    value: "Gemini Multilinguality - HI",
+    label: "Gemini Multilinguality - HI",
+  },
   { value: "Magi - Writing", label: "Magi - Writing" },
   { value: "Magi - Evaluation", label: "Magi - Evaluation" },
 ];
+
+const WORKFLOWOPTIONS: Option[] = getWorkFlowOptions();
 
 const CURRENTTASK: Option[] = getCurrentTaskOptions();
 
@@ -203,33 +233,33 @@ export const TOP_FILTER_CONFIG: Column = {
   columnNum: "C",
   placeHolder: "Select A Super Rator",
   type: QuestionType.SELECTOR,
-  options: []
-}
+  options: [],
+};
 
 export const USER_TAB_CONFIG: Column[] = [
   {
     label: "Super Rater Name",
     columnNum: "C",
     placeHolder: "Loading ...",
-    type: QuestionType.INPUT
+    type: QuestionType.INPUT,
   },
   {
     label: "Super Rater LDAP",
     columnNum: "D",
     placeHolder: "Loading ...",
-    type: QuestionType.INPUT
+    type: QuestionType.INPUT,
   },
   {
     label: "Pod",
     columnNum: "E",
     placeHolder: "Loading ...",
-    type: QuestionType.INPUT
+    type: QuestionType.INPUT,
   },
   {
     label: "Location",
     columnNum: "Q",
     placeHolder: "Loading ...",
-    type: QuestionType.INPUT
+    type: QuestionType.INPUT,
   },
   {
     label: "GlobalLogic Email",
@@ -237,9 +267,9 @@ export const USER_TAB_CONFIG: Column[] = [
     placeHolder: "Loading ...",
     type: QuestionType.INPUT,
     validation: {
-      type: 'email',
-      regex:'@globallogic.com'
-    }
+      type: "email",
+      regex: "@globallogic.com",
+    },
   },
   {
     label: "Google Email",
@@ -247,79 +277,79 @@ export const USER_TAB_CONFIG: Column[] = [
     placeHolder: "Loading ...",
     type: QuestionType.INPUT,
     validation: {
-      type: 'email',
-      regex:'@google.com'
-    }
+      type: "email",
+      regex: "@google.com",
+    },
   },
   {
     label: "Onboarding Status",
     columnNum: "K",
     placeHolder: "Please select ...",
     type: QuestionType.SELECTOR,
-    options: ONBOARDING_STATUS
+    options: ONBOARDING_STATUS,
   },
   {
     label: "Highest Level of Education",
     columnNum: "R",
     placeHolder: "Please select ...",
     type: QuestionType.SELECTOR,
-    options: EDUCATION
+    options: EDUCATION,
   },
   {
     label: "All Associated Roles",
     columnNum: "W",
     placeHolder: "Please select ...",
     type: QuestionType.MULTISELECT,
-    options: ROLES
+    options: ROLES,
   },
   {
     label: "Production Role",
     columnNum: "N",
     placeHolder: "Please select ...",
     type: QuestionType.SELECTOR,
-    options: PRODUCTIONROLE
+    options: PRODUCTIONROLE,
   },
   {
     label: "Vendor Onboarded Date",
     columnNum: "J",
     placeHolder: "Please select ...",
-    type: QuestionType.DATEPICKER
+    type: QuestionType.DATEPICKER,
   },
   {
     label: "Production Ready Date",
     columnNum: "L",
     placeHolder: "Please select ...",
-    type: QuestionType.DATEPICKER
+    type: QuestionType.DATEPICKER,
   },
   {
     label: "Est. Date of Prod. Start",
     columnNum: "M",
     placeHolder: "Please select ...",
-    type: QuestionType.DATEPICKER
+    type: QuestionType.DATEPICKER,
   },
   {
     label: "Released from Onboarding",
     columnNum: "AA",
     placeHolder: "Please select ...",
-    type: QuestionType.DATEPICKER
+    type: QuestionType.DATEPICKER,
   },
   {
     label: "Major/Area of Study",
     columnNum: "S",
     placeHolder: "Loading ...",
-    type: QuestionType.TEXTAREA
+    type: QuestionType.TEXTAREA,
   },
   {
     label: "Technical Language Skills",
     columnNum: "X",
     placeHolder: "Loading ...",
-    type: QuestionType.TEXTAREA
+    type: QuestionType.TEXTAREA,
   },
   {
     label: "Notes",
     columnNum: "F",
     placeHolder: "Loading ...",
-    type: QuestionType.TEXTAREA
+    type: QuestionType.TEXTAREA,
   },
 ];
 
@@ -329,40 +359,340 @@ export const PROJECT_TAB_CONFIG: Column[] = [
     columnNum: "I",
     placeHolder: "Select A Base Project",
     type: QuestionType.SELECTOR,
-    options: BASEPROJECT
+    options: BASEPROJECT,
   },
   {
     label: "Project - Work Type",
     columnNum: "H",
     placeHolder: "Select A Project",
     type: QuestionType.SELECTOR,
-    options: PROJECTWORKTYPE
+    options: PROJECTWORKTYPE,
   },
   {
     label: "Current Task",
     columnNum: "G",
     placeHolder: "Please select ...",
     type: QuestionType.SELECTOR,
-    options: CURRENTTASK
+    options: CURRENTTASK,
   },
   {
     label: "Assigned Project (q type)",
     columnNum: "V",
     placeHolder: "Please enter ...",
-    type: QuestionType.INPUT
+    type: QuestionType.INPUT,
   },
   {
     label: "Prod Lead",
     columnNum: "O",
     placeHolder: "Please enter ...",
-    type: QuestionType.INPUT
+    type: QuestionType.INPUT,
   },
   {
     label: "Prod Lead Ldap",
     columnNum: "P",
     placeHolder: "Please enter ...",
-    type: QuestionType.INPUT
+    type: QuestionType.INPUT,
   },
 ];
 
+export interface Cell extends Column {
+  disabled?: boolean;
+  rowNum?: number;
+}
 
+export interface SuperRaterRow {
+  id: string;
+  superRaterName: Cell;
+  superRaterLDAP: Cell;
+  pod: Cell;
+  location: Cell;
+  globalLogicEmail: Cell;
+  googleEmail: Cell;
+  onboardingStatus: Cell;
+  highestLevelofEducation: Cell;
+  allAssociatedRoles: Cell;
+  productionRole: Cell;
+  vendorOnboardedDate: Cell;
+  productionReadyDate: Cell;
+  estDateofProdStart: Cell;
+  releasedfromOnboarding: Cell;
+  majorAreaofStudy: Cell;
+  technicalLanguageSkills: Cell;
+  notes: Cell;
+  baseProject: Cell;
+  project: Cell;
+  currentTask: Cell;
+  assignedProject: Cell;
+  prodLead: Cell;
+  prodLeadLdap: Cell;
+}
+
+export const SUPERRATEROW_MAP: SuperRaterRow = {
+  id: "Roster",
+  superRaterName: {
+    columnNum: "C",
+    type: QuestionType.INPUT,
+    disabled: true,
+    label: "Super Rater Name",
+  },
+  superRaterLDAP: {
+    columnNum: "D",
+    type: QuestionType.INPUT,
+    disabled: true,
+    label: "Super Rater LDAP",
+  },
+  pod: { columnNum: "E", type: QuestionType.INPUT, disabled: true, label: "Pod"},
+  location: { columnNum: "Q", type: QuestionType.INPUT, disabled: true, label: "Location"},
+  globalLogicEmail: {
+    columnNum: "AC",
+    type: QuestionType.INPUT,
+    disabled: true,
+    label: "GlobalLogic Email"
+  },
+  googleEmail: { columnNum: "Z", type: QuestionType.INPUT, disabled: true, label: "Google Email"},
+  onboardingStatus: {
+    columnNum: "K",
+    type: QuestionType.SELECTOR,
+    options: ONBOARDING_STATUS,
+    disabled: true,
+    label: "Onboarding Status"
+  },
+  highestLevelofEducation: {
+    columnNum: "R",
+    type: QuestionType.SELECTOR,
+    options: EDUCATION,
+    disabled: true,
+    label: "Highest Level of Education"
+  },
+  allAssociatedRoles: {
+    columnNum: "W",
+    type: QuestionType.MULTISELECT,
+    options: ROLES,
+    disabled: true,
+    label: "All Associated Roles"
+  },
+  productionRole: {
+    columnNum: "N",
+    type: QuestionType.SELECTOR,
+    options: PRODUCTIONROLE,
+    disabled: true,
+    label: "Production Role"
+  },
+  vendorOnboardedDate: {
+    columnNum: "J",
+    type: QuestionType.DATEPICKER,
+    disabled: true,
+    label: "Vendor Onboarded Date"
+  },
+  productionReadyDate: {
+    columnNum: "L",
+    type: QuestionType.DATEPICKER,
+    disabled: true,
+    label: "Production Ready Date"
+  },
+  estDateofProdStart: {
+    columnNum: "M",
+    type: QuestionType.DATEPICKER,
+    disabled: true,
+    label: "Est Date of Prod Start"
+  },
+  releasedfromOnboarding: {
+    columnNum: "AA",
+    type: QuestionType.DATEPICKER,
+    disabled: true,
+    label: "Released from Onboarding"
+  },
+  majorAreaofStudy: {
+    columnNum: "S",
+    type: QuestionType.INPUT,
+    disabled: true,
+    label: "Major Area of Study"
+  },
+  technicalLanguageSkills: {
+    columnNum: "X",
+    type: QuestionType.INPUT,
+    disabled: true,
+    label: "Technical Language Skills"
+  },
+  notes: { columnNum: "F", type: QuestionType.INPUT, disabled: true, label: "Notes"},
+  baseProject: {
+    columnNum: "I",
+    type: QuestionType.SELECTOR,
+    options: BASEPROJECT,
+    disabled: true,
+    label: "Base Project"
+  },
+  project: {
+    columnNum: "H",
+    type: QuestionType.SELECTOR,
+    options: PROJECTWORKTYPE,
+    disabled: true,
+        label: "Project"
+  },
+  currentTask: {
+    columnNum: "G",
+    type: QuestionType.SELECTOR,
+    options: CURRENTTASK,
+    disabled: true,
+        label: "Current Task"
+  },
+  assignedProject: { columnNum: "V", type: QuestionType.INPUT, disabled: true, label: "Assigned Project"},
+  prodLead: { columnNum: "O", type: QuestionType.INPUT, disabled: true, label: "Prod Lead"},
+  prodLeadLdap: { columnNum: "P", type: QuestionType.INPUT, disabled: true, label: "Prod Lead Ldap"},
+};
+
+export interface DataWithFilter {
+  data: SuperRaterRow[];
+  filtered: SuperRaterRow[];
+}
+
+
+
+export const SUPERRATER_TABLEHEADER = [
+  "",
+  "super Rater Name",
+  "super Rater LDAP",
+  "base Project",
+  "project",
+  "current Task",
+  "assigned Project",
+  "pod",
+  "location",
+  "globalLogic Email",
+  "google Email",
+  "onboarding Status",
+  "highest Level of Education",
+  "all Associated Roles",
+  "production Role",
+  "vendor Onboarded Date",
+  "production Ready Date",
+  "est Date of Prod Start",
+  "released from Onboarding",
+  "major Area of Study",
+  "technical Language Skills",
+  "notes",
+  "prod Lead",
+  "prod Lead Ldap",
+];
+
+export const TABLE_CONFIG: Column[] = [
+  { label: "Row Number", value: "id", columnNum: "B" },
+  { label: "Super Rater Name", value: "superRaterName", columnNum: "C" },
+];
+
+export interface ActiveProjectRow {
+  id: string;
+  bugId: Cell;
+  project: Cell;
+  workflow: Cell;
+  tasksubtype: Cell;
+  workspace: Cell;
+  qType: Cell;
+  status: Cell;
+  startDate: Cell;
+  endDate: Cell;
+  reviewCompleted: Cell;
+  averageHandlingTime: Cell;
+}
+
+export interface ProjectDataWithFilter{
+  data: ActiveProjectRow[];
+  filtered: ActiveProjectRow[];
+}
+
+export const ACTIVEPROJECT_CONFIG: ActiveProjectRow = {
+  id: "ActiveProject",
+  bugId: {
+    columnNum: "C",
+    type: QuestionType.INPUT,
+    disabled: true,
+    label: "Bug ID",
+  },
+  project: {
+    columnNum: "F",
+    type: QuestionType.SELECTOR,
+    disabled: true,
+    label: "Project",
+    options: BASEPROJECT,
+  },
+  workflow: { columnNum: "G", type: QuestionType.INPUT, disabled: true, label: "Work Flow"},
+  tasksubtype: { columnNum: "H", type: QuestionType.INPUT, disabled: true, label: "Task Subtype"},
+  workspace: {
+    columnNum: "I",
+    type: QuestionType.INPUT,
+    disabled: true,
+    label: "GlobalLogic Email"
+  },
+  qType: { columnNum: "J", type: QuestionType.SELECTOR, disabled: true, label: "Question Type", options: getQTypeOptions()},
+  status: {
+    columnNum: "M",
+    type: QuestionType.SELECTOR,
+    disabled: true,
+    label: "Status",
+    options: WORKSTATUS
+  },
+  startDate: {
+    columnNum: "N",
+    type: QuestionType.DATEPICKER,
+    disabled: true,
+    label: "Start Date"
+  },
+  endDate: {
+    columnNum: "P",
+    type: QuestionType.DATEPICKER,
+    disabled: true,
+    label: "End Date"
+  },
+  reviewCompleted: {
+    columnNum: "R",
+    type: QuestionType.INPUT,
+    disabled: true,
+    label: "Review Completed"
+  },
+  averageHandlingTime: {
+    columnNum: "U",
+    type: QuestionType.INPUT,
+    disabled: true,
+    label: "Average Handling Time"
+  }
+};
+
+export const ACTIVEPROJECT_TABLEHEADER = [
+  "",
+  "bug Id",
+  "project",
+  "work flow",
+  "task subtype",
+  "work space",
+  "question Type",
+  "status",
+  "start Date",
+  "end Date",
+  "review Completed",
+  "average Handling Time"
+];
+
+export enum Dimension {
+  DIMENSION_UNSPECIFIED,
+  ROWS,
+  COLUMNS,
+}
+
+export interface ValueRange {
+  range: string,
+  value: string
+}
+
+
+export type Record = {
+  [key: string]: ValueRange;
+};
+
+
+export const WORKFLOWFILTER_CONFIG = {
+  label: "Work Flow",
+  columnNum: "G",
+  placeHolder: "Select A Work Flow",
+  type: QuestionType.SELECTOR,
+  options: WORKFLOWOPTIONS,
+};
