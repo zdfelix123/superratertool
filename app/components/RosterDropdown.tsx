@@ -28,6 +28,7 @@ interface RosterDropDownProps {
   onBaseProjectChange?: Function;
   onNameChange?: Function;
   onInputChange:Function;
+  activeproject?:boolean;
 }
 
 const RosterDropdown = ({
@@ -36,6 +37,7 @@ const RosterDropdown = ({
   onBaseProjectChange,
   onNameChange,
   onInputChange,
+  activeproject
 }: RosterDropDownProps) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(column.value || "");
@@ -56,6 +58,14 @@ const RosterDropdown = ({
       return;
     }
     if (rowNumber < 1) return;
+    if (activeproject){
+      onInputChange({
+        range: `Sheet2!${column.columnNum}${column.rowNum || 0}`,
+        value: currentValue,
+      });
+      return;
+
+    }
     onInputChange({
       range: `Sheet1!${column.columnNum}${1 + (column.rowNum||0)}`,
       value: currentValue

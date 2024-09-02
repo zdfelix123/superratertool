@@ -242,9 +242,6 @@ const Srroster = () => {
               },
             };
           });
-          console.log("response", res.batchGet);
-          console.log("result", res.data.values);
-          console.log("rows", rows);
           setDataWithFilter({ data: rows, filtered: rows });
           return res.data.values;
         });
@@ -276,7 +273,12 @@ const Srroster = () => {
     });
 
   }, [saveValues]);
-  const handleNameChange = () => {};
+  const handleNameChange = (name: string) => {
+    const filtered = dataWithFilter.data.filter(
+      (r) => (r.superRaterName.value || "") === name
+    );
+    setDataWithFilter({ ...dataWithFilter, filtered });
+  };
 
   const handleInputChange = (vr: ValueRange)=>{
     const prev = JSON.parse(JSON.stringify(updates));

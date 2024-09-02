@@ -12,19 +12,21 @@ import { getRowNumberFromId } from "../common/utils";
 interface Projectdatagrid {
   data: ActiveProjectRow[];
   onCheckBoxChange: Function;
+  onInputChange: Function;
+  activeproject?:boolean
 }
 
-const Projectdatagrid = ({ data, onCheckBoxChange }: Projectdatagrid) => {
+const Projectdatagrid = ({ data, onCheckBoxChange, onInputChange, activeproject}: Projectdatagrid) => {
   const [selectedRows, setSelectedRows] = useState(new Set());
   const handleCheckBox = (e: ChangeEvent<HTMLInputElement>, rowNum: number) => {
     if (e.target.checked) {
       const set = new Set(selectedRows);
-      set.add(rowNum);
+      set.add(rowNum + 6);
       onCheckBoxChange(Array.from(set));
       setSelectedRows(set);
     } else {
       const set = new Set(selectedRows);
-      set.delete(rowNum);
+      set.delete(rowNum + 6);
       onCheckBoxChange(Array.from(set));
       setSelectedRows(set);
     }
@@ -60,7 +62,7 @@ const Projectdatagrid = ({ data, onCheckBoxChange }: Projectdatagrid) => {
                       </div>
                     )}
                     <div className="capitalize min-w-40 mr-4">
-                      <TableEntry column={col} rowNumber={0} />
+                      <TableEntry column={col} rowNumber={0} onInputChange={onInputChange} activeproject={true}/>
                     </div>
                   </td>
                 ))}

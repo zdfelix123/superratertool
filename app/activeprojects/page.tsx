@@ -15,7 +15,8 @@ import {
   ProjectDataWithFilter,
   ActiveProjectRow,
   ACTIVEPROJECT_CONFIG,
-  ValueRange
+  ValueRange,
+  Record
 } from "../common/constants";
 import { titleToNumber, getRowNumber } from "../common/utils";
 import loading from "../../public/loading.gif";
@@ -27,6 +28,7 @@ const Activeprojects = () => {
   const [selectedCheckbox, setselectedCheckbox] = useState([] as number[]);
   const [offset, setOffset] = useState(0);
   const [saveValues, setSaveValues] = useState(false);
+  const [updates, setUpdates] = useState({} as Record);
   useEffect(() => {
     const fetchData = async () => {
       const queryParams = "range=Sheet2!B7:AS1132";
@@ -48,7 +50,7 @@ const Activeprojects = () => {
               }-${value[0]}`,
               bugId: {
                 ...ACTIVEPROJECT_CONFIG.bugId,
-                rowNum: getRowNumber(value[0]),
+                rowNum: getRowNumber(value[0]) + 6,
                 value:
                   value[
                     titleToNumber(ACTIVEPROJECT_CONFIG.bugId.columnNum) - 2
@@ -64,7 +66,7 @@ const Activeprojects = () => {
               },
               workflow: {
                 ...ACTIVEPROJECT_CONFIG.workflow,
-                rowNum: getRowNumber(value[0]),
+                rowNum: getRowNumber(value[0]) + 6,
                 value:
                   value[
                     titleToNumber(ACTIVEPROJECT_CONFIG.workflow.columnNum) - 2
@@ -72,7 +74,7 @@ const Activeprojects = () => {
               },
               tasksubtype: {
                 ...ACTIVEPROJECT_CONFIG.tasksubtype,
-                rowNum: getRowNumber(value[0]) + 5,
+                rowNum: getRowNumber(value[0]) + 6,
                 value:
                   value[
                     titleToNumber(ACTIVEPROJECT_CONFIG.tasksubtype.columnNum) -
@@ -81,7 +83,7 @@ const Activeprojects = () => {
               },
               workspace: {
                 ...ACTIVEPROJECT_CONFIG.workspace,
-                rowNum: getRowNumber(value[0]),
+                rowNum: getRowNumber(value[0]) + 6,
                 value:
                   value[
                     titleToNumber(ACTIVEPROJECT_CONFIG.workspace.columnNum) - 2
@@ -89,7 +91,7 @@ const Activeprojects = () => {
               },
               qType: {
                 ...ACTIVEPROJECT_CONFIG.qType,
-                rowNum: getRowNumber(value[0]),
+                rowNum: getRowNumber(value[0]) + 6,
                 value:
                   value[
                     titleToNumber(ACTIVEPROJECT_CONFIG.qType.columnNum) - 2
@@ -97,7 +99,7 @@ const Activeprojects = () => {
               },
               status: {
                 ...ACTIVEPROJECT_CONFIG.status,
-                rowNum: getRowNumber(value[0]),
+                rowNum: getRowNumber(value[0]) + 6,
                 value:
                   value[
                     titleToNumber(ACTIVEPROJECT_CONFIG.status.columnNum) - 2
@@ -105,7 +107,7 @@ const Activeprojects = () => {
               },
               startDate: {
                 ...ACTIVEPROJECT_CONFIG.startDate,
-                rowNum: getRowNumber(value[0]),
+                rowNum: getRowNumber(value[0]) + 6,
                 value:
                   value[
                     titleToNumber(ACTIVEPROJECT_CONFIG.startDate.columnNum) - 2
@@ -113,7 +115,7 @@ const Activeprojects = () => {
               },
               endDate: {
                 ...ACTIVEPROJECT_CONFIG.endDate,
-                rowNum: getRowNumber(value[0]),
+                rowNum: getRowNumber(value[0]) + 6,
                 value:
                   value[
                     titleToNumber(ACTIVEPROJECT_CONFIG.endDate.columnNum) - 2
@@ -121,7 +123,7 @@ const Activeprojects = () => {
               },
               reviewCompleted: {
                 ...ACTIVEPROJECT_CONFIG.reviewCompleted,
-                rowNum: getRowNumber(value[0]),
+                rowNum: getRowNumber(value[0]) + 6,
                 value:
                   value[
                     titleToNumber(
@@ -131,7 +133,7 @@ const Activeprojects = () => {
               },
               averageHandlingTime: {
                 ...ACTIVEPROJECT_CONFIG.averageHandlingTime,
-                rowNum: getRowNumber(value[0]),
+                rowNum: getRowNumber(value[0]) + 6,
                 value:
                   value[
                     titleToNumber(
@@ -141,14 +143,36 @@ const Activeprojects = () => {
               },
             };
           });
-          console.log(rows);
           setDataWithFilter({ data: rows, filtered: rows });
           return res.data.values;
         });
     };
     fetchData();
   }, []);
-  const handleNameChange = () => {};
+
+  useEffect(() => {
+    if (!Object.keys(updates).length){
+      return;
+    }
+    Object.values(updates).forEach(update=>{
+      const postData = async () => {
+        const req = new Request(
+          `/api/roster?range=${update.range}`
+        );
+        const response = await fetch(req, {
+          method: "PUT",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(update.value),
+        });
+        return response;
+      }
+      postData();
+    });
+
+  }, [saveValues]);
 
   const handleTopFilterBaseProjectChange = (baseProject: string) => {
     const prefix = baseProject.slice(0, 4);
@@ -157,7 +181,13 @@ const Activeprojects = () => {
     );
     setDataWithFilter({ ...dataWithFilter, filtered });
   };
-  const handleTopFilterProjectChange = (project: string) => {};
+  const handleTopFilterProjectChange = (project: string) => {
+    const prefix = project.slice(0, 4);
+    const filtered = dataWithFilter.data.filter(
+      (r) => (r.workflow.value || "").startsWith(prefix)
+    );
+    setDataWithFilter({ ...dataWithFilter, filtered });
+  };
 
   const edit = () => {
     setSaveValues(true);
@@ -171,7 +201,17 @@ const Activeprojects = () => {
     setDataWithFilter({ ...dataWithFilter, filtered: rows });
   };
 
-  const save = () => {};
+  const save = () => {
+    const rows = [...dataWithFilter.filtered];
+    rows.forEach((row) => {
+      Object.values(row)
+        .filter((v) => v.columnNum)
+        .forEach((v) => (v.disabled = true));
+    });
+    setDataWithFilter({ ...dataWithFilter, filtered: rows });
+    setselectedCheckbox([]);
+    setSaveValues(false);
+  };
 
   const handleCheckBoxChange = (selected: number[]) => {
     setselectedCheckbox(selected);
@@ -180,6 +220,12 @@ const Activeprojects = () => {
   const getTableData = (rows: ActiveProjectRow[], offset: number) => {
     return rows.slice(offset, 10 + offset);
   };
+
+  const handleInputChange = (vr: ValueRange)=>{
+    const prev = JSON.parse(JSON.stringify(updates));
+    prev[vr.range] =vr;
+    setUpdates(prev);
+  }
 
   const handleNav = async (nextPage: number) => {
     if (offset + nextPage < 0) {
@@ -197,10 +243,9 @@ const Activeprojects = () => {
       </Card>
       <div className="ml-8 mt-8">
         <Topbatchfilter
-          onNameChange={handleNameChange}
           onBaseProjectChange={handleTopFilterBaseProjectChange}
           onProjectChange={handleTopFilterProjectChange}
-          hideNameFilter={true}
+          activeProjectFilter={true}
         />
       </div>
       <div className="grid justify-items-center">
@@ -208,6 +253,7 @@ const Activeprojects = () => {
           <Projectdatagrid
             data={getTableData(dataWithFilter.filtered || [], offset)}
             onCheckBoxChange={handleCheckBoxChange}
+            onInputChange={handleInputChange}
           />
         ) : (
           <img className="w-32 mt-12 mb-12" src={loading.src} alt="loading" />

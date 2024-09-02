@@ -8,14 +8,14 @@ interface TopfilterProps {
   onNameChange?: Function;
   onBaseProjectChange: Function;
   onProjectChange: Function;
-  hideNameFilter?: boolean;
+  activeProjectFilter?: boolean;
 }
 
 const Topbatchfilter = ({
   onNameChange,
   onBaseProjectChange,
   onProjectChange,
-  hideNameFilter,
+  activeProjectFilter,
 }: TopfilterProps) => {
   const [config, setConfig] = useState(TOP_FILTER_CONFIG);
   const [data, setData] = useState([] as Project[]);
@@ -54,11 +54,8 @@ const Topbatchfilter = ({
     fetchData();
   }, []);
   const handleNameChange = (name: string) => {
-    if (name) {
-      const rownumber = data.findIndex((p) => p.name === name);
-      if (onNameChange) {
-        onNameChange(rownumber);
-      }
+    if (onNameChange) {
+      onNameChange(name);
     }
   };
 
@@ -81,6 +78,7 @@ const Topbatchfilter = ({
     setConfig({ ...TOP_FILTER_CONFIG, options });
     onProjectChange(value);
   };
+
   return (
     <div className="flex flex-row w-9/12">
       <div className="mr-16">
@@ -97,7 +95,7 @@ const Topbatchfilter = ({
           onBaseProjectChange={handleProjectChange}
         ></Dropdown>
       </div>
-      {!hideNameFilter && (
+      {!activeProjectFilter && (
         <Dropdown
           column={config}
           rowNumber={0}

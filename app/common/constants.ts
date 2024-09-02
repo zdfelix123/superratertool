@@ -1,4 +1,4 @@
-import { getCurrentTaskOptions, getQTypeOptions } from "./currentTaskData";
+import { getCurrentTaskOptions, getQTypeOptions,getWorkFlowOptions} from "./currentTaskData";
 export interface Column {
   id?: string;
   type?: QuestionType;
@@ -224,6 +224,8 @@ const BASEPROJECT: Option[] = [
   { value: "Magi - Writing", label: "Magi - Writing" },
   { value: "Magi - Evaluation", label: "Magi - Evaluation" },
 ];
+
+const WORKFLOWOPTIONS: Option[] = getWorkFlowOptions();
 
 const CURRENTTASK: Option[] = getCurrentTaskOptions();
 
@@ -684,4 +686,13 @@ export interface ValueRange {
 
 export type Record = {
   [key: string]: ValueRange;
+};
+
+
+export const WORKFLOWFILTER_CONFIG = {
+  label: "Work Flow",
+  columnNum: "G",
+  placeHolder: "Select A Work Flow",
+  type: QuestionType.SELECTOR,
+  options: WORKFLOWOPTIONS,
 };

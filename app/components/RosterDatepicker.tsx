@@ -19,11 +19,13 @@ interface RosterDatepickerProps {
   column: Cell;
   rowNumber: number;
   onInputChange: Function;
+  activeproject?: boolean;
 }
 
 const RosterDatepicker = ({
   column,
   onInputChange,
+  activeproject
 }: RosterDatepickerProps) => {
   const [date, setDate] = useState<Date>();
   useEffect(() => {
@@ -35,6 +37,13 @@ const RosterDatepicker = ({
     if (!value) return;
     setDate(value);
     if (!column.columnNum) {
+      return;
+    }
+    if (activeproject) {
+      onInputChange({
+        range: `Sheet2!${column.columnNum}${column.rowNum || 0}`,
+        value: formatDate(value),
+      });
       return;
     }
     onInputChange({

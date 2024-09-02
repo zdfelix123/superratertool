@@ -15,9 +15,10 @@ interface RosterMultiselectProps {
   column: Cell;
   rowNumber: number;
   onInputChange: Function;
+  activeproject?:boolean;
 }
 
-const RosterMultiselect = ({ column, rowNumber, onInputChange}: RosterMultiselectProps) => {
+const RosterMultiselect = ({ column, rowNumber, onInputChange, activeproject}: RosterMultiselectProps) => {
   const [value, setValue] = useState<string[]>([]);
   useEffect(() => {
     setValue((column.value || "").split(","));
@@ -26,6 +27,13 @@ const RosterMultiselect = ({ column, rowNumber, onInputChange}: RosterMultiselec
   const handleTextChange = async (currentValue: string[]) => {
     setValue(currentValue);
     if (!column.columnNum) {
+      return;
+    }
+    if (activeproject) {
+      onInputChange({
+        range: `Sheet2!${column.columnNum}${column.rowNum || 0}`,
+        value: currentValue.join(","),
+      });
       return;
     }
     onInputChange(
