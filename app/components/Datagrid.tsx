@@ -92,300 +92,300 @@ export const columns: ColumnDef<SuperRaterRow>[] = [
       <div className="capitalize">{getRowNumberFromId(row.getValue("id"))}</div>
     ),
   },
-  {
-    accessorKey: "superRaterName",
-    header: ({ column}) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Super Rater Name
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => (
-      <div className="capitalize">
-        <TableEntry
-          column={row.getValue("superRaterName") as Cell}
-          rowNumber={(row.getValue("superRaterName") as Cell).rowNum || 0}
-        />
-      </div>
-    ),
-  },
-  {
-    accessorKey: "superRaterLDAP",
-    header: "Super Rater LDAP",
-    cell: ({ row }) => (
-      <div className="capitalize">
-        <TableEntry
-          column={row.getValue("superRaterLDAP") as Cell}
-          rowNumber={(row.getValue("superRaterLDAP") as Cell).rowNum || 0}
-        />
-      </div>
-    ),
-  },
-  {
-    accessorKey: "baseProject",
-    header: "Base Project",
-    cell: ({ row }) => (
-      <div className="capitalize">
-        <TableEntry
-          column={row.getValue("baseProject") as Cell}
-          rowNumber={(row.getValue("baseProject") as Cell).rowNum || 0}
-        />
-      </div>
-    ),
-  },
-  {
-    accessorKey: "project",
-    header: "Project",
-    cell: ({ row }) => (
-      <div className="capitalize">
-        <TableEntry
-          column={row.getValue("project") as Cell}
-          rowNumber={(row.getValue("project") as Cell).rowNum || 0}
-        />
-      </div>
-    ),
-  },
-  {
-    accessorKey: "currentTask",
-    header: "Current Task",
-    cell: ({ row }) => (
-      <div className="capitalize">
-        <TableEntry
-          column={row.getValue("currentTask") as Cell}
-          rowNumber={(row.getValue("currentTask") as Cell).rowNum || 0}
-        />
-      </div>
-    ),
-  },
-  {
-    accessorKey: "assignedProject",
-    header: "Assigned Project",
-    cell: ({ row }) => (
-      <div className="capitalize">
-        <TableEntry
-          column={row.getValue("assignedProject") as Cell}
-          rowNumber={(row.getValue("assignedProject") as Cell).rowNum || 0}
-        />
-      </div>
-    ),
-  },
-  {
-    accessorKey: "prodLead",
-    header: "Prod Lead",
-    cell: ({ row }) => (
-      <div className="capitalize">
-        <TableEntry
-          column={row.getValue("prodLead") as Cell}
-          rowNumber={(row.getValue("prodLead") as Cell).rowNum || 0}
-        />
-      </div>
-    ),
-  },
-  {
-    accessorKey: "prodLeadLdap",
-    header: "Prod Lead Ldap",
-    cell: ({ row }) => (
-      <div className="capitalize">
-        <TableEntry
-          column={row.getValue("prodLeadLdap") as Cell}
-          rowNumber={(row.getValue("prodLeadLdap") as Cell).rowNum || 0}
-        />
-      </div>
-    ),
-  },
-  {
-    accessorKey: "pod",
-    header: "Pod",
-    cell: ({ row }) => (
-      <div className="capitalize">
-        <TableEntry
-          column={row.getValue("pod") as Cell}
-          rowNumber={(row.getValue("pod") as Cell).rowNum || 0}
-        />
-      </div>
-    ),
-  },
-  {
-    accessorKey: "location",
-    header: "Location",
-    cell: ({ row }) => (
-      <div className="capitalize">
-        <TableEntry
-          column={row.getValue("location") as Cell}
-          rowNumber={(row.getValue("location") as Cell).rowNum || 0}
-        />
-      </div>
-    ),
-  },
-  {
-    accessorKey: "globalLogicEmail",
-    header: "GlobalLogic Email",
-    cell: ({ row }) => (
-      <div className="capitalize">
-        <TableEntry
-          column={row.getValue("globalLogicEmail") as Cell}
-          rowNumber={(row.getValue("globalLogicEmail") as Cell).rowNum || 0}
-        />
-      </div>
-    ),
-  },
-  {
-    accessorKey: "googleEmail",
-    header: "Google Email",
-    cell: ({ row }) => (
-      <div className="capitalize">
-        <TableEntry
-          column={row.getValue("googleEmail") as Cell}
-          rowNumber={(row.getValue("googleEmail") as Cell).rowNum || 0}
-        />
-      </div>
-    ),
-  },
-  {
-    accessorKey: "onboardingStatus",
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        Onboarding Status
-        <ArrowUpDown className="ml-2 h-4 w-4" />
-      </Button>
-    ),
-    cell: ({ row }) => (
-      <div className="capitalize">
-        <TableEntry
-          column={row.getValue("onboardingStatus") as Cell}
-          rowNumber={(row.getValue("onboardingStatus") as Cell).rowNum || 0}
-        />
-      </div>
-    ),
-  },
-  {
-    accessorKey: "highestLevelofEducation",
-    header: "Highest Level of Education",
-    cell: ({ row }) => (
-      <div className="capitalize">
-        <TableEntry
-          column={row.getValue("highestLevelofEducation") as Cell}
-          rowNumber={(row.getValue("highestLevelofEducation") as Cell).rowNum || 0}
-        />
-      </div>
-    ),
-  },
-  {
-    accessorKey: "allAssociatedRoles",
-    header: "All Associated Roles",
-    cell: ({ row }) => (
-      <div className="capitalize">
-        <TableEntry
-          column={row.getValue("allAssociatedRoles") as Cell}
-          rowNumber={(row.getValue("allAssociatedRoles") as Cell).rowNum || 0}
-        />
-      </div>
-    ),
-  },
-  {
-    accessorKey: "productionRole",
-    header: "Production Role",
-    cell: ({ row }) => (
-      <div className="capitalize">
-        <TableEntry
-          column={row.getValue("productionRole") as Cell}
-          rowNumber={(row.getValue("productionRole") as Cell).rowNum || 0}
-        />
-      </div>
-    ),
-  },
-  {
-    accessorKey: "vendorOnboardedDate",
-    header: "Vendor Onboarded Date",
-    cell: ({ row }) => (
-      <div className="capitalize">
-        <TableEntry
-          column={row.getValue("vendorOnboardedDate") as Cell}
-          rowNumber={(row.getValue("vendorOnboardedDate") as Cell).rowNum || 0}
-        />
-      </div>
-    ),
-  },
-  {
-    accessorKey: "productionReadyDate",
-    header: "Production Ready Date",
-    cell: ({ row }) => (
-      <div className="capitalize">
-        <TableEntry
-          column={row.getValue("productionReadyDate") as Cell}
-          rowNumber={(row.getValue("productionReadyDate") as Cell).rowNum || 0}
-        />
-      </div>
-    ),
-  },
-  {
-    accessorKey: "estDateofProdStart",
-    header: "est Date of Prod Start",
-    cell: ({ row }) => (
-      <div className="capitalize">
-        <TableEntry
-          column={row.getValue("estDateofProdStart") as Cell}
-          rowNumber={(row.getValue("estDateofProdStart") as Cell).rowNum || 0}
-        />
-      </div>
-    ),
-  },
-  {
-    accessorKey: "releasedfromOnboarding",
-    header: "Released from Onboarding",
-    cell: ({ row }) => (
-      <div className="capitalize">
-        <TableEntry
-          column={row.getValue("releasedfromOnboarding") as Cell}
-          rowNumber={(row.getValue("releasedfromOnboarding") as Cell).rowNum || 0}
-        />
-      </div>
-    ),
-  },
-  {
-    accessorKey: "majorAreaofStudy",
-    header: "Major Area of Study",
-    cell: ({ row }) => (
-      <div className="capitalize">
-        <TableEntry
-          column={row.getValue("majorAreaofStudy") as Cell}
-          rowNumber={(row.getValue("majorAreaofStudy") as Cell).rowNum || 0}
-        />
-      </div>
-    ),
-  },
-  {
-    accessorKey: "technicalLanguageSkills",
-    header: "Technical Language Skills",
-    cell: ({ row }) => (
-      <div className="capitalize">
-        <TableEntry
-          column={row.getValue("technicalLanguageSkills") as Cell}
-          rowNumber={(row.getValue("technicalLanguageSkills") as Cell).rowNum || 0}
-        />
-      </div>
-    ),
-  },
-  {
-    accessorKey: "notes",
-    header: "Notes",
-    cell: ({ row }) => (
-      <div className="capitalize">
-        <TableEntry
-          column={row.getValue("notes") as Cell}
-          rowNumber={(row.getValue("notes") as Cell).rowNum || 0}
-        />
-      </div>
-    ),
-  },
+  // {
+  //   accessorKey: "superRaterName",
+  //   header: ({ column}) => {
+  //     return (
+  //       <Button
+  //         variant="ghost"
+  //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+  //       >
+  //         Super Rater Name
+  //         <ArrowUpDown className="ml-2 h-4 w-4" />
+  //       </Button>
+  //     );
+  //   },
+  //   cell: ({ row }) => (
+  //     <div className="capitalize">
+  //       <TableEntry
+  //         column={row.getValue("superRaterName") as Cell}
+  //         rowNumber={(row.getValue("superRaterName") as Cell).rowNum || 0}
+  //       />
+  //     </div>
+  //   ),
+  // },
+  // {
+  //   accessorKey: "superRaterLDAP",
+  //   header: "Super Rater LDAP",
+  //   cell: ({ row }) => (
+  //     <div className="capitalize">
+  //       <TableEntry
+  //         column={row.getValue("superRaterLDAP") as Cell}
+  //         rowNumber={(row.getValue("superRaterLDAP") as Cell).rowNum || 0}
+  //       />
+  //     </div>
+  //   ),
+  // },
+  // {
+  //   accessorKey: "baseProject",
+  //   header: "Base Project",
+  //   cell: ({ row }) => (
+  //     <div className="capitalize">
+  //       <TableEntry
+  //         column={row.getValue("baseProject") as Cell}
+  //         rowNumber={(row.getValue("baseProject") as Cell).rowNum || 0}
+  //       />
+  //     </div>
+  //   ),
+  // },
+  // {
+  //   accessorKey: "project",
+  //   header: "Project",
+  //   cell: ({ row }) => (
+  //     <div className="capitalize">
+  //       <TableEntry
+  //         column={row.getValue("project") as Cell}
+  //         rowNumber={(row.getValue("project") as Cell).rowNum || 0}
+  //       />
+  //     </div>
+  //   ),
+  // },
+  // {
+  //   accessorKey: "currentTask",
+  //   header: "Current Task",
+  //   cell: ({ row }) => (
+  //     <div className="capitalize">
+  //       <TableEntry
+  //         column={row.getValue("currentTask") as Cell}
+  //         rowNumber={(row.getValue("currentTask") as Cell).rowNum || 0}
+  //       />
+  //     </div>
+  //   ),
+  // },
+  // {
+  //   accessorKey: "assignedProject",
+  //   header: "Assigned Project",
+  //   cell: ({ row }) => (
+  //     <div className="capitalize">
+  //       <TableEntry
+  //         column={row.getValue("assignedProject") as Cell}
+  //         rowNumber={(row.getValue("assignedProject") as Cell).rowNum || 0}
+  //       />
+  //     </div>
+  //   ),
+  // },
+  // {
+  //   accessorKey: "prodLead",
+  //   header: "Prod Lead",
+  //   cell: ({ row }) => (
+  //     <div className="capitalize">
+  //       <TableEntry
+  //         column={row.getValue("prodLead") as Cell}
+  //         rowNumber={(row.getValue("prodLead") as Cell).rowNum || 0}
+  //       />
+  //     </div>
+  //   ),
+  // },
+  // {
+  //   accessorKey: "prodLeadLdap",
+  //   header: "Prod Lead Ldap",
+  //   cell: ({ row }) => (
+  //     <div className="capitalize">
+  //       <TableEntry
+  //         column={row.getValue("prodLeadLdap") as Cell}
+  //         rowNumber={(row.getValue("prodLeadLdap") as Cell).rowNum || 0}
+  //       />
+  //     </div>
+  //   ),
+  // },
+  // {
+  //   accessorKey: "pod",
+  //   header: "Pod",
+  //   cell: ({ row }) => (
+  //     <div className="capitalize">
+  //       <TableEntry
+  //         column={row.getValue("pod") as Cell}
+  //         rowNumber={(row.getValue("pod") as Cell).rowNum || 0}
+  //       />
+  //     </div>
+  //   ),
+  // },
+  // {
+  //   accessorKey: "location",
+  //   header: "Location",
+  //   cell: ({ row }) => (
+  //     <div className="capitalize">
+  //       <TableEntry
+  //         column={row.getValue("location") as Cell}
+  //         rowNumber={(row.getValue("location") as Cell).rowNum || 0}
+  //       />
+  //     </div>
+  //   ),
+  // },
+  // {
+  //   accessorKey: "globalLogicEmail",
+  //   header: "GlobalLogic Email",
+  //   cell: ({ row }) => (
+  //     <div className="capitalize">
+  //       <TableEntry
+  //         column={row.getValue("globalLogicEmail") as Cell}
+  //         rowNumber={(row.getValue("globalLogicEmail") as Cell).rowNum || 0}
+  //       />
+  //     </div>
+  //   ),
+  // },
+  // {
+  //   accessorKey: "googleEmail",
+  //   header: "Google Email",
+  //   cell: ({ row }) => (
+  //     <div className="capitalize">
+  //       <TableEntry
+  //         column={row.getValue("googleEmail") as Cell}
+  //         rowNumber={(row.getValue("googleEmail") as Cell).rowNum || 0}
+  //       />
+  //     </div>
+  //   ),
+  // },
+  // {
+  //   accessorKey: "onboardingStatus",
+  //   header: ({ column }) => (
+  //     <Button
+  //       variant="ghost"
+  //       onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+  //     >
+  //       Onboarding Status
+  //       <ArrowUpDown className="ml-2 h-4 w-4" />
+  //     </Button>
+  //   ),
+  //   cell: ({ row }) => (
+  //     <div className="capitalize">
+  //       <TableEntry
+  //         column={row.getValue("onboardingStatus") as Cell}
+  //         rowNumber={(row.getValue("onboardingStatus") as Cell).rowNum || 0}
+  //       />
+  //     </div>
+  //   ),
+  // },
+  // {
+  //   accessorKey: "highestLevelofEducation",
+  //   header: "Highest Level of Education",
+  //   cell: ({ row }) => (
+  //     <div className="capitalize">
+  //       <TableEntry
+  //         column={row.getValue("highestLevelofEducation") as Cell}
+  //         rowNumber={(row.getValue("highestLevelofEducation") as Cell).rowNum || 0}
+  //       />
+  //     </div>
+  //   ),
+  // },
+  // {
+  //   accessorKey: "allAssociatedRoles",
+  //   header: "All Associated Roles",
+  //   cell: ({ row }) => (
+  //     <div className="capitalize">
+  //       <TableEntry
+  //         column={row.getValue("allAssociatedRoles") as Cell}
+  //         rowNumber={(row.getValue("allAssociatedRoles") as Cell).rowNum || 0}
+  //       />
+  //     </div>
+  //   ),
+  // },
+  // {
+  //   accessorKey: "productionRole",
+  //   header: "Production Role",
+  //   cell: ({ row }) => (
+  //     <div className="capitalize">
+  //       <TableEntry
+  //         column={row.getValue("productionRole") as Cell}
+  //         rowNumber={(row.getValue("productionRole") as Cell).rowNum || 0}
+  //       />
+  //     </div>
+  //   ),
+  // },
+  // {
+  //   accessorKey: "vendorOnboardedDate",
+  //   header: "Vendor Onboarded Date",
+  //   cell: ({ row }) => (
+  //     <div className="capitalize">
+  //       <TableEntry
+  //         column={row.getValue("vendorOnboardedDate") as Cell}
+  //         rowNumber={(row.getValue("vendorOnboardedDate") as Cell).rowNum || 0}
+  //       />
+  //     </div>
+  //   ),
+  // },
+  // {
+  //   accessorKey: "productionReadyDate",
+  //   header: "Production Ready Date",
+  //   cell: ({ row }) => (
+  //     <div className="capitalize">
+  //       <TableEntry
+  //         column={row.getValue("productionReadyDate") as Cell}
+  //         rowNumber={(row.getValue("productionReadyDate") as Cell).rowNum || 0}
+  //       />
+  //     </div>
+  //   ),
+  // },
+  // {
+  //   accessorKey: "estDateofProdStart",
+  //   header: "est Date of Prod Start",
+  //   cell: ({ row }) => (
+  //     <div className="capitalize">
+  //       <TableEntry
+  //         column={row.getValue("estDateofProdStart") as Cell}
+  //         rowNumber={(row.getValue("estDateofProdStart") as Cell).rowNum || 0}
+  //       />
+  //     </div>
+  //   ),
+  // },
+  // {
+  //   accessorKey: "releasedfromOnboarding",
+  //   header: "Released from Onboarding",
+  //   cell: ({ row }) => (
+  //     <div className="capitalize">
+  //       <TableEntry
+  //         column={row.getValue("releasedfromOnboarding") as Cell}
+  //         rowNumber={(row.getValue("releasedfromOnboarding") as Cell).rowNum || 0}
+  //       />
+  //     </div>
+  //   ),
+  // },
+  // {
+  //   accessorKey: "majorAreaofStudy",
+  //   header: "Major Area of Study",
+  //   cell: ({ row }) => (
+  //     <div className="capitalize">
+  //       <TableEntry
+  //         column={row.getValue("majorAreaofStudy") as Cell}
+  //         rowNumber={(row.getValue("majorAreaofStudy") as Cell).rowNum || 0}
+  //       />
+  //     </div>
+  //   ),
+  // },
+  // {
+  //   accessorKey: "technicalLanguageSkills",
+  //   header: "Technical Language Skills",
+  //   cell: ({ row }) => (
+  //     <div className="capitalize">
+  //       <TableEntry
+  //         column={row.getValue("technicalLanguageSkills") as Cell}
+  //         rowNumber={(row.getValue("technicalLanguageSkills") as Cell).rowNum || 0}
+  //       />
+  //     </div>
+  //   ),
+  // },
+  // {
+  //   accessorKey: "notes",
+  //   header: "Notes",
+  //   cell: ({ row }) => (
+  //     <div className="capitalize">
+  //       <TableEntry
+  //         column={row.getValue("notes") as Cell}
+  //         rowNumber={(row.getValue("notes") as Cell).rowNum || 0}
+  //       />
+  //     </div>
+  //   ),
+  // },
 ];
 
 const Datagrid = ({ data}: DatagridProps) => {
