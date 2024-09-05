@@ -305,7 +305,7 @@ export const USER_TAB_CONFIG: Column[] = [
   {
     label: "Production Role",
     columnNum: "N",
-    placeHolder: "Please select ...",
+    placeHolder: "Select A Prod Role ...",
     type: QuestionType.SELECTOR,
     options: PRODUCTIONROLE,
   },
@@ -694,5 +694,13 @@ export const WORKFLOWFILTER_CONFIG = {
   columnNum: "G",
   placeHolder: "Select A Work Flow",
   type: QuestionType.SELECTOR,
-  options: WORKFLOWOPTIONS,
+  options: getWorkFlowOptions(),
+};
+
+export const QTYPE_CONFIG = {
+  label: "Question Type",
+  columnNum: "J",
+  placeHolder: "Select A Question Type",
+  type: QuestionType.SELECTOR,
+  options: getQTypeOptions(),
 };
