@@ -425,6 +425,7 @@ export interface SuperRaterRow {
   assignedProject: Cell;
   prodLead: Cell;
   prodLeadLdap: Cell;
+  isChecked?:boolean;
 }
 
 export const SUPERRATEROW_MAP: SuperRaterRow = {
@@ -539,6 +540,7 @@ export const SUPERRATEROW_MAP: SuperRaterRow = {
   assignedProject: { columnNum: "V", type: QuestionType.INPUT, disabled: true, label: "Assigned Project"},
   prodLead: { columnNum: "O", type: QuestionType.INPUT, disabled: true, label: "Prod Lead"},
   prodLeadLdap: { columnNum: "P", type: QuestionType.INPUT, disabled: true, label: "Prod Lead Ldap"},
+  isChecked: false,
 };
 
 export interface DataWithFilter {
@@ -593,6 +595,7 @@ export interface ActiveProjectRow {
   endDate: Cell;
   reviewCompleted: Cell;
   averageHandlingTime: Cell;
+  isChecked?:boolean;
 }
 
 export interface ProjectDataWithFilter{
@@ -654,7 +657,8 @@ export const ACTIVEPROJECT_CONFIG: ActiveProjectRow = {
     type: QuestionType.INPUT,
     disabled: true,
     label: "Average Handling Time"
-  }
+  },
+  isChecked: false
 };
 
 export const ACTIVEPROJECT_TABLEHEADER = [
