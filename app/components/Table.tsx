@@ -36,7 +36,7 @@ const Table = ({ data, onCheckBoxChange, onInputChange }: TableProps) => {
       {data && (
         <table className="mt-6">
           <thead>
-            <tr>
+            <tr className="bg-sky-600 text-white">
               {SUPERRATER_TABLEHEADER.map((c: string, index) => (
                 <th key={index} className="capitalize text-left">
                   {c}
@@ -46,14 +46,14 @@ const Table = ({ data, onCheckBoxChange, onInputChange }: TableProps) => {
           </thead>
           <tbody>
             {data.map((row, i) => (
-              <tr key={i}>
+              <tr key={i} className={i % 2===0? 'bg-zinc-200':""}>
                 {Object.values(row).map((col, j) => (
                   <td key={j}>
                     {!col.columnNum && (
-                      <div className="ml-16 mt-14">
+                      <div className="">
                         <input
                           type="checkbox"
-                          className="mr-4"
+                          className="mr-4 ml-8"
                           onChange={(e) =>
                             handleCheckBox(e, getRowNumberFromId(col))
                           }

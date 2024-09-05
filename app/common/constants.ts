@@ -305,7 +305,7 @@ export const USER_TAB_CONFIG: Column[] = [
   {
     label: "Production Role",
     columnNum: "N",
-    placeHolder: "Please select ...",
+    placeHolder: "Select A Prod Role ...",
     type: QuestionType.SELECTOR,
     options: PRODUCTIONROLE,
   },
@@ -425,6 +425,7 @@ export interface SuperRaterRow {
   assignedProject: Cell;
   prodLead: Cell;
   prodLeadLdap: Cell;
+  isChecked?:boolean;
 }
 
 export const SUPERRATEROW_MAP: SuperRaterRow = {
@@ -539,6 +540,7 @@ export const SUPERRATEROW_MAP: SuperRaterRow = {
   assignedProject: { columnNum: "V", type: QuestionType.INPUT, disabled: true, label: "Assigned Project"},
   prodLead: { columnNum: "O", type: QuestionType.INPUT, disabled: true, label: "Prod Lead"},
   prodLeadLdap: { columnNum: "P", type: QuestionType.INPUT, disabled: true, label: "Prod Lead Ldap"},
+  isChecked: false,
 };
 
 export interface DataWithFilter {
@@ -593,6 +595,7 @@ export interface ActiveProjectRow {
   endDate: Cell;
   reviewCompleted: Cell;
   averageHandlingTime: Cell;
+  isChecked?:boolean;
 }
 
 export interface ProjectDataWithFilter{
@@ -654,7 +657,8 @@ export const ACTIVEPROJECT_CONFIG: ActiveProjectRow = {
     type: QuestionType.INPUT,
     disabled: true,
     label: "Average Handling Time"
-  }
+  },
+  isChecked: false
 };
 
 export const ACTIVEPROJECT_TABLEHEADER = [
@@ -694,5 +698,13 @@ export const WORKFLOWFILTER_CONFIG = {
   columnNum: "G",
   placeHolder: "Select A Work Flow",
   type: QuestionType.SELECTOR,
-  options: WORKFLOWOPTIONS,
+  options: getWorkFlowOptions(),
+};
+
+export const QTYPE_CONFIG = {
+  label: "Question Type",
+  columnNum: "J",
+  placeHolder: "Select A Question Type",
+  type: QuestionType.SELECTOR,
+  options: getQTypeOptions(),
 };

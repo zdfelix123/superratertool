@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 import Nav from "../components/Nav";
 import Table from "../components/Table";
+import Addrow from "../components/Addrow";
 import Topbatchfilter from "../components/Topbatchfilter";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,7 +16,7 @@ import {
   SUPERRATEROW_MAP,
   DataWithFilter,
   ValueRange,
-  Record
+  Record,
 } from "../common/constants";
 
 import { useEffect, useState } from "react";
@@ -250,15 +251,12 @@ const Srroster = () => {
   }, []);
 
   useEffect(() => {
-
-    if (!Object.keys(updates).length){
+    if (!Object.keys(updates).length) {
       return;
     }
-    Object.values(updates).forEach(update=>{
+    Object.values(updates).forEach((update) => {
       const postData = async () => {
-        const req = new Request(
-          `/api/roster?range=${update.range}`
-        );
+        const req = new Request(`/api/roster?range=${update.range}`);
         const response = await fetch(req, {
           method: "PUT",
           headers: {
@@ -268,24 +266,27 @@ const Srroster = () => {
           body: JSON.stringify(update.value),
         });
         return response;
-      }
+      };
       postData();
     });
-
   }, [saveValues]);
   const handleNameChange = (name: string) => {
+    const names = name.split(",");
+    if (!dataWithFilter.data){
+      return;
+    }
     const filtered = dataWithFilter.data.filter(
-      (r) => (r.superRaterName.value || "") === name
+      (r) => names.indexOf((r.superRaterName.value || ""))!==-1
     );
     setDataWithFilter({ ...dataWithFilter, filtered });
   };
 
-  const handleInputChange = (vr: ValueRange)=>{
+  const handleInputChange = (vr: ValueRange) => {
     const prev = JSON.parse(JSON.stringify(updates));
     console.log("updates", updates);
-    prev[vr.range] =vr;
+    prev[vr.range] = vr;
     setUpdates(prev);
-  }
+  };
 
   const handleTopFilterBaseProjectChange = (baseProject: string) => {
     const prefix = baseProject.slice(0, 4);
@@ -298,6 +299,13 @@ const Srroster = () => {
   const handleTopFilterProjectChange = (project: string) => {
     const filtered = dataWithFilter.data.filter(
       (r) => (r.project.value || "") === project
+    );
+    setDataWithFilter({ ...dataWithFilter, filtered });
+  };
+
+  const handleTopFilterProductionRoleChange = (productionrole: string) => {
+    const filtered = dataWithFilter.data.filter(
+      (r) => (r.productionRole.value || "") === productionrole
     );
     setDataWithFilter({ ...dataWithFilter, filtered });
   };
@@ -321,6 +329,7 @@ const Srroster = () => {
   const save = () => {
     const rows = [...dataWithFilter.filtered];
     rows.forEach((row) => {
+      row.isChecked = false;
       Object.values(row)
         .filter((v) => v.columnNum)
         .forEach((v) => (v.disabled = true));
@@ -349,11 +358,12 @@ const Srroster = () => {
         </CardHeader>
       </Card>
 
-      <div className="ml-8 mt-8">
+      <div className="ml-8 mt-8 flex flex-row">
         <Topbatchfilter
           onNameChange={handleNameChange}
           onBaseProjectChange={handleTopFilterBaseProjectChange}
           onProjectChange={handleTopFilterProjectChange}
+          onProductionRoleChange={handleTopFilterProductionRoleChange}
         />
       </div>
       {/* <Datagrid data={srrosterRows}/> */}
@@ -368,7 +378,7 @@ const Srroster = () => {
           <img className="w-32 mt-12 mb-12" src={loading.src} alt="loading" />
         )}
       </div>
-      <CardFooter className="ml-8 flex flex-row justify-between">
+      <CardFooter className=" flex flex-row justify-between">
         <div>
           <Button
             onClick={edit}
@@ -379,13 +389,18 @@ const Srroster = () => {
           </Button>
           <Button
             onClick={save}
-            className="bg-blue-100"
+            className="bg-blue-100 mr-8"
             disabled={!selectedCheckbox.length || !saveValues}
           >
             Save
           </Button>
+          <Addrow/>
         </div>
         <div className="flex flex-row mr-16">
+          <div className="text-sm font-medium mr-16 mt-2">
+            Total Records:
+            {dataWithFilter.filtered && dataWithFilter.filtered.length}
+          </div>
           <Button onClick={() => handleNav(-10)}>Previous</Button>
           <Button onClick={() => handleNav(10)}>Next</Button>
         </div>

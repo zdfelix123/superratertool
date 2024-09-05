@@ -27,9 +27,12 @@ interface DropDownProps {
   rowNumber: number;
   onBaseProjectChange?: Function;
   onNameChange?:Function;
+  onProductionRoleChange?: Function;
+  onWorkFlowChange?: Function;
+  onQTypeChange?: Function;
 }
 
-const Dropdown = ({ column, rowNumber, onBaseProjectChange, onNameChange }: DropDownProps) => {
+const Dropdown = ({ column, rowNumber, onBaseProjectChange, onNameChange, onProductionRoleChange, onWorkFlowChange, onQTypeChange}: DropDownProps) => {
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState(column.value || "")
   useEffect(() => {
@@ -39,10 +42,19 @@ const Dropdown = ({ column, rowNumber, onBaseProjectChange, onNameChange }: Drop
   const handleTextChange = async (currentValue: string) => {
     setValue(currentValue === value ? "" : currentValue)
     if (onBaseProjectChange){
-      onBaseProjectChange(currentValue === value ? "" : currentValue)
+      onBaseProjectChange(currentValue === value ? "" : currentValue);
     }
     if (onNameChange){
-      onNameChange(currentValue === value ? "" : currentValue)
+      onNameChange(currentValue === value ? "" : currentValue);
+    }
+    if (onProductionRoleChange){
+      onProductionRoleChange(currentValue === value ? "" : currentValue);
+    }
+    if (onWorkFlowChange){
+      onWorkFlowChange(currentValue === value ? "" : currentValue);
+    }
+    if (onQTypeChange){
+      onQTypeChange(currentValue === value ? "" : currentValue);
     }
     setOpen(false)
     if (!column.columnNum) {

@@ -14,19 +14,22 @@ import { formatDate } from "../common/utils";
 interface MultiselectProps {
   column: Column;
   rowNumber: number;
+  onNameChange?: Function;
 }
 
-const Multiselect = ({ column, rowNumber }: MultiselectProps) => {
+const Multiselect = ({ column, rowNumber, onNameChange}: MultiselectProps) => {
   const [value, setValue] = useState<string[]>([]);
   useEffect(() => {
     setValue((column.value ||"").split(","))
   }, [column.value]);
   
   const handleTextChange = async (currentValue: string[]) => {
-    console.log("current value",currentValue);
     setValue(currentValue)
     if (!column.columnNum) {
       return;
+    }
+    if (onNameChange){
+      onNameChange(currentValue.join(","));
     }
     const req1 = new Request(
       `/api/roster?range=${column.columnNum}${rowNumber}`

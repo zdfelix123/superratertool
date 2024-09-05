@@ -16,10 +16,11 @@ import {
   ActiveProjectRow,
   ACTIVEPROJECT_CONFIG,
   ValueRange,
-  Record
+  Record,
 } from "../common/constants";
 import { titleToNumber, getRowNumber } from "../common/utils";
 import loading from "../../public/loading.gif";
+import Addprojectrow from "../components/Addprojectrow";
 
 const Activeprojects = () => {
   const [dataWithFilter, setDataWithFilter] = useState(
@@ -151,14 +152,12 @@ const Activeprojects = () => {
   }, []);
 
   useEffect(() => {
-    if (!Object.keys(updates).length){
+    if (!Object.keys(updates).length) {
       return;
     }
-    Object.values(updates).forEach(update=>{
+    Object.values(updates).forEach((update) => {
       const postData = async () => {
-        const req = new Request(
-          `/api/roster?range=${update.range}`
-        );
+        const req = new Request(`/api/roster?range=${update.range}`);
         const response = await fetch(req, {
           method: "PUT",
           headers: {
@@ -168,10 +167,9 @@ const Activeprojects = () => {
           body: JSON.stringify(update.value),
         });
         return response;
-      }
+      };
       postData();
     });
-
   }, [saveValues]);
 
   const handleTopFilterBaseProjectChange = (baseProject: string) => {
@@ -183,8 +181,24 @@ const Activeprojects = () => {
   };
   const handleTopFilterProjectChange = (project: string) => {
     const prefix = project.slice(0, 4);
-    const filtered = dataWithFilter.data.filter(
-      (r) => (r.workflow.value || "").startsWith(prefix)
+    const filtered = dataWithFilter.data.filter((r) =>
+      (r.workflow.value || "").startsWith(prefix)
+    );
+    setDataWithFilter({ ...dataWithFilter, filtered });
+  };
+
+  const handleWorkFlowChange = (workflow: string) => {
+    const prefix = workflow.slice(0, 8);
+    const filtered = dataWithFilter.data.filter((r) =>
+      (r.workflow.value || "").startsWith(prefix)
+    );
+    setDataWithFilter({ ...dataWithFilter, filtered });
+  };
+
+  const handleQTypeChange = (qtype: string) => {
+    const prefix = qtype.slice(0, 8);
+    const filtered = dataWithFilter.data.filter((r) =>
+      (r.qType.value || "").startsWith(prefix)
     );
     setDataWithFilter({ ...dataWithFilter, filtered });
   };
@@ -221,11 +235,11 @@ const Activeprojects = () => {
     return rows.slice(offset, 10 + offset);
   };
 
-  const handleInputChange = (vr: ValueRange)=>{
+  const handleInputChange = (vr: ValueRange) => {
     const prev = JSON.parse(JSON.stringify(updates));
-    prev[vr.range] =vr;
+    prev[vr.range] = vr;
     setUpdates(prev);
-  }
+  };
 
   const handleNav = async (nextPage: number) => {
     if (offset + nextPage < 0) {
@@ -241,10 +255,12 @@ const Activeprojects = () => {
           <Nav />
         </CardHeader>
       </Card>
-      <div className="ml-8 mt-8">
+      <div className="ml-8 mt-8 flex flex-row">
         <Topbatchfilter
           onBaseProjectChange={handleTopFilterBaseProjectChange}
           onProjectChange={handleTopFilterProjectChange}
+          onWorkFlowChange={handleWorkFlowChange}
+          onQTypeChange={handleQTypeChange}
           activeProjectFilter={true}
         />
       </div>
@@ -260,7 +276,7 @@ const Activeprojects = () => {
         )}
       </div>
 
-      <CardFooter className="ml-8 flex flex-row justify-between">
+      <CardFooter className="flex flex-row justify-between">
         <div>
           <Button
             onClick={edit}
@@ -271,13 +287,18 @@ const Activeprojects = () => {
           </Button>
           <Button
             onClick={save}
-            className="bg-blue-100"
+            className="bg-blue-100 mr-8"
             disabled={!selectedCheckbox.length || !saveValues}
           >
             Save
           </Button>
+          <Addprojectrow/>
         </div>
         <div className="flex flex-row mr-16">
+          <div className="text-sm font-medium mr-16 mt-2">
+            Total Records:
+            {dataWithFilter.filtered && dataWithFilter.filtered.length}
+          </div>
           <Button onClick={() => handleNav(-10)}>Previous</Button>
           <Button onClick={() => handleNav(10)}>Next</Button>
         </div>
