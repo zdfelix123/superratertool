@@ -377,7 +377,7 @@ const Srroster = () => {
           <img className="w-32 mt-12 mb-12" src={loading.src} alt="loading" />
         )}
       </div>
-      <CardFooter className="ml-8 flex flex-row justify-between">
+      <CardFooter className=" flex flex-row justify-between">
         <div>
           <Button
             onClick={edit}

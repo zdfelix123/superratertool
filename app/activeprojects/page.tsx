@@ -275,7 +275,7 @@ const Activeprojects = () => {
         )}
       </div>
 
-      <CardFooter className="ml-8 flex flex-row justify-between">
+      <CardFooter className="flex flex-row justify-between">
         <div>
           <Button
             onClick={edit}
