@@ -25,7 +25,7 @@ const Addrow = () => {
           </div>
           <div className="grid gap-2 grid-cols-2">
             {Object.values(SUPERRATEROW_MAP).filter(row=>row.columnNum).map((row) => (
-              <div className="grid grid-cols-3 items-center gap-4">
+              <div key={row.id} className="grid grid-cols-3 items-center gap-4">
                 <Label htmlFor={row.label}>{row.label}</Label>
                 <Input
                   id={row.label}
