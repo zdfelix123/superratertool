@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 import Nav from "../components/Nav";
 import Table from "../components/Table";
+import Addrow from "../components/Addrow";
 import Topbatchfilter from "../components/Topbatchfilter";
 import { Button } from "@/components/ui/button";
 import {
@@ -388,11 +389,12 @@ const Srroster = () => {
           </Button>
           <Button
             onClick={save}
-            className="bg-blue-100"
+            className="bg-blue-100 mr-8"
             disabled={!selectedCheckbox.length || !saveValues}
           >
             Save
           </Button>
+          <Addrow/>
         </div>
         <div className="flex flex-row mr-16">
           <div className="text-sm font-medium mr-16 mt-2">

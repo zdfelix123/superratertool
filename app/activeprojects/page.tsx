@@ -20,6 +20,7 @@ import {
 } from "../common/constants";
 import { titleToNumber, getRowNumber } from "../common/utils";
 import loading from "../../public/loading.gif";
+import Addprojectrow from "../components/Addprojectrow";
 
 const Activeprojects = () => {
   const [dataWithFilter, setDataWithFilter] = useState(
@@ -286,11 +287,12 @@ const Activeprojects = () => {
           </Button>
           <Button
             onClick={save}
-            className="bg-blue-100"
+            className="bg-blue-100 mr-8"
             disabled={!selectedCheckbox.length || !saveValues}
           >
             Save
           </Button>
+          <Addprojectrow/>
         </div>
         <div className="flex flex-row mr-16">
           <div className="text-sm font-medium mr-16 mt-2">
