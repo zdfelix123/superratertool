@@ -36,7 +36,7 @@ const Projectdatagrid = ({ data, onCheckBoxChange, onInputChange, activeproject}
       {data && (
         <table className="mt-6">
           <thead>
-            <tr>
+            <tr className="bg-sky-600 text-white">
               { ACTIVEPROJECT_TABLEHEADER.map((c: string, index) => (
                 <th key={index} className="capitalize text-left">
                   {c}
@@ -46,14 +46,14 @@ const Projectdatagrid = ({ data, onCheckBoxChange, onInputChange, activeproject}
           </thead>
           <tbody>
             {data.map((row, i) => (
-              <tr key={i}>
+              <tr className={i % 2===0? 'bg-zinc-200':""} key={i}>
                 {Object.values(row).map((col, j) => (
                   <td key={j}>
                     {!col.columnNum && (
-                      <div className="ml-16 mt-14">
+                      <div className="">
                         <input
                           type="checkbox"
-                          className="mr-4"
+                          className="mr-4 ml-8"
                           onChange={(e) =>
                             handleCheckBox(e, getRowNumberFromId(col))
                           }

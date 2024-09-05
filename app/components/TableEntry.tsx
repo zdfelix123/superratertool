@@ -68,7 +68,7 @@ const TableEntry = ({
   };
 
   return (
-    <div className="mt-8">
+    <div className="">
       {column.type == QuestionType.INPUT && (
         <div>
           <Input
