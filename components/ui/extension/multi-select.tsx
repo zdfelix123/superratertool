@@ -256,7 +256,7 @@ const MultiSelectorTrigger = forwardRef<
             onClick={() => onValueChange(item)}
           >
             <span className="sr-only">Remove {item} option</span>
-            <RemoveIcon className="h-4 w-4 hover:stroke-destructive" />
+            {item && (<RemoveIcon className="h-4 w-4 hover:stroke-destructive" />)}
           </button>
         </Badge>
       ))}

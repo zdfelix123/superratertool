@@ -270,8 +270,12 @@ const Srroster = () => {
     });
   }, [saveValues]);
   const handleNameChange = (name: string) => {
+    const names = name.split(",");
+    if (!dataWithFilter.data){
+      return;
+    }
     const filtered = dataWithFilter.data.filter(
-      (r) => (r.superRaterName.value || "") === name
+      (r) => names.indexOf((r.superRaterName.value || ""))!==-1
     );
     setDataWithFilter({ ...dataWithFilter, filtered });
   };

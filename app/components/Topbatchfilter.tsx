@@ -1,5 +1,6 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import Dropdown from "./Dropdown";
+import Multiselect from "./Multiselect";
 
 import { TOP_FILTER_CONFIG, Project } from "../common/constants";
 import { arrToObject } from "../common/utils";
@@ -104,6 +105,7 @@ const Topbatchfilter = ({
   }
 
   return (
+    <div className="flex flex-col">
     <div className="flex flex-row w-9/12">
       <div className="mr-16">
         <Dropdown
@@ -130,13 +132,6 @@ const Topbatchfilter = ({
           ></Dropdown>
         </div>
       )}
-      {!activeProjectFilter && (
-        <Dropdown
-          column={config}
-          rowNumber={0}
-          onNameChange={handleNameChange}
-        ></Dropdown>
-      )}
       {activeProjectFilter && (
         <div className="mr-16">
           <Dropdown
@@ -155,6 +150,16 @@ const Topbatchfilter = ({
           ></Dropdown>
         </div>
       )}
+    </div>
+    <div className="flex flex-row w-3/12 mr-4">
+    {!activeProjectFilter && (
+        <Multiselect
+          column={config}
+          rowNumber={0}
+          onNameChange={handleNameChange}
+        ></Multiselect>
+      )}
+    </div>
     </div>
   );
 };
