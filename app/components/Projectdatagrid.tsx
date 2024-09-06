@@ -7,7 +7,7 @@ import {
   Column,
 } from "../common/constants";
 import TableEntry from "./TableEntry";
-import { getRowNumberFromId } from "../common/utils";
+import { getRowNumberFromId, convertActiveProjectRowToArray} from "../common/utils";
 
 interface Projectdatagrid {
   data: ActiveProjectRow[];
@@ -18,7 +18,8 @@ interface Projectdatagrid {
 
 const Projectdatagrid = ({ data, onCheckBoxChange, onInputChange, activeproject}: Projectdatagrid) => {
   const [selectedRows, setSelectedRows] = useState(new Set());
-  const handleCheckBox = (e: ChangeEvent<HTMLInputElement>, rowNum: number) => {
+  const handleCheckBox = (e: ChangeEvent<HTMLInputElement>, rowNum: number, row:ActiveProjectRow) => {
+    row.isChecked = !row.isChecked;
     if (e.target.checked) {
       const set = new Set(selectedRows);
       set.add(rowNum + 6);
@@ -47,22 +48,23 @@ const Projectdatagrid = ({ data, onCheckBoxChange, onInputChange, activeproject}
           <tbody>
             {data.map((row, i) => (
               <tr className={i % 2===0? 'bg-zinc-200':""} key={i}>
-                {Object.values(row).map((col, j) => (
+                {convertActiveProjectRowToArray(row).map((col, j) => (
                   <td key={j}>
-                    {!col.columnNum && (
+                    {!(col as Cell).columnNum && (
                       <div className="">
                         <input
                           type="checkbox"
                           className="mr-4 ml-8"
+                          checked = {row.isChecked}
                           onChange={(e) =>
-                            handleCheckBox(e, getRowNumberFromId(col))
+                            handleCheckBox(e, getRowNumberFromId(col as string), row)
                           }
                         ></input>
-                        {getRowNumberFromId(col)}
+                        {getRowNumberFromId(col as string)}
                       </div>
                     )}
                     <div className="capitalize min-w-40 mr-4">
-                      <TableEntry column={col} rowNumber={0} onInputChange={onInputChange} activeproject={true}/>
+                      <TableEntry column={col as Cell} rowNumber={0} onInputChange={onInputChange} activeproject={true}/>
                     </div>
                   </td>
                 ))}

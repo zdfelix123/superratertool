@@ -218,6 +218,7 @@ const Activeprojects = () => {
   const save = () => {
     const rows = [...dataWithFilter.filtered];
     rows.forEach((row) => {
+      row.isChecked = false;
       Object.values(row)
         .filter((v) => v.columnNum)
         .forEach((v) => (v.disabled = true));

@@ -8,7 +8,7 @@ import {
   Column,
 } from "../common/constants";
 import TableEntry from "./TableEntry";
-import { getRowNumberFromId } from "../common/utils";
+import { getRowNumberFromId, convertSuperRaterRowToArray} from "../common/utils";
 
 interface TableProps {
   data: SuperRaterRow[];
@@ -18,7 +18,8 @@ interface TableProps {
 
 const Table = ({ data, onCheckBoxChange, onInputChange }: TableProps) => {
   const [selectedRows, setSelectedRows] = useState(new Set());
-  const handleCheckBox = (e: ChangeEvent<HTMLInputElement>, rowNum: number) => {
+  const handleCheckBox = (e: ChangeEvent<HTMLInputElement>, rowNum: number, row: SuperRaterRow) => {
+    row.isChecked = !row.isChecked;
     if (e.target.checked) {
       const set = new Set(selectedRows);
       set.add(rowNum);
@@ -47,22 +48,23 @@ const Table = ({ data, onCheckBoxChange, onInputChange }: TableProps) => {
           <tbody>
             {data.map((row, i) => (
               <tr key={i} className={i % 2===0? 'bg-zinc-200':""}>
-                {Object.values(row).map((col, j) => (
+                {convertSuperRaterRowToArray(row).map((col, j) => (
                   <td key={j}>
-                    {!col.columnNum && (
+                    {!(col as Cell).columnNum && (
                       <div className="">
                         <input
                           type="checkbox"
                           className="mr-4 ml-8"
+                          checked = {row.isChecked}
                           onChange={(e) =>
-                            handleCheckBox(e, getRowNumberFromId(col))
+                            handleCheckBox(e, getRowNumberFromId(col as string), row)
                           }
                         ></input>
-                        {getRowNumberFromId(col)}
+                        {getRowNumberFromId(col as string)}
                       </div>
                     )}
                     <div className="capitalize min-w-40 mr-4">
-                      <TableEntry column={col} rowNumber={0} onInputChange={onInputChange}/>
+                      <TableEntry column={col as Cell} rowNumber={0} onInputChange={onInputChange}/>
                     </div>
                   </td>
                 ))}
