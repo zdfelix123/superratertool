@@ -304,7 +304,7 @@ const Srroster = () => {
   };
 
   const handleTopFilterProductionRoleChange = (productionrole: string) => {
-    const filtered = dataWithFilter.data.filter(
+    const filtered = dataWithFilter.filtered.filter(
       (r) => (r.productionRole.value || "") === productionrole
     );
     setDataWithFilter({ ...dataWithFilter, filtered });
