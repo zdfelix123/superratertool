@@ -2,20 +2,30 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { ACTIVEPROJECT_CONFIG } from "../common/constants";
+  ADD_ACTIVEPROJECT_CONFIG,
+  Cell,
+  ActiveProjectRow,
+} from "../common/constants";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose,
+} from "@/components/ui/dialog";
+import TableEntry from "./TableEntry";
 
 const Addprojectrow = () => {
   const save = () => {};
+  const handleInputChange = () => {};
   return (
-    <Popover>
-      <PopoverTrigger asChild>
+    <Dialog>
+      <DialogTrigger asChild>
         <Button variant="outline">Add</Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-200 overflow-auto">
+      </DialogTrigger>
+      <DialogContent className="w-200 overflow-auto bg-white">
         <div className="grid gap-4">
           <div className="space-y-2">
             <h4 className="font-medium leading-none">Active Project</h4>
@@ -24,23 +34,32 @@ const Addprojectrow = () => {
             </p>
           </div>
           <div className="grid gap-2 grid-cols-2">
-            {Object.values(ACTIVEPROJECT_CONFIG).filter(row=>row.columnNum).map((row) => (
-              <div key={row.id} className="grid grid-cols-3 items-center gap-4">
-                <Label htmlFor={row.label}>{row.label}</Label>
-                <Input
-                  id={row.label}
-                  defaultValue="Please enter"
-                  className="col-span-2 h-8"
-                />
-              </div>
-            ))}
+            {Object.values(ADD_ACTIVEPROJECT_CONFIG)
+              .filter((c) => (c as Cell).columnNum)
+              .map((c) => (
+                <div
+                  key={(c as Cell).columnNum}
+                  className="grid grid-cols-3 items-center gap-4"
+                >
+                  <Label htmlFor={(c as Cell).label}>{(c as Cell).label}</Label>
+                  <div className="capitalize min-w-40 mr-4">
+                    <TableEntry
+                      column={c as Cell}
+                      rowNumber={0}
+                      onInputChange={handleInputChange}
+                    />
+                  </div>
+                </div>
+              ))}
           </div>
         </div>
-        <Button onClick={save} className="bg-blue-100 mr-8">
-          Save
-        </Button>
-      </PopoverContent>
-    </Popover>
+        <DialogClose>
+          <Button onClick={save} className="bg-blue-100 mr-8 w-28">
+            Save
+          </Button>
+        </DialogClose>
+      </DialogContent>
+    </Dialog>
   );
 };
 

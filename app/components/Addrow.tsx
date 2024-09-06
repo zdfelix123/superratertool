@@ -1,46 +1,65 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { SUPERRATEROW_MAP, Cell } from "../common/constants";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { SUPERRATEROW_MAP } from "../common/constants";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose,
+} from "@/components/ui/dialog";
+import { useEffect, useState } from "react";
+import { ADD_SUPERRATEROW_MAP} from "../common/constants";
+import TableEntry from "./TableEntry";
 
 const Addrow = () => {
   const save = () => {};
+  const handleInputChange =()=>{
+    
+  }
   return (
-    <Popover>
-      <PopoverTrigger asChild>
+    <Dialog>
+      <DialogTrigger asChild>
         <Button variant="outline">Add</Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-200 overflow-auto">
+      </DialogTrigger>
+      <DialogContent className="w-200 overflow-auto bg-white w-4/5">
         <div className="grid gap-4">
           <div className="space-y-2">
             <h4 className="font-medium leading-none">Roster</h4>
             <p className="text-sm text-muted-foreground">
-                Add an entry for super rater roster
+              Add an entry for super rater roster
             </p>
           </div>
           <div className="grid gap-2 grid-cols-2">
-            {Object.values(SUPERRATEROW_MAP).filter(row=>row.columnNum).map((row) => (
-              <div key={row.id} className="grid grid-cols-3 items-center gap-4">
-                <Label htmlFor={row.label}>{row.label}</Label>
-                <Input
-                  id={row.label}
-                  defaultValue="Please enter"
-                  className="col-span-2 h-8"
-                />
-              </div>
-            ))}
+            {Object.values(ADD_SUPERRATEROW_MAP)
+              .filter((c) => c.columnNum)
+              .map((c) => (
+                <div
+                  key={(c as Cell).columnNum}
+                  className="grid grid-cols-3 items-center gap-4"
+                >
+                  <Label htmlFor={(c as Cell).label}>{(c as Cell).label}</Label>
+                  <div className="capitalize min-w-40 mr-4">
+                    <TableEntry
+                      column={c as Cell}
+                      rowNumber={0}
+                      onInputChange={handleInputChange}
+                    />
+                  </div>
+                </div>
+              ))}
           </div>
         </div>
-        <Button onClick={save} className="bg-blue-100 mr-8">
-          Save
-        </Button>
-      </PopoverContent>
-    </Popover>
+        <DialogClose asChild>
+          <Button onClick={save} className="bg-blue-100 mr-8 w-28">
+            Save
+          </Button>
+        </DialogClose>
+      </DialogContent>
+    </Dialog>
   );
 };
 

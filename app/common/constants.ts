@@ -543,6 +543,121 @@ export const SUPERRATEROW_MAP: SuperRaterRow = {
   isChecked: false,
 };
 
+export const ADD_SUPERRATEROW_MAP: SuperRaterRow = {
+  id: "Roster",
+  superRaterName: {
+    columnNum: "C",
+    type: QuestionType.INPUT,
+    disabled: false,
+    label: "Super Rater Name",
+  },
+  superRaterLDAP: {
+    columnNum: "D",
+    type: QuestionType.INPUT,
+    disabled: false,
+    label: "Super Rater LDAP",
+  },
+  pod: { columnNum: "E", type: QuestionType.INPUT, disabled: false, label: "Pod"},
+  location: { columnNum: "Q", type: QuestionType.INPUT, disabled: false, label: "Location"},
+  globalLogicEmail: {
+    columnNum: "AC",
+    type: QuestionType.INPUT,
+    disabled: false,
+    label: "GlobalLogic Email"
+  },
+  googleEmail: { columnNum: "Z", type: QuestionType.INPUT, disabled: false, label: "Google Email"},
+  onboardingStatus: {
+    columnNum: "K",
+    type: QuestionType.SELECTOR,
+    options: ONBOARDING_STATUS,
+    disabled: false,
+    label: "Onboarding Status"
+  },
+  highestLevelofEducation: {
+    columnNum: "R",
+    type: QuestionType.SELECTOR,
+    options: EDUCATION,
+    disabled: false,
+    label: "Highest Level of Education"
+  },
+  allAssociatedRoles: {
+    columnNum: "W",
+    type: QuestionType.MULTISELECT,
+    options: ROLES,
+    disabled: false,
+    label: "All Associated Roles"
+  },
+  productionRole: {
+    columnNum: "N",
+    type: QuestionType.SELECTOR,
+    options: PRODUCTIONROLE,
+    disabled: false,
+    label: "Production Role"
+  },
+  vendorOnboardedDate: {
+    columnNum: "J",
+    type: QuestionType.DATEPICKER,
+    disabled: false,
+    label: "Vendor Onboarded Date"
+  },
+  productionReadyDate: {
+    columnNum: "L",
+    type: QuestionType.DATEPICKER,
+    disabled: false,
+    label: "Production Ready Date"
+  },
+  estDateofProdStart: {
+    columnNum: "M",
+    type: QuestionType.DATEPICKER,
+    disabled: false,
+    label: "Est Date of Prod Start"
+  },
+  releasedfromOnboarding: {
+    columnNum: "AA",
+    type: QuestionType.DATEPICKER,
+    disabled: false,
+    label: "Released from Onboarding"
+  },
+  majorAreaofStudy: {
+    columnNum: "S",
+    type: QuestionType.INPUT,
+    disabled: false,
+    label: "Major Area of Study"
+  },
+  technicalLanguageSkills: {
+    columnNum: "X",
+    type: QuestionType.INPUT,
+    disabled: false,
+    label: "Technical Language Skills"
+  },
+  notes: { columnNum: "F", type: QuestionType.INPUT, disabled: false, label: "Notes"},
+  baseProject: {
+    columnNum: "I",
+    type: QuestionType.SELECTOR,
+    options: BASEPROJECT,
+    disabled: false,
+    label: "Base Project"
+  },
+  project: {
+    columnNum: "H",
+    type: QuestionType.SELECTOR,
+    options: PROJECTWORKTYPE,
+    disabled: false,
+        label: "Project"
+  },
+  currentTask: {
+    columnNum: "G",
+    type: QuestionType.SELECTOR,
+    options: CURRENTTASK,
+    disabled: false,
+        label: "Current Task"
+  },
+  assignedProject: { columnNum: "V", type: QuestionType.INPUT, disabled: false, label: "Assigned Project"},
+  prodLead: { columnNum: "O", type: QuestionType.INPUT, disabled: false, label: "Prod Lead"},
+  prodLeadLdap: { columnNum: "P", type: QuestionType.INPUT, disabled: false, label: "Prod Lead Ldap"},
+  isChecked: false,
+};
+
 export interface DataWithFilter {
   data: SuperRaterRow[];
   filtered: SuperRaterRow[];
@@ -657,6 +772,64 @@ export const ACTIVEPROJECT_CONFIG: ActiveProjectRow = {
     type: QuestionType.INPUT,
     disabled: true,
     label: "Average Handling Time"
+  },
+  isChecked: false
+};
+
+export const ADD_ACTIVEPROJECT_CONFIG: ActiveProjectRow = {
+  id: "ActiveProject",
+  bugId: {
+    columnNum: "C",
+    type: QuestionType.INPUT,
+    disabled: false,
+    label: "Bug ID",
+  },
+  project: {
+    columnNum: "F",
+    type: QuestionType.SELECTOR,
+    disabled: false,
+    label: "Project",
+    options: BASEPROJECT,
+  },
+  workflow: { columnNum: "G", type: QuestionType.INPUT, disabled: false, label: "Work Flow"},
+  tasksubtype: { columnNum: "H", type: QuestionType.INPUT, disabled: false, label: "Task Subtype"},
+  workspace: {
+    columnNum: "I",
+    type: QuestionType.INPUT,
+    disabled: false,
+    label: "GlobalLogic Email"
+  },
+  qType: { columnNum: "J", type: QuestionType.SELECTOR, disabled: false, label: "Question Type", options: getQTypeOptions()},
+  status: {
+    columnNum: "M",
+    type: QuestionType.SELECTOR,
+    disabled: false,
+    label: "Status",
+    options: WORKSTATUS
+  },
+  reviewCompleted: {
+    columnNum: "R",
+    type: QuestionType.INPUT,
+    disabled: false,
+    label: "Review Completed"
+  },
+  averageHandlingTime: {
+    columnNum: "U",
+    type: QuestionType.INPUT,
+    disabled: false,
+    label: "Average Handling Time"
+  },
+  startDate: {
+    columnNum: "N",
+    type: QuestionType.DATEPICKER,
+    disabled: false,
+    label: "Start Date"
+  },
+  endDate: {
+    columnNum: "P",
+    type: QuestionType.DATEPICKER,
+    disabled: false,
+    label: "End Date"
   },
   isChecked: false
 };
