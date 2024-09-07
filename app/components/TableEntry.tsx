@@ -68,11 +68,12 @@ const TableEntry = ({
   };
 
   return (
-    <div className="">
+    <div>
       {column.type == QuestionType.INPUT && (
         <div>
           <Input
             id="name"
+            className={`${column.width ? "w-[" + column.width + "]" : ""}]`}
             value={value}
             onChange={(e) => handleTextChange(e)}
             disabled={column.disabled}
