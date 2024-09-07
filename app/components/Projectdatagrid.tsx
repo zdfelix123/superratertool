@@ -48,9 +48,17 @@ const Projectdatagrid = ({
   const handleTopCheckBox = (e: ChangeEvent<HTMLInputElement>) => {
     setTopchecked(!topchecked);
     if (e.target.checked) {
-      data.forEach((r) =>r.isChecked = true);
+      const set = new Set();
+      data.forEach((r) => {
+        r.isChecked = true;
+        set.add(getRowNumberFromId(r.id) + 6);
+      });
+      onCheckBoxChange(Array.from(set));
+      setSelectedRows(set);
     } else {
-      data.forEach((r) =>r.isChecked = false);
+      data.forEach((r) => (r.isChecked = false));
+      onCheckBoxChange([]);
+      setSelectedRows(new Set());
     }
   };
   return (

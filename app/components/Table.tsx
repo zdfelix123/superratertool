@@ -43,9 +43,17 @@ const Table = ({ data, onCheckBoxChange, onInputChange }: TableProps) => {
   const handleTopCheckBox = (e: ChangeEvent<HTMLInputElement>) => {
     setTopchecked(!topchecked);
     if (e.target.checked) {
-      data.forEach((r) =>r.isChecked = true);
+      const set = new Set();
+      data.forEach((r) => {
+        r.isChecked = true;
+        set.add(getRowNumberFromId(r.id));
+      });
+      onCheckBoxChange(Array.from(set));
+      setSelectedRows(set);
     } else {
-      data.forEach((r) =>r.isChecked = false);
+      data.forEach((r) => (r.isChecked = false));
+      onCheckBoxChange([]);
+      setSelectedRows(new Set());
     }
   };
   return (
@@ -55,12 +63,14 @@ const Table = ({ data, onCheckBoxChange, onInputChange }: TableProps) => {
           <tr className="bg-sky-600 text-white">
             {SUPERRATER_TABLEHEADER.map((c: string, index) => (
               <th key={index} className="capitalize text-left">
-                                  {index === 0 && (<input
+                {index === 0 && (
+                  <input
                     type="checkbox"
                     className="mt-4 ml-8"
                     checked={topchecked}
                     onChange={(e) => handleTopCheckBox(e)}
-                  ></input>)}
+                  ></input>
+                )}
                 {c}
               </th>
             ))}
