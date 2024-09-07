@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import Dropdown from "./Dropdown";
 import Multiselect from "./Multiselect";
 
-import { TOP_FILTER_CONFIG, Project } from "../common/constants";
+import { TOP_FILTER_CONFIG, Project, Column } from "../common/constants";
 import { arrToObject } from "../common/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,6 +19,9 @@ interface TopfilterProps {
   onProductionRoleChange?: Function;
   onWorkFlowChange?: Function;
   onQTypeChange?: Function;
+  topprojectfilterconfig?:Column[];
+  toprosterfilterconfig?: Column[];
+  clearfilter:boolean;
 }
 
 const Topbatchfilter = ({
@@ -29,6 +32,9 @@ const Topbatchfilter = ({
   onProductionRoleChange,
   onWorkFlowChange,
   onQTypeChange,
+  topprojectfilterconfig,
+  clearfilter,
+  toprosterfilterconfig,
 }: TopfilterProps) => {
   const [config, setConfig] = useState(TOP_FILTER_CONFIG);
   const [data, setData] = useState([] as Project[]);
@@ -66,11 +72,6 @@ const Topbatchfilter = ({
     };
     fetchData();
   }, []);
-  const handleNameChange = (name: string) => {
-    if (onNameChange) {
-      onNameChange(name);
-    }
-  };
 
   const handleBaseProjectChange = (value: string) => {
     const prefix = value.slice(0, 4);
@@ -110,69 +111,65 @@ const Topbatchfilter = ({
     }
   };
 
-  const clearFilter = ()=>{
-
-  }
-
   return (
     <div className="flex flex-col">
       <div className="flex flex-row w-9/12">
         <div className="mr-16">
           <Dropdown
-            column={PROJECT_TAB_CONFIG[0]}
+            column={topprojectfilterconfig && topprojectfilterconfig[0] || PROJECT_TAB_CONFIG[0]}
             rowNumber={0}
             onBaseProjectChange={handleBaseProjectChange}
+            clearfilter={clearfilter}
           ></Dropdown>
         </div>
         {!activeProjectFilter && (
           <div className="mr-16">
             <Dropdown
-              column={projectConfig}
+              column={toprosterfilterconfig && toprosterfilterconfig[1] ||PROJECT_TAB_CONFIG[1] }
               rowNumber={0}
               onBaseProjectChange={handleProjectChange}
+              clearfilter={clearfilter}
             ></Dropdown>
           </div>
         )}
         {!activeProjectFilter && (
           <div className="mr-16">
             <Dropdown
-              column={USER_TAB_CONFIG[9]}
+              column={toprosterfilterconfig&&toprosterfilterconfig[2]||USER_TAB_CONFIG[9]}
               rowNumber={0}
               onProductionRoleChange={handleProductionRoleChange}
+              clearfilter={clearfilter}
             ></Dropdown>
           </div>
         )}
         {activeProjectFilter && (
           <div className="mr-16">
             <Dropdown
-              column={WORKFLOWFILTER_CONFIG}
+              column={topprojectfilterconfig && topprojectfilterconfig[1] ||WORKFLOWFILTER_CONFIG}
               rowNumber={0}
               onWorkFlowChange={handleWorkFlowChange}
+              clearfilter={clearfilter}
             ></Dropdown>
           </div>
         )}
         {activeProjectFilter && (
           <div className="mr-16">
             <Dropdown
-              column={QTYPE_CONFIG}
+              column={topprojectfilterconfig && topprojectfilterconfig[2] ||QTYPE_CONFIG}
               rowNumber={0}
               onQTypeChange={handleQTypeChange}
+              clearfilter={clearfilter}
             ></Dropdown>
           </div>
         )}
-        <Button
-            onClick={clearFilter}
-            className="bg-blue-100 mr-8"
-          >
-            Clear Filter
-          </Button>
       </div>
       <div className="flex flex-row w-3/12 mr-4">
         {!activeProjectFilter && (
           <Multiselect
-            column={config}
+            column={toprosterfilterconfig&&toprosterfilterconfig[3] || TOP_FILTER_CONFIG}
             rowNumber={0}
-            onNameChange={handleNameChange}
+            onNameChange={onNameChange}
+            clearfilter={clearfilter}
           ></Multiselect>
         )}
       </div>

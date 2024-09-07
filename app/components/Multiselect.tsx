@@ -15,9 +15,10 @@ interface MultiselectProps {
   column: Column;
   rowNumber: number;
   onNameChange?: Function;
+  clearfilter?:boolean;
 }
 
-const Multiselect = ({ column, rowNumber, onNameChange}: MultiselectProps) => {
+const Multiselect = ({ column, rowNumber, onNameChange, clearfilter}: MultiselectProps) => {
   const [value, setValue] = useState<string[]>([]);
   useEffect(() => {
     setValue((column.value ||"").split(","))
@@ -59,7 +60,7 @@ const Multiselect = ({ column, rowNumber, onNameChange}: MultiselectProps) => {
   };
 
   return (
-    <MultiSelector values={value} onValuesChange={handleTextChange} loop={false}>
+    <MultiSelector values={clearfilter? []:value} onValuesChange={handleTextChange} loop={false}>
       <MultiSelectorTrigger>
         <MultiSelectorInput placeholder={column.placeHolder} />
       </MultiSelectorTrigger>
