@@ -1,10 +1,7 @@
-import { ChangeEvent, useEffect, useState } from "react";
+
 import Dropdown from "./Dropdown";
 import Multiselect from "./Multiselect";
-
-import { TOP_FILTER_CONFIG, Project, Column } from "../common/constants";
-import { arrToObject } from "../common/utils";
-import { Button } from "@/components/ui/button";
+import { TOP_FILTER_CONFIG, Column } from "../common/constants";
 import {
   PROJECT_TAB_CONFIG,
   USER_TAB_CONFIG,
@@ -36,60 +33,12 @@ const Topbatchfilter = ({
   clearfilter,
   toprosterfilterconfig,
 }: TopfilterProps) => {
-  const [config, setConfig] = useState(TOP_FILTER_CONFIG);
-  const [data, setData] = useState([] as Project[]);
-  const [projectConfig, setProjectConfig] = useState(PROJECT_TAB_CONFIG[1]);
-  useEffect(() => {
-    const fetchData = async () => {
-      const req = new Request(`/api/roster?range=Sheet1!AM2:AN2`);
-      await fetch(req, {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          if (
-            !res.data.values ||
-            !res.data.values[0] ||
-            !res.data.values[0][0]
-          ) {
-            return;
-          }
-          const projects = arrToObject(res.data.values[0]);
-          setData(projects);
-          const options = projects
-            .filter((p: Project) => p.name !== "")
-            .map((p: Project) => ({
-              label: p.name,
-              value: p.name,
-            }));
-          setConfig({ ...TOP_FILTER_CONFIG, options });
-          return res.data.values;
-        });
-    };
-    fetchData();
-  }, []);
 
   const handleBaseProjectChange = (value: string) => {
-    const prefix = value.slice(0, 4);
-    const options = (PROJECT_TAB_CONFIG[1].options || []).filter((o) =>
-      o.value.startsWith(prefix)
-    );
-    setProjectConfig({ ...projectConfig, options });
-    onBaseProjectChange(prefix);
+    onBaseProjectChange(value);
   };
 
   const handleProjectChange = (value: string) => {
-    const options = data
-      .filter((p) => p.project == value)
-      .map((p: Project) => ({
-        label: p.name,
-        value: p.name,
-      }));
-    setConfig({ ...TOP_FILTER_CONFIG, options });
     onProjectChange(value);
   };
 
