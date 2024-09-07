@@ -398,6 +398,7 @@ export const PROJECT_TAB_CONFIG: Column[] = [
 export interface Cell extends Column {
   disabled?: boolean;
   rowNum?: number;
+  width?: string;
 }
 
 export interface SuperRaterRow {
@@ -741,7 +742,7 @@ export const ACTIVEPROJECT_CONFIG: ActiveProjectRow = {
     disabled: true,
     label: "GlobalLogic Email"
   },
-  qType: { columnNum: "J", type: QuestionType.SELECTOR, disabled: true, label: "Question Type", options: getQTypeOptions()},
+  qType: { columnNum: "J", type: QuestionType.SELECTOR, disabled: true, label: "Question Type", options: getQTypeOptions(), width: "400px"},
   status: {
     columnNum: "M",
     type: QuestionType.SELECTOR,
@@ -799,7 +800,7 @@ export const ADD_ACTIVEPROJECT_CONFIG: ActiveProjectRow = {
     disabled: false,
     label: "GlobalLogic Email"
   },
-  qType: { columnNum: "J", type: QuestionType.SELECTOR, disabled: false, label: "Question Type", options: getQTypeOptions()},
+  qType: { columnNum: "J", type: QuestionType.INPUT, disabled: false, label: "Question Type", options: getQTypeOptions(), width: "400px"},
   status: {
     columnNum: "M",
     type: QuestionType.SELECTOR,

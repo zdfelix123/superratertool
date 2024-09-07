@@ -4,7 +4,13 @@ import Multiselect from "./Multiselect";
 
 import { TOP_FILTER_CONFIG, Project } from "../common/constants";
 import { arrToObject } from "../common/utils";
-import { PROJECT_TAB_CONFIG, USER_TAB_CONFIG, WORKFLOWFILTER_CONFIG, QTYPE_CONFIG} from "../common/constants";
+import { Button } from "@/components/ui/button";
+import {
+  PROJECT_TAB_CONFIG,
+  USER_TAB_CONFIG,
+  WORKFLOWFILTER_CONFIG,
+  QTYPE_CONFIG,
+} from "../common/constants";
 interface TopfilterProps {
   onNameChange?: Function;
   onBaseProjectChange: Function;
@@ -12,7 +18,7 @@ interface TopfilterProps {
   activeProjectFilter?: boolean;
   onProductionRoleChange?: Function;
   onWorkFlowChange?: Function;
-  onQTypeChange?:Function
+  onQTypeChange?: Function;
 }
 
 const Topbatchfilter = ({
@@ -22,7 +28,7 @@ const Topbatchfilter = ({
   activeProjectFilter,
   onProductionRoleChange,
   onWorkFlowChange,
-  onQTypeChange
+  onQTypeChange,
 }: TopfilterProps) => {
   const [config, setConfig] = useState(TOP_FILTER_CONFIG);
   const [data, setData] = useState([] as Project[]);
@@ -92,74 +98,84 @@ const Topbatchfilter = ({
     }
   };
 
-  const handleWorkFlowChange = (value: string) =>{
-    if (onWorkFlowChange){
+  const handleWorkFlowChange = (value: string) => {
+    if (onWorkFlowChange) {
       onWorkFlowChange(value);
     }
-  }
+  };
 
-  const handleQTypeChange=(value:string)=>{
-    if (onQTypeChange){
+  const handleQTypeChange = (value: string) => {
+    if (onQTypeChange) {
       onQTypeChange(value);
     }
+  };
+
+  const clearFilter = ()=>{
+
   }
 
   return (
     <div className="flex flex-col">
-    <div className="flex flex-row w-9/12">
-      <div className="mr-16">
-        <Dropdown
-          column={PROJECT_TAB_CONFIG[0]}
-          rowNumber={0}
-          onBaseProjectChange={handleBaseProjectChange}
-        ></Dropdown>
+      <div className="flex flex-row w-9/12">
+        <div className="mr-16">
+          <Dropdown
+            column={PROJECT_TAB_CONFIG[0]}
+            rowNumber={0}
+            onBaseProjectChange={handleBaseProjectChange}
+          ></Dropdown>
+        </div>
+        {!activeProjectFilter && (
+          <div className="mr-16">
+            <Dropdown
+              column={projectConfig}
+              rowNumber={0}
+              onBaseProjectChange={handleProjectChange}
+            ></Dropdown>
+          </div>
+        )}
+        {!activeProjectFilter && (
+          <div className="mr-16">
+            <Dropdown
+              column={USER_TAB_CONFIG[9]}
+              rowNumber={0}
+              onProductionRoleChange={handleProductionRoleChange}
+            ></Dropdown>
+          </div>
+        )}
+        {activeProjectFilter && (
+          <div className="mr-16">
+            <Dropdown
+              column={WORKFLOWFILTER_CONFIG}
+              rowNumber={0}
+              onWorkFlowChange={handleWorkFlowChange}
+            ></Dropdown>
+          </div>
+        )}
+        {activeProjectFilter && (
+          <div className="mr-16">
+            <Dropdown
+              column={QTYPE_CONFIG}
+              rowNumber={0}
+              onQTypeChange={handleQTypeChange}
+            ></Dropdown>
+          </div>
+        )}
+        <Button
+            onClick={clearFilter}
+            className="bg-blue-100 mr-8"
+          >
+            Clear Filter
+          </Button>
       </div>
-      {!activeProjectFilter && (
-        <div className="mr-16">
-          <Dropdown
-            column={projectConfig}
+      <div className="flex flex-row w-3/12 mr-4">
+        {!activeProjectFilter && (
+          <Multiselect
+            column={config}
             rowNumber={0}
-            onBaseProjectChange={handleProjectChange}
-          ></Dropdown>
-        </div>
-      )}
-      {!activeProjectFilter && (
-        <div className="mr-16">
-          <Dropdown
-            column={USER_TAB_CONFIG[9]}
-            rowNumber={0}
-            onProductionRoleChange={handleProductionRoleChange}
-          ></Dropdown>
-        </div>
-      )}
-      {activeProjectFilter && (
-        <div className="mr-16">
-          <Dropdown
-            column={WORKFLOWFILTER_CONFIG}
-            rowNumber={0}
-            onWorkFlowChange={handleWorkFlowChange}
-          ></Dropdown>
-        </div>
-      )}
-      {activeProjectFilter && (
-        <div className="mr-16">
-          <Dropdown
-            column={QTYPE_CONFIG}
-            rowNumber={0}
-            onQTypeChange={handleQTypeChange}
-          ></Dropdown>
-        </div>
-      )}
-    </div>
-    <div className="flex flex-row w-3/12 mr-4">
-    {!activeProjectFilter && (
-        <Multiselect
-          column={config}
-          rowNumber={0}
-          onNameChange={handleNameChange}
-        ></Multiselect>
-      )}
-    </div>
+            onNameChange={handleNameChange}
+          ></Multiselect>
+        )}
+      </div>
     </div>
   );
 };

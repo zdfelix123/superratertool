@@ -283,7 +283,6 @@ const Srroster = () => {
 
   const handleInputChange = (vr: ValueRange) => {
     const prev = JSON.parse(JSON.stringify(updates));
-    console.log("updates", updates);
     prev[vr.range] = vr;
     setUpdates(prev);
   };

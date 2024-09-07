@@ -26,14 +26,14 @@ const Addprojectrow = () => {
         <Button variant="outline">Add</Button>
       </DialogTrigger>
       <DialogContent className="w-200 overflow-auto bg-white">
-        <div className="grid gap-4">
-          <div className="space-y-2">
-            <h4 className="font-medium leading-none">Active Project</h4>
+        <div className="grid gap-4 ">
+          <div className="space-y-2 bg-sky-600 text-white p-6">
+            <h4 className="font-medium leading-none font-bold">Active Project</h4>
             <p className="text-sm text-muted-foreground">
               Add an entry for active project
             </p>
           </div>
-          <div className="grid gap-2 grid-cols-2">
+          <div className="grid gap-2 grid-cols-2 p-6">
             {Object.values(ADD_ACTIVEPROJECT_CONFIG)
               .filter((c) => (c as Cell).columnNum)
               .map((c) => (

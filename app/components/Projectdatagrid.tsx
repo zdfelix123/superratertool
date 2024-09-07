@@ -7,18 +7,31 @@ import {
   Column,
 } from "../common/constants";
 import TableEntry from "./TableEntry";
-import { getRowNumberFromId, convertActiveProjectRowToArray} from "../common/utils";
+import {
+  getRowNumberFromId,
+  convertActiveProjectRowToArray,
+} from "../common/utils";
 
 interface Projectdatagrid {
   data: ActiveProjectRow[];
   onCheckBoxChange: Function;
   onInputChange: Function;
-  activeproject?:boolean
+  activeproject?: boolean;
 }
 
-const Projectdatagrid = ({ data, onCheckBoxChange, onInputChange, activeproject}: Projectdatagrid) => {
+const Projectdatagrid = ({
+  data,
+  onCheckBoxChange,
+  onInputChange,
+  activeproject,
+}: Projectdatagrid) => {
   const [selectedRows, setSelectedRows] = useState(new Set());
-  const handleCheckBox = (e: ChangeEvent<HTMLInputElement>, rowNum: number, row:ActiveProjectRow) => {
+  const [topchecked, setTopchecked] = useState(false);
+  const handleCheckBox = (
+    e: ChangeEvent<HTMLInputElement>,
+    rowNum: number,
+    row: ActiveProjectRow
+  ) => {
     row.isChecked = !row.isChecked;
     if (e.target.checked) {
       const set = new Set(selectedRows);
@@ -32,14 +45,28 @@ const Projectdatagrid = ({ data, onCheckBoxChange, onInputChange, activeproject}
       setSelectedRows(set);
     }
   };
+  const handleTopCheckBox = (e: ChangeEvent<HTMLInputElement>) => {
+    setTopchecked(!topchecked);
+    if (e.target.checked) {
+      data.forEach((r) =>r.isChecked = true);
+    } else {
+      data.forEach((r) =>r.isChecked = false);
+    }
+  };
   return (
     <div>
       {data && (
         <table className="mt-6">
           <thead>
             <tr className="bg-sky-600 text-white">
-              { ACTIVEPROJECT_TABLEHEADER.map((c: string, index) => (
+              {ACTIVEPROJECT_TABLEHEADER.map((c: string, index) => (
                 <th key={index} className="capitalize text-left">
+                  {index === 0 && (<input
+                    type="checkbox"
+                    className="mt-4 ml-8"
+                    checked={topchecked}
+                    onChange={(e) => handleTopCheckBox(e)}
+                  ></input>)}
                   {c}
                 </th>
               ))}
@@ -47,24 +74,34 @@ const Projectdatagrid = ({ data, onCheckBoxChange, onInputChange, activeproject}
           </thead>
           <tbody>
             {data.map((row, i) => (
-              <tr className={i % 2===0? 'bg-zinc-200':""} key={i}>
+              <tr key={row.id} className={i % 2 === 0 ? "bg-zinc-200" : ""}>
                 {convertActiveProjectRowToArray(row).map((col, j) => (
-                  <td key={j}>
+                  <td key={(col as Cell).columnNum}>
                     {!(col as Cell).columnNum && (
                       <div className="">
                         <input
+                          key={row.id}
                           type="checkbox"
                           className="mr-4 ml-8"
-                          checked = {row.isChecked}
+                          checked={row.isChecked}
                           onChange={(e) =>
-                            handleCheckBox(e, getRowNumberFromId(col as string), row)
+                            handleCheckBox(
+                              e,
+                              getRowNumberFromId(col as string),
+                              row
+                            )
                           }
                         ></input>
                         {getRowNumberFromId(col as string)}
                       </div>
                     )}
                     <div className="capitalize min-w-40 mr-4">
-                      <TableEntry column={col as Cell} rowNumber={0} onInputChange={onInputChange} activeproject={true}/>
+                      <TableEntry
+                        column={col as Cell}
+                        rowNumber={0}
+                        onInputChange={onInputChange}
+                        activeproject={true}
+                      />
                     </div>
                   </td>
                 ))}
@@ -74,7 +111,7 @@ const Projectdatagrid = ({ data, onCheckBoxChange, onInputChange, activeproject}
         </table>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Projectdatagrid
+export default Projectdatagrid;

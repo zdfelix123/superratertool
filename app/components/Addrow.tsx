@@ -25,15 +25,15 @@ const Addrow = () => {
       <DialogTrigger asChild>
         <Button variant="outline">Add</Button>
       </DialogTrigger>
-      <DialogContent className="w-200 overflow-auto bg-white w-4/5">
+      <DialogContent className="overflow-auto bg-white w-11/12 max-h-full">
         <div className="grid gap-4">
-          <div className="space-y-2">
+          <div className="space-y-2 bg-sky-600 text-white p-6">
             <h4 className="font-medium leading-none">Roster</h4>
             <p className="text-sm text-muted-foreground">
               Add an entry for super rater roster
             </p>
           </div>
-          <div className="grid gap-2 grid-cols-2">
+          <div className="grid gap-2 grid-cols-2 p-6">
             {Object.values(ADD_SUPERRATEROW_MAP)
               .filter((c) => c.columnNum)
               .map((c) => (
