@@ -12,6 +12,7 @@ import {
   getRowNumberFromId,
   convertSuperRaterRowToArray,
 } from "../common/utils";
+import Rosterchangehistory from "./Rosterchangehistory";
 
 interface TableProps {
   data: SuperRaterRow[];
@@ -57,7 +58,7 @@ const Table = ({ data, onCheckBoxChange, onInputChange }: TableProps) => {
     }
   };
   return (
-    <div>
+    <div className="flex flex-row">
       <table className="mt-6">
         <thead>
           <tr className="bg-sky-600 text-white">
@@ -112,6 +113,7 @@ const Table = ({ data, onCheckBoxChange, onInputChange }: TableProps) => {
           ))}
         </tbody>
       </table>
+      {/* <Rosterchangehistory/> */}
     </div>
   );
 };

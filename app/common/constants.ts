@@ -966,6 +966,7 @@ export interface ValueRange {
   range: string;
   value: string;
   col?:string;
+  column?:Cell;
 }
 
 export type Record = {
@@ -999,4 +1000,8 @@ export interface Toprosterfilter {
   project: string;
   productionrole: string;
   superrator: string;
+}
+
+export interface ChangeHistory {
+  [key: number]: string
 }

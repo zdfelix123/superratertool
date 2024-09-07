@@ -58,14 +58,16 @@ const TableEntry = ({
       onInputChange({
         range: `Sheet2!${column.columnNum}${column.rowNum || 0}`,
         value: e.target.value,
-        col: column.columnNum
+        col: column.columnNum,
+        column,
       });
       return;
     }
     onInputChange({
       range: `Sheet1!${column.columnNum}${1 + (column.rowNum || 0)}`,
       value: e.target.value,
-      col: column.columnNum
+      col: column.columnNum,
+      column,
     });
   };
 
