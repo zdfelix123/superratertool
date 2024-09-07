@@ -308,7 +308,7 @@ const Srroster = () => {
     setUpdates(prev);
   };
 
-  const applyfilter = (filter: Toprosterfilter) => {
+  const applyfilter = (filter: Toprosterfilter, updateconfig = true) => {
     let filtered = dataWithFilter.data;
     console.log("filtered",filtered);
     if (filter.baseproject){
@@ -334,6 +334,9 @@ const Srroster = () => {
       );
     }
     setDataWithFilter({ ...dataWithFilter, filtered });
+    if (!updateconfig){
+      return;
+    }
     updatefilterconfig(filtered);
   };
   
@@ -360,7 +363,7 @@ const Srroster = () => {
     setClearfilter(false);
     if(!name) return;
     setToprosterfilter({ ...toprosterfilter, superrator:name });
-    applyfilter({ ...toprosterfilter, superrator:name });
+    applyfilter({ ...toprosterfilter, superrator:name }, false);
   };
 
   const handleCheckBoxChange = (selected: number[]) => {
