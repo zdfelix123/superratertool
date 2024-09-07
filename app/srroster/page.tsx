@@ -274,6 +274,7 @@ const Srroster = () => {
             };
           });
           setDataWithFilter({ data: rows, filtered: rows });
+          console.log("data with filter", dataWithFilter);
           updatefilterconfig(rows);
           return res.data.values;
         });
@@ -425,7 +426,7 @@ const Srroster = () => {
         </CardHeader>
       </Card>
 
-      <div className="ml-8 mt-8 flex flex-row">
+      {dataWithFilter.data && (<div className="ml-8 mt-8 flex flex-row">
         <Topbatchfilter
           onNameChange={handleNameChange}
           onBaseProjectChange={handleTopFilterBaseProjectChange}
@@ -437,7 +438,7 @@ const Srroster = () => {
         <Button onClick={clearFilter} className="bg-blue-100 mr-8">
           Clear Filter
         </Button>
-      </div>
+      </div>)}
       {/* <Datagrid data={srrosterRows}/> */}
       <div className="grid justify-items-center">
         {dataWithFilter.filtered ? (
