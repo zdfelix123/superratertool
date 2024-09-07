@@ -965,6 +965,7 @@ export enum Dimension {
 export interface ValueRange {
   range: string;
   value: string;
+  col?:string;
 }
 
 export type Record = {

@@ -62,13 +62,15 @@ const RosterDropdown = ({
       onInputChange({
         range: `Sheet2!${column.columnNum}${column.rowNum || 0}`,
         value: currentValue,
+        col: column.columnNum
       });
       return;
 
     }
     onInputChange({
       range: `Sheet1!${column.columnNum}${1 + (column.rowNum||0)}`,
-      value: currentValue
+      value: currentValue,
+      col: column.columnNum
     });
   };
 

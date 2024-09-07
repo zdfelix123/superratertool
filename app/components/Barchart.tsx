@@ -25,7 +25,6 @@ const Barchart = () => {
               .then((res) => res.json())
               .then((res) => {
                 const data = res.data.values[0];
-                console.log("data",data);
                 return res.data.values;
               });
           };

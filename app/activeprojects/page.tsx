@@ -332,7 +332,7 @@ const Activeprojects = () => {
           >
             Save
           </Button>
-          <Addprojectrow />
+          <Addprojectrow rowNumber={dataWithFilter.data &&dataWithFilter.data.length || 0} />
         </div>
         <div className="flex flex-row mr-16">
           <div className="text-sm font-medium mr-16 mt-2">

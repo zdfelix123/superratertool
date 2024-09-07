@@ -310,7 +310,6 @@ const Srroster = () => {
 
   const applyfilter = (filter: Toprosterfilter, updateconfig = true) => {
     let filtered = dataWithFilter.data;
-    console.log("filtered",filtered);
     if (filter.baseproject){
       filtered = dataWithFilter.data.filter((r) =>
         (r.baseProject.value || "").startsWith(filter.baseproject)
@@ -467,7 +466,7 @@ const Srroster = () => {
           >
             Save
           </Button>
-          <Addrow />
+          <Addrow rowNumber={dataWithFilter.data &&dataWithFilter.data.length || 0}/>
         </div>
         <div className="flex flex-row mr-16">
           <div className="text-sm font-medium mr-16 mt-2">

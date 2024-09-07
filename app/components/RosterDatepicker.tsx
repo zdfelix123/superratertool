@@ -43,12 +43,14 @@ const RosterDatepicker = ({
       onInputChange({
         range: `Sheet2!${column.columnNum}${column.rowNum || 0}`,
         value: formatDate(value),
+        col: column.columnNum
       });
       return;
     }
     onInputChange({
       range: `Sheet1!${column.columnNum}${1 + (column.rowNum || 0)}`,
       value: formatDate(value),
+      col: column.columnNum
     });
   };
   return (
