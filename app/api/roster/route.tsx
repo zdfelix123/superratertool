@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
       valueInputOption: "USER_ENTERED",
       requestBody: {
         values: [
-          [body],
+          body,
         ],
       },
     });

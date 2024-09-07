@@ -5,6 +5,8 @@ import {
   ADD_ACTIVEPROJECT_CONFIG,
   Cell,
   ActiveProjectRow,
+  ValueRange,
+  Record
 } from "../common/constants";
 import {
   Dialog,
@@ -16,10 +18,43 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import TableEntry from "./TableEntry";
+import { useEffect, useState } from "react";
+import { titleToNumber } from "../common/utils";
 
-const Addprojectrow = () => {
-  const save = () => {};
-  const handleInputChange = () => {};
+interface AddprojectProps {
+  rowNumber: number;
+}
+const Addprojectrow = ({ rowNumber }: AddprojectProps) => {
+  const [updates, setUpdates] = useState({} as Record);
+  const save = () => {
+    if (!Object.keys(updates).length) {
+      return;
+    }
+    const updateValues = new Array(40).fill('');
+    updateValues[1] = rowNumber + 5;
+    Object.values(updates).forEach(v=>{
+      const index = titleToNumber(v.col||'A');
+      updateValues[index-1] = v.value;
+    });
+    const postData = async () => {
+      const req = new Request(`/api/roster?range=Sheet2!B:B`);
+      const response = await fetch(req, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updateValues),
+      });
+      return response;
+    };
+    postData();
+  };
+  const handleInputChange = (vr: ValueRange) => {
+    const prev = JSON.parse(JSON.stringify(updates));
+    prev[vr.range] = vr;
+    setUpdates(prev);
+  };
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -54,7 +89,7 @@ const Addprojectrow = () => {
           </div>
         </div>
         <DialogClose>
-          <Button onClick={save} className="bg-blue-100 mr-8 w-28">
+          <Button onClick={save} className="bg-blue-100 mr-8 w-28 ml-6 mb-4">
             Save
           </Button>
         </DialogClose>

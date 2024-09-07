@@ -115,3 +115,10 @@ export function convertActiveProjectRowToArray(row: ActiveProjectRow) {
     input = input.filter(s=>s);
     return Array.from(new Set(input)).map(s=>({value:s, label:s}));
   }
+
+  export function getColumnFromRange(input: string){
+    if(!input){
+      return '';
+    }
+
+  }

@@ -21,9 +21,10 @@ import {
   PROJECT_TAB_CONFIG,
   QTYPE_CONFIG,
   Topprojectfilter,
-  WORKFLOWFILTER_CONFIG
+  WORKFLOWFILTER_CONFIG,
+  ChangeHistory
 } from "../common/constants";
-import { titleToNumber, getRowNumber, getOptions} from "../common/utils";
+import { titleToNumber, getRowNumber, getOptions, formatDate} from "../common/utils";
 import loading from "../../public/loading.gif";
 import Addprojectrow from "../components/Addprojectrow";
 
@@ -55,6 +56,46 @@ const Activeprojects = () => {
     workflowconfig.options = workflowoptions
     qtypeconfig.options = qtypeoptions;
     setTopprojectfilterconfig([projectconfig, workflowconfig, qtypeconfig]);
+  };
+  const convertToChangeHistory = (updates: Record) => {
+    const changes = {} as ChangeHistory;
+    Object.values(updates).forEach((update) => {
+      console.log("update", update.column?.rowNum);
+      if (update.column && update.column.rowNum) {
+        if (changes[update.column?.rowNum]) {
+          const message = `Row: ${update.column.rowNum-6} Field: ${
+            update.column.label
+          }, updated: ${formatDate(new Date(Date.now()))}`;
+          changes[update.column?.rowNum] =
+            changes[update.column?.rowNum] + " " + message;
+        } else {
+          const message = `Row: ${update.column.rowNum-6} Field: ${
+            update.column.label
+          }, updated: ${formatDate(new Date(Date.now()))}`;
+          changes[update.column?.rowNum] = message;
+        }
+      }
+    });
+    return changes;
+  };
+
+  const writeToChangeHistory = (changes: ChangeHistory) => {
+    console.log("changes", changes);
+    Object.entries(changes).forEach(([key, value]) => {
+      const writedata = async () => {
+        const req = new Request(`/api/roster?range=ProjectChange!B${key}`);
+        const response = await fetch(req, {
+          method: "PUT",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(value),
+        });
+        return response;
+      };
+      writedata();
+    });
   };
   useEffect(() => {
     const fetchData = async () => {
@@ -197,6 +238,8 @@ const Activeprojects = () => {
       };
       postData();
     });
+    const changes = convertToChangeHistory(updates);
+    writeToChangeHistory(changes);
   }, [saveValues]);
 
   const applyfilter = (filter: Topprojectfilter) => {
@@ -332,7 +375,7 @@ const Activeprojects = () => {
           >
             Save
           </Button>
-          <Addprojectrow />
+          <Addprojectrow rowNumber={dataWithFilter.data &&dataWithFilter.data.length || 0} />
         </div>
         <div className="flex flex-row mr-16">
           <div className="text-sm font-medium mr-16 mt-2">

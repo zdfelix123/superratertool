@@ -70,7 +70,6 @@ const Roster = () => {
             }
           }
           setProjectTabs(projectTabsWithVal);
-          console.log("result", res.data.values[0]);
           return res.data.values;
         });
     };

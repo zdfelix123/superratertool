@@ -21,10 +21,16 @@ import {
   USER_TAB_CONFIG,
   TOP_FILTER_CONFIG,
   Toprosterfilter,
+  ChangeHistory,
 } from "../common/constants";
 
 import { useEffect, useState } from "react";
-import { titleToNumber, getRowNumber, getOptions} from "../common/utils";
+import {
+  titleToNumber,
+  getRowNumber,
+  getOptions,
+  formatDate,
+} from "../common/utils";
 import loading from "../../public/loading.gif";
 
 const Srroster = () => {
@@ -48,16 +54,74 @@ const Srroster = () => {
   });
 
   const updatefilterconfig = (rows: SuperRaterRow[]) => {
-    const [baseprojectconfig, projectconfig, productionroleconfig, superratorconfig] = toprosterfilterconfig;
-    const baseprojectoptions = getOptions(rows.map(row=>row.baseProject.value||''));
-    const projectoptions = getOptions(rows.map(row=>row.project.value||''));
-    const productionrolewoptions = getOptions(rows.map(row=>row.productionRole.value||''));
-    const superratoroptions = getOptions(rows.map(row=>row.superRaterName.value||''));
+    const [
+      baseprojectconfig,
+      projectconfig,
+      productionroleconfig,
+      superratorconfig,
+    ] = toprosterfilterconfig;
+    const baseprojectoptions = getOptions(
+      rows.map((row) => row.baseProject.value || "")
+    );
+    const projectoptions = getOptions(
+      rows.map((row) => row.project.value || "")
+    );
+    const productionrolewoptions = getOptions(
+      rows.map((row) => row.productionRole.value || "")
+    );
+    const superratoroptions = getOptions(
+      rows.map((row) => row.superRaterName.value || "")
+    );
     baseprojectconfig.options = baseprojectoptions;
     projectconfig.options = projectoptions;
-    productionroleconfig.options = productionrolewoptions
+    productionroleconfig.options = productionrolewoptions;
     superratorconfig.options = superratoroptions;
-    setToprosterfilterconfig([baseprojectconfig, projectconfig, productionroleconfig, superratorconfig]);
+    setToprosterfilterconfig([
+      baseprojectconfig,
+      projectconfig,
+      productionroleconfig,
+      superratorconfig,
+    ]);
+  };
+
+  const convertToChangeHistory = (updates: Record) => {
+    const changes = {} as ChangeHistory;
+    Object.values(updates).forEach((update) => {
+      console.log("update", update.column?.rowNum);
+      if (update.column && update.column.rowNum) {
+        if (changes[update.column?.rowNum]) {
+          const message = `Row: ${update.column.rowNum} Field: ${
+            update.column.label
+          }, updated: ${formatDate(new Date(Date.now()))}`;
+          changes[update.column?.rowNum] =
+            changes[update.column?.rowNum] + " " + message;
+        } else {
+          const message = `Row: ${update.column.rowNum} Field: ${
+            update.column.label
+          }, updated: ${formatDate(new Date(Date.now()))}`;
+          changes[update.column?.rowNum] = message;
+        }
+      }
+    });
+    return changes;
+  };
+
+  const writeToChangeHistory = (changes: ChangeHistory) => {
+    Object.entries(changes).forEach(([key, value]) => {
+      const writedata = async () => {
+        const req = new Request(`/api/roster?range=RosterChange!B${key}`);
+        const response = await fetch(req, {
+          method: "PUT",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(value),
+        });
+        return response;
+      };
+      writedata();
+    });
   };
   useEffect(() => {
     const fetchData = async () => {
@@ -300,6 +364,8 @@ const Srroster = () => {
       };
       postData();
     });
+    const changes = convertToChangeHistory(updates);
+    writeToChangeHistory(changes);
   }, [saveValues]);
 
   const handleInputChange = (vr: ValueRange) => {
@@ -310,22 +376,25 @@ const Srroster = () => {
 
   const applyfilter = (filter: Toprosterfilter, updateconfig = true) => {
     let filtered = dataWithFilter.data;
-    console.log("filtered",filtered);
-    if (filter.baseproject){
+    if (filter.baseproject) {
       filtered = dataWithFilter.data.filter((r) =>
         (r.baseProject.value || "").startsWith(filter.baseproject)
       );
     }
 
     if (filter.project) {
-      filtered = filtered.filter((r) => (r.project.value || "") === filter.project);
-    };
+      filtered = filtered.filter(
+        (r) => (r.project.value || "") === filter.project
+      );
+    }
     if (filter.productionrole) {
-      filtered = filtered.filter((r) => (r.productionRole.value || "") === filter.productionrole);
-    };
-    if (filter.superrator){
-      const names = filter.superrator.split(",").filter(n=>n);
-  
+      filtered = filtered.filter(
+        (r) => (r.productionRole.value || "") === filter.productionrole
+      );
+    }
+    if (filter.superrator) {
+      const names = filter.superrator.split(",").filter((n) => n);
+
       if (!dataWithFilter.data) {
         return;
       }
@@ -334,12 +403,12 @@ const Srroster = () => {
       );
     }
     setDataWithFilter({ ...dataWithFilter, filtered });
-    if (!updateconfig){
+    if (!updateconfig) {
       return;
     }
     updatefilterconfig(filtered);
   };
-  
+
   const handleTopFilterBaseProjectChange = (baseProject: string) => {
     setClearfilter(false);
     const prefix = baseProject.slice(0, 4);
@@ -361,9 +430,9 @@ const Srroster = () => {
 
   const handleNameChange = (name: string) => {
     setClearfilter(false);
-    if(!name) return;
-    setToprosterfilter({ ...toprosterfilter, superrator:name });
-    applyfilter({ ...toprosterfilter, superrator:name }, false);
+    if (!name) return;
+    setToprosterfilter({ ...toprosterfilter, superrator: name });
+    applyfilter({ ...toprosterfilter, superrator: name }, false);
   };
 
   const handleCheckBoxChange = (selected: number[]) => {
@@ -426,19 +495,21 @@ const Srroster = () => {
         </CardHeader>
       </Card>
 
-      <div className="ml-8 mt-8 flex flex-row">
-        <Topbatchfilter
-          onNameChange={handleNameChange}
-          onBaseProjectChange={handleTopFilterBaseProjectChange}
-          onProjectChange={handleTopFilterProjectChange}
-          onProductionRoleChange={handleTopFilterProductionRoleChange}
-          toprosterfilterconfig={toprosterfilterconfig}
-          clearfilter={clearfilter}
-        />
-        <Button onClick={clearFilter} className="bg-blue-100 mr-8">
-          Clear Filter
-        </Button>
-      </div>
+      {dataWithFilter.data && (
+        <div className="ml-8 mt-8 flex flex-row">
+          <Topbatchfilter
+            onNameChange={handleNameChange}
+            onBaseProjectChange={handleTopFilterBaseProjectChange}
+            onProjectChange={handleTopFilterProjectChange}
+            onProductionRoleChange={handleTopFilterProductionRoleChange}
+            toprosterfilterconfig={toprosterfilterconfig}
+            clearfilter={clearfilter}
+          />
+          <Button onClick={clearFilter} className="bg-blue-100 mr-8">
+            Clear Filter
+          </Button>
+        </div>
+      )}
       {/* <Datagrid data={srrosterRows}/> */}
       <div className="grid justify-items-center">
         {dataWithFilter.filtered ? (
@@ -467,7 +538,9 @@ const Srroster = () => {
           >
             Save
           </Button>
-          <Addrow />
+          <Addrow
+            rowNumber={(dataWithFilter.data && dataWithFilter.data.length) || 0}
+          />
         </div>
         <div className="flex flex-row mr-16">
           <div className="text-sm font-medium mr-16 mt-2">

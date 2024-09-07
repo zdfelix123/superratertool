@@ -12,17 +12,43 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import { useEffect, useState } from "react";
-import { ADD_SUPERRATEROW_MAP, Record, ValueRange} from "../common/constants";
+import { ADD_SUPERRATEROW_MAP, Record, ValueRange } from "../common/constants";
 import TableEntry from "./TableEntry";
+import { titleToNumber } from "../common/utils";
 
-const Addrow = () => {
+interface AddrowProps {
+  rowNumber: number;
+}
+
+const Addrow = ({ rowNumber }: AddrowProps) => {
   const [updates, setUpdates] = useState({} as Record);
-  const save = () => {};
+  const save = () => {
+    if (!Object.keys(updates).length) {
+      return;
+    }
+    const updateValues = new Array(40).fill('');
+    updateValues[0] = rowNumber + 3;
+    Object.values(updates).forEach(v=>{
+      const index = titleToNumber(v.col||'A');
+      updateValues[index-2] = v.value;
+    });
+    const postData = async () => {
+      const req = new Request(`/api/roster?range=Sheet1!B:B`);
+      const response = await fetch(req, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updateValues),
+      });
+      return response;
+    };
+    postData();
+  };
   const handleInputChange = (vr: ValueRange) => {
-    console.log("vr", vr);
     const prev = JSON.parse(JSON.stringify(updates));
     prev[vr.range] = vr;
-    console.log("prev", prev);
     setUpdates(prev);
   };
   return (
@@ -33,7 +59,9 @@ const Addrow = () => {
       <DialogContent className="overflow-auto bg-white w-11/12 max-h-full">
         <div className="grid gap-4">
           <DialogHeader className="space-y-2 bg-sky-600 text-white p-6">
-            <DialogTitle className="font-medium leading-none">Roster</DialogTitle>
+            <DialogTitle className="font-medium leading-none">
+              Roster
+            </DialogTitle>
             <p className="text-sm text-muted-foreground">
               Add an entry for super rater roster
             </p>
@@ -59,7 +87,7 @@ const Addrow = () => {
           </div>
         </div>
         <DialogClose asChild>
-          <Button onClick={save} className="bg-blue-100 mr-8 w-28">
+          <Button onClick={save} className="bg-blue-100 mr-8 w-28 ml-6 mb-4">
             Save
           </Button>
         </DialogClose>
