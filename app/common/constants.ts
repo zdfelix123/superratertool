@@ -1,4 +1,8 @@
-import { getCurrentTaskOptions, getQTypeOptions,getWorkFlowOptions} from "./currentTaskData";
+import {
+  getCurrentTaskOptions,
+  getQTypeOptions,
+  getWorkFlowOptions,
+} from "./currentTaskData";
 export interface Column {
   id?: string;
   type?: QuestionType;
@@ -398,6 +402,7 @@ export const PROJECT_TAB_CONFIG: Column[] = [
 export interface Cell extends Column {
   disabled?: boolean;
   rowNum?: number;
+  width?: string;
 }
 
 export interface SuperRaterRow {
@@ -425,7 +430,7 @@ export interface SuperRaterRow {
   assignedProject: Cell;
   prodLead: Cell;
   prodLeadLdap: Cell;
-  isChecked?:boolean;
+  isChecked?: boolean;
 }
 
 export const SUPERRATEROW_MAP: SuperRaterRow = {
@@ -442,104 +447,139 @@ export const SUPERRATEROW_MAP: SuperRaterRow = {
     disabled: true,
     label: "Super Rater LDAP",
   },
-  pod: { columnNum: "E", type: QuestionType.INPUT, disabled: true, label: "Pod"},
-  location: { columnNum: "Q", type: QuestionType.INPUT, disabled: true, label: "Location"},
+  pod: {
+    columnNum: "E",
+    type: QuestionType.INPUT,
+    disabled: true,
+    label: "Pod",
+  },
+  location: {
+    columnNum: "Q",
+    type: QuestionType.INPUT,
+    disabled: true,
+    label: "Location",
+  },
   globalLogicEmail: {
     columnNum: "AC",
     type: QuestionType.INPUT,
     disabled: true,
-    label: "GlobalLogic Email"
+    label: "GlobalLogic Email",
   },
-  googleEmail: { columnNum: "Z", type: QuestionType.INPUT, disabled: true, label: "Google Email"},
+  googleEmail: {
+    columnNum: "Z",
+    type: QuestionType.INPUT,
+    disabled: true,
+    label: "Google Email",
+  },
   onboardingStatus: {
     columnNum: "K",
     type: QuestionType.SELECTOR,
     options: ONBOARDING_STATUS,
     disabled: true,
-    label: "Onboarding Status"
+    label: "Onboarding Status",
   },
   highestLevelofEducation: {
     columnNum: "R",
     type: QuestionType.SELECTOR,
     options: EDUCATION,
     disabled: true,
-    label: "Highest Level of Education"
+    label: "Highest Level of Education",
   },
   allAssociatedRoles: {
     columnNum: "W",
     type: QuestionType.MULTISELECT,
     options: ROLES,
     disabled: true,
-    label: "All Associated Roles"
+    label: "All Associated Roles",
   },
   productionRole: {
     columnNum: "N",
     type: QuestionType.SELECTOR,
     options: PRODUCTIONROLE,
     disabled: true,
-    label: "Production Role"
+    label: "Production Role",
   },
   vendorOnboardedDate: {
     columnNum: "J",
     type: QuestionType.DATEPICKER,
     disabled: true,
-    label: "Vendor Onboarded Date"
+    label: "Vendor Onboarded Date",
   },
   productionReadyDate: {
     columnNum: "L",
     type: QuestionType.DATEPICKER,
     disabled: true,
-    label: "Production Ready Date"
+    label: "Production Ready Date",
   },
   estDateofProdStart: {
     columnNum: "M",
     type: QuestionType.DATEPICKER,
     disabled: true,
-    label: "Est Date of Prod Start"
+    label: "Est Date of Prod Start",
   },
   releasedfromOnboarding: {
     columnNum: "AA",
     type: QuestionType.DATEPICKER,
     disabled: true,
-    label: "Released from Onboarding"
+    label: "Released from Onboarding",
   },
   majorAreaofStudy: {
     columnNum: "S",
     type: QuestionType.INPUT,
     disabled: true,
-    label: "Major Area of Study"
+    label: "Major Area of Study",
   },
   technicalLanguageSkills: {
     columnNum: "X",
     type: QuestionType.INPUT,
     disabled: true,
-    label: "Technical Language Skills"
+    label: "Technical Language Skills",
   },
-  notes: { columnNum: "F", type: QuestionType.INPUT, disabled: true, label: "Notes"},
+  notes: {
+    columnNum: "F",
+    type: QuestionType.INPUT,
+    disabled: true,
+    label: "Notes",
+  },
   baseProject: {
     columnNum: "I",
     type: QuestionType.SELECTOR,
     options: BASEPROJECT,
     disabled: true,
-    label: "Base Project"
+    label: "Base Project",
   },
   project: {
     columnNum: "H",
     type: QuestionType.SELECTOR,
     options: PROJECTWORKTYPE,
     disabled: true,
-        label: "Project"
+    label: "Project",
   },
   currentTask: {
     columnNum: "G",
     type: QuestionType.SELECTOR,
     options: CURRENTTASK,
     disabled: true,
-        label: "Current Task"
+    label: "Current Task",
   },
-  assignedProject: { columnNum: "V", type: QuestionType.INPUT, disabled: true, label: "Assigned Project"},
-  prodLead: { columnNum: "O", type: QuestionType.INPUT, disabled: true, label: "Prod Lead"},
-  prodLeadLdap: { columnNum: "P", type: QuestionType.INPUT, disabled: true, label: "Prod Lead Ldap"},
+  assignedProject: {
+    columnNum: "V",
+    type: QuestionType.INPUT,
+    disabled: true,
+    label: "Assigned Project",
+  },
+  prodLead: {
+    columnNum: "O",
+    type: QuestionType.INPUT,
+    disabled: true,
+    label: "Prod Lead",
+  },
+  prodLeadLdap: {
+    columnNum: "P",
+    type: QuestionType.INPUT,
+    disabled: true,
+    label: "Prod Lead Ldap",
+  },
   isChecked: false,
 };
 
@@ -557,104 +597,139 @@ export const ADD_SUPERRATEROW_MAP: SuperRaterRow = {
     disabled: false,
     label: "Super Rater LDAP",
   },
-  pod: { columnNum: "E", type: QuestionType.INPUT, disabled: false, label: "Pod"},
-  location: { columnNum: "Q", type: QuestionType.INPUT, disabled: false, label: "Location"},
+  pod: {
+    columnNum: "E",
+    type: QuestionType.INPUT,
+    disabled: false,
+    label: "Pod",
+  },
+  location: {
+    columnNum: "Q",
+    type: QuestionType.INPUT,
+    disabled: false,
+    label: "Location",
+  },
   globalLogicEmail: {
     columnNum: "AC",
     type: QuestionType.INPUT,
     disabled: false,
-    label: "GlobalLogic Email"
+    label: "GlobalLogic Email",
   },
-  googleEmail: { columnNum: "Z", type: QuestionType.INPUT, disabled: false, label: "Google Email"},
+  googleEmail: {
+    columnNum: "Z",
+    type: QuestionType.INPUT,
+    disabled: false,
+    label: "Google Email",
+  },
   onboardingStatus: {
     columnNum: "K",
     type: QuestionType.SELECTOR,
     options: ONBOARDING_STATUS,
     disabled: false,
-    label: "Onboarding Status"
+    label: "Onboarding Status",
   },
   highestLevelofEducation: {
     columnNum: "R",
     type: QuestionType.SELECTOR,
     options: EDUCATION,
     disabled: false,
-    label: "Highest Level of Education"
+    label: "Highest Level of Education",
   },
   allAssociatedRoles: {
     columnNum: "W",
     type: QuestionType.MULTISELECT,
     options: ROLES,
     disabled: false,
-    label: "All Associated Roles"
+    label: "All Associated Roles",
   },
   productionRole: {
     columnNum: "N",
     type: QuestionType.SELECTOR,
     options: PRODUCTIONROLE,
     disabled: false,
-    label: "Production Role"
+    label: "Production Role",
   },
   vendorOnboardedDate: {
     columnNum: "J",
     type: QuestionType.DATEPICKER,
     disabled: false,
-    label: "Vendor Onboarded Date"
+    label: "Vendor Onboarded Date",
   },
   productionReadyDate: {
     columnNum: "L",
     type: QuestionType.DATEPICKER,
     disabled: false,
-    label: "Production Ready Date"
+    label: "Production Ready Date",
   },
   estDateofProdStart: {
     columnNum: "M",
     type: QuestionType.DATEPICKER,
     disabled: false,
-    label: "Est Date of Prod Start"
+    label: "Est Date of Prod Start",
   },
   releasedfromOnboarding: {
     columnNum: "AA",
     type: QuestionType.DATEPICKER,
     disabled: false,
-    label: "Released from Onboarding"
+    label: "Released from Onboarding",
   },
   majorAreaofStudy: {
     columnNum: "S",
     type: QuestionType.INPUT,
     disabled: false,
-    label: "Major Area of Study"
+    label: "Major Area of Study",
   },
   technicalLanguageSkills: {
     columnNum: "X",
     type: QuestionType.INPUT,
     disabled: false,
-    label: "Technical Language Skills"
+    label: "Technical Language Skills",
   },
-  notes: { columnNum: "F", type: QuestionType.INPUT, disabled: false, label: "Notes"},
+  notes: {
+    columnNum: "F",
+    type: QuestionType.INPUT,
+    disabled: false,
+    label: "Notes",
+  },
   baseProject: {
     columnNum: "I",
     type: QuestionType.SELECTOR,
     options: BASEPROJECT,
     disabled: false,
-    label: "Base Project"
+    label: "Base Project",
   },
   project: {
     columnNum: "H",
     type: QuestionType.SELECTOR,
     options: PROJECTWORKTYPE,
     disabled: false,
-        label: "Project"
+    label: "Project",
   },
   currentTask: {
     columnNum: "G",
     type: QuestionType.SELECTOR,
     options: CURRENTTASK,
     disabled: false,
-        label: "Current Task"
+    label: "Current Task",
   },
-  assignedProject: { columnNum: "V", type: QuestionType.INPUT, disabled: false, label: "Assigned Project"},
-  prodLead: { columnNum: "O", type: QuestionType.INPUT, disabled: false, label: "Prod Lead"},
-  prodLeadLdap: { columnNum: "P", type: QuestionType.INPUT, disabled: false, label: "Prod Lead Ldap"},
+  assignedProject: {
+    columnNum: "V",
+    type: QuestionType.INPUT,
+    disabled: false,
+    label: "Assigned Project",
+  },
+  prodLead: {
+    columnNum: "O",
+    type: QuestionType.INPUT,
+    disabled: false,
+    label: "Prod Lead",
+  },
+  prodLeadLdap: {
+    columnNum: "P",
+    type: QuestionType.INPUT,
+    disabled: false,
+    label: "Prod Lead Ldap",
+  },
   isChecked: false,
 };
 
@@ -662,8 +737,6 @@ export interface DataWithFilter {
   data: SuperRaterRow[];
   filtered: SuperRaterRow[];
 }
-
-
 
 export const SUPERRATER_TABLEHEADER = [
   "",
@@ -710,10 +783,10 @@ export interface ActiveProjectRow {
   endDate: Cell;
   reviewCompleted: Cell;
   averageHandlingTime: Cell;
-  isChecked?:boolean;
+  isChecked?: boolean;
 }
 
-export interface ProjectDataWithFilter{
+export interface ProjectDataWithFilter {
   data: ActiveProjectRow[];
   filtered: ActiveProjectRow[];
 }
@@ -733,47 +806,64 @@ export const ACTIVEPROJECT_CONFIG: ActiveProjectRow = {
     label: "Project",
     options: BASEPROJECT,
   },
-  workflow: { columnNum: "G", type: QuestionType.INPUT, disabled: true, label: "Work Flow"},
-  tasksubtype: { columnNum: "H", type: QuestionType.INPUT, disabled: true, label: "Task Subtype"},
+  workflow: {
+    columnNum: "G",
+    type: QuestionType.INPUT,
+    disabled: true,
+    label: "Work Flow",
+  },
+  tasksubtype: {
+    columnNum: "H",
+    type: QuestionType.INPUT,
+    disabled: true,
+    label: "Task Subtype",
+  },
   workspace: {
     columnNum: "I",
     type: QuestionType.INPUT,
     disabled: true,
-    label: "GlobalLogic Email"
+    label: "GlobalLogic Email",
   },
-  qType: { columnNum: "J", type: QuestionType.SELECTOR, disabled: true, label: "Question Type", options: getQTypeOptions()},
+  qType: {
+    columnNum: "J",
+    type: QuestionType.SELECTOR,
+    disabled: true,
+    label: "Question Type",
+    options: getQTypeOptions(),
+    width: "400px",
+  },
   status: {
     columnNum: "M",
     type: QuestionType.SELECTOR,
     disabled: true,
     label: "Status",
-    options: WORKSTATUS
+    options: WORKSTATUS,
   },
   startDate: {
     columnNum: "N",
     type: QuestionType.DATEPICKER,
     disabled: true,
-    label: "Start Date"
+    label: "Start Date",
   },
   endDate: {
     columnNum: "P",
     type: QuestionType.DATEPICKER,
     disabled: true,
-    label: "End Date"
+    label: "End Date",
   },
   reviewCompleted: {
     columnNum: "R",
     type: QuestionType.INPUT,
     disabled: true,
-    label: "Review Completed"
+    label: "Review Completed",
   },
   averageHandlingTime: {
     columnNum: "U",
     type: QuestionType.INPUT,
     disabled: true,
-    label: "Average Handling Time"
+    label: "Average Handling Time",
   },
-  isChecked: false
+  isChecked: false,
 };
 
 export const ADD_ACTIVEPROJECT_CONFIG: ActiveProjectRow = {
@@ -791,47 +881,64 @@ export const ADD_ACTIVEPROJECT_CONFIG: ActiveProjectRow = {
     label: "Project",
     options: BASEPROJECT,
   },
-  workflow: { columnNum: "G", type: QuestionType.INPUT, disabled: false, label: "Work Flow"},
-  tasksubtype: { columnNum: "H", type: QuestionType.INPUT, disabled: false, label: "Task Subtype"},
+  workflow: {
+    columnNum: "G",
+    type: QuestionType.INPUT,
+    disabled: false,
+    label: "Work Flow",
+  },
+  tasksubtype: {
+    columnNum: "H",
+    type: QuestionType.INPUT,
+    disabled: false,
+    label: "Task Subtype",
+  },
   workspace: {
     columnNum: "I",
     type: QuestionType.INPUT,
     disabled: false,
-    label: "GlobalLogic Email"
+    label: "GlobalLogic Email",
   },
-  qType: { columnNum: "J", type: QuestionType.SELECTOR, disabled: false, label: "Question Type", options: getQTypeOptions()},
+  qType: {
+    columnNum: "J",
+    type: QuestionType.INPUT,
+    disabled: false,
+    label: "Question Type",
+    options: getQTypeOptions(),
+    width: "400px",
+  },
   status: {
     columnNum: "M",
     type: QuestionType.SELECTOR,
     disabled: false,
     label: "Status",
-    options: WORKSTATUS
+    options: WORKSTATUS,
   },
   reviewCompleted: {
     columnNum: "R",
     type: QuestionType.INPUT,
     disabled: false,
-    label: "Review Completed"
+    label: "Review Completed",
   },
   averageHandlingTime: {
     columnNum: "U",
     type: QuestionType.INPUT,
     disabled: false,
-    label: "Average Handling Time"
+    label: "Average Handling Time",
   },
   startDate: {
     columnNum: "N",
     type: QuestionType.DATEPICKER,
     disabled: false,
-    label: "Start Date"
+    label: "Start Date",
   },
   endDate: {
     columnNum: "P",
     type: QuestionType.DATEPICKER,
     disabled: false,
-    label: "End Date"
+    label: "End Date",
   },
-  isChecked: false
+  isChecked: false,
 };
 
 export const ACTIVEPROJECT_TABLEHEADER = [
@@ -846,7 +953,7 @@ export const ACTIVEPROJECT_TABLEHEADER = [
   "start Date",
   "end Date",
   "review Completed",
-  "average Handling Time"
+  "average Handling Time",
 ];
 
 export enum Dimension {
@@ -856,15 +963,13 @@ export enum Dimension {
 }
 
 export interface ValueRange {
-  range: string,
-  value: string
+  range: string;
+  value: string;
 }
-
 
 export type Record = {
   [key: string]: ValueRange;
 };
-
 
 export const WORKFLOWFILTER_CONFIG = {
   label: "Work Flow",
@@ -881,3 +986,16 @@ export const QTYPE_CONFIG = {
   type: QuestionType.SELECTOR,
   options: getQTypeOptions(),
 };
+
+export interface Topprojectfilter {
+  baseproject: string;
+  workflow: string;
+  qtype: string;
+}
+
+export interface Toprosterfilter {
+  baseproject: string;
+  project: string;
+  productionrole: string;
+  superrator: string;
+}

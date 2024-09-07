@@ -17,10 +17,14 @@ import {
   DataWithFilter,
   ValueRange,
   Record,
+  PROJECT_TAB_CONFIG,
+  USER_TAB_CONFIG,
+  TOP_FILTER_CONFIG,
+  Toprosterfilter,
 } from "../common/constants";
 
 import { useEffect, useState } from "react";
-import { titleToNumber, getRowNumber } from "../common/utils";
+import { titleToNumber, getRowNumber, getOptions} from "../common/utils";
 import loading from "../../public/loading.gif";
 
 const Srroster = () => {
@@ -29,6 +33,32 @@ const Srroster = () => {
   const [offset, setOffset] = useState(0);
   const [saveValues, setSaveValues] = useState(false);
   const [updates, setUpdates] = useState({} as Record);
+  const [clearfilter, setClearfilter] = useState(false);
+  const [toprosterfilterconfig, setToprosterfilterconfig] = useState([
+    PROJECT_TAB_CONFIG[0],
+    PROJECT_TAB_CONFIG[1],
+    USER_TAB_CONFIG[9],
+    TOP_FILTER_CONFIG,
+  ]);
+  const [toprosterfilter, setToprosterfilter] = useState({
+    baseproject: "",
+    project: "",
+    productionrole: "",
+    superrator: "",
+  });
+
+  const updatefilterconfig = (rows: SuperRaterRow[]) => {
+    const [baseprojectconfig, projectconfig, productionroleconfig, superratorconfig] = toprosterfilterconfig;
+    const baseprojectoptions = getOptions(rows.map(row=>row.baseProject.value||''));
+    const projectoptions = getOptions(rows.map(row=>row.project.value||''));
+    const productionrolewoptions = getOptions(rows.map(row=>row.productionRole.value||''));
+    const superratoroptions = getOptions(rows.map(row=>row.superRaterName.value||''));
+    baseprojectconfig.options = baseprojectoptions;
+    projectconfig.options = projectoptions;
+    productionroleconfig.options = productionrolewoptions
+    superratorconfig.options = superratoroptions;
+    setToprosterfilterconfig([baseprojectconfig, projectconfig, productionroleconfig, superratorconfig]);
+  };
   useEffect(() => {
     const fetchData = async () => {
       const queryParams = "range=Sheet1!B2:AG1582";
@@ -244,6 +274,7 @@ const Srroster = () => {
             };
           });
           setDataWithFilter({ data: rows, filtered: rows });
+          updatefilterconfig(rows);
           return res.data.values;
         });
     };
@@ -270,44 +301,69 @@ const Srroster = () => {
       postData();
     });
   }, [saveValues]);
-  const handleNameChange = (name: string) => {
-    const names = name.split(",");
-    if (!dataWithFilter.data){
-      return;
-    }
-    const filtered = dataWithFilter.data.filter(
-      (r) => names.indexOf((r.superRaterName.value || ""))!==-1
-    );
-    setDataWithFilter({ ...dataWithFilter, filtered });
-  };
 
   const handleInputChange = (vr: ValueRange) => {
     const prev = JSON.parse(JSON.stringify(updates));
-    console.log("updates", updates);
     prev[vr.range] = vr;
     setUpdates(prev);
   };
 
-  const handleTopFilterBaseProjectChange = (baseProject: string) => {
-    const prefix = baseProject.slice(0, 4);
-    const filtered = dataWithFilter.data.filter((r) =>
-      (r.baseProject.value || "").startsWith(prefix)
-    );
+  const applyfilter = (filter: Toprosterfilter, updateconfig = true) => {
+    let filtered = dataWithFilter.data;
+    console.log("filtered",filtered);
+    if (filter.baseproject){
+      filtered = dataWithFilter.data.filter((r) =>
+        (r.baseProject.value || "").startsWith(filter.baseproject)
+      );
+    }
+
+    if (filter.project) {
+      filtered = filtered.filter((r) => (r.project.value || "") === filter.project);
+    };
+    if (filter.productionrole) {
+      filtered = filtered.filter((r) => (r.productionRole.value || "") === filter.productionrole);
+    };
+    if (filter.superrator){
+      const names = filter.superrator.split(",").filter(n=>n);
+  
+      if (!dataWithFilter.data) {
+        return;
+      }
+      filtered = filtered.filter(
+        (r) => names.indexOf(r.superRaterName.value || "") !== -1
+      );
+    }
     setDataWithFilter({ ...dataWithFilter, filtered });
+    if (!updateconfig){
+      return;
+    }
+    updatefilterconfig(filtered);
+  };
+  
+  const handleTopFilterBaseProjectChange = (baseProject: string) => {
+    setClearfilter(false);
+    const prefix = baseProject.slice(0, 4);
+    setToprosterfilter({ ...toprosterfilter, baseproject: prefix });
+    applyfilter({ ...toprosterfilter, baseproject: prefix });
   };
 
   const handleTopFilterProjectChange = (project: string) => {
-    const filtered = dataWithFilter.data.filter(
-      (r) => (r.project.value || "") === project
-    );
-    setDataWithFilter({ ...dataWithFilter, filtered });
+    setClearfilter(false);
+    setToprosterfilter({ ...toprosterfilter, project });
+    applyfilter({ ...toprosterfilter, project });
   };
 
   const handleTopFilterProductionRoleChange = (productionrole: string) => {
-    const filtered = dataWithFilter.filtered.filter(
-      (r) => (r.productionRole.value || "") === productionrole
-    );
-    setDataWithFilter({ ...dataWithFilter, filtered });
+    setClearfilter(false);
+    setToprosterfilter({ ...toprosterfilter, productionrole });
+    applyfilter({ ...toprosterfilter, productionrole });
+  };
+
+  const handleNameChange = (name: string) => {
+    setClearfilter(false);
+    if(!name) return;
+    setToprosterfilter({ ...toprosterfilter, superrator:name });
+    applyfilter({ ...toprosterfilter, superrator:name }, false);
   };
 
   const handleCheckBoxChange = (selected: number[]) => {
@@ -349,6 +405,18 @@ const Srroster = () => {
   const getTableData = (rows: SuperRaterRow[], offset: number) => {
     return rows.slice(offset, 10 + offset);
   };
+
+  const clearFilter = () => {
+    setClearfilter(true);
+    setToprosterfilter({
+      baseproject: "",
+      project: "",
+      productionrole: "",
+      superrator: "",
+    });
+    setDataWithFilter({ ...dataWithFilter, filtered: dataWithFilter.data });
+    updatefilterconfig(dataWithFilter.data);
+  };
   return (
     <div>
       <Card>
@@ -364,7 +432,12 @@ const Srroster = () => {
           onBaseProjectChange={handleTopFilterBaseProjectChange}
           onProjectChange={handleTopFilterProjectChange}
           onProductionRoleChange={handleTopFilterProductionRoleChange}
+          toprosterfilterconfig={toprosterfilterconfig}
+          clearfilter={clearfilter}
         />
+        <Button onClick={clearFilter} className="bg-blue-100 mr-8">
+          Clear Filter
+        </Button>
       </div>
       {/* <Datagrid data={srrosterRows}/> */}
       <div className="grid justify-items-center">
@@ -394,7 +467,7 @@ const Srroster = () => {
           >
             Save
           </Button>
-          <Addrow/>
+          <Addrow />
         </div>
         <div className="flex flex-row mr-16">
           <div className="text-sm font-medium mr-16 mt-2">

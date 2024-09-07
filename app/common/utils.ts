@@ -110,3 +110,8 @@ export function convertActiveProjectRowToArray(row: ActiveProjectRow) {
       row.averageHandlingTime,
     ];
   }
+
+  export function getOptions(input:string[]){
+    input = input.filter(s=>s);
+    return Array.from(new Set(input)).map(s=>({value:s, label:s}));
+  }

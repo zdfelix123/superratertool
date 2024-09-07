@@ -12,28 +12,33 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import { useEffect, useState } from "react";
-import { ADD_SUPERRATEROW_MAP} from "../common/constants";
+import { ADD_SUPERRATEROW_MAP, Record, ValueRange} from "../common/constants";
 import TableEntry from "./TableEntry";
 
 const Addrow = () => {
+  const [updates, setUpdates] = useState({} as Record);
   const save = () => {};
-  const handleInputChange =()=>{
-    
-  }
+  const handleInputChange = (vr: ValueRange) => {
+    console.log("vr", vr);
+    const prev = JSON.parse(JSON.stringify(updates));
+    prev[vr.range] = vr;
+    console.log("prev", prev);
+    setUpdates(prev);
+  };
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="outline">Add</Button>
       </DialogTrigger>
-      <DialogContent className="w-200 overflow-auto bg-white w-4/5">
+      <DialogContent className="overflow-auto bg-white w-11/12 max-h-full">
         <div className="grid gap-4">
-          <div className="space-y-2">
-            <h4 className="font-medium leading-none">Roster</h4>
+          <DialogHeader className="space-y-2 bg-sky-600 text-white p-6">
+            <DialogTitle className="font-medium leading-none">Roster</DialogTitle>
             <p className="text-sm text-muted-foreground">
               Add an entry for super rater roster
             </p>
-          </div>
-          <div className="grid gap-2 grid-cols-2">
+          </DialogHeader>
+          <div className="grid gap-2 grid-cols-2 p-6">
             {Object.values(ADD_SUPERRATEROW_MAP)
               .filter((c) => c.columnNum)
               .map((c) => (

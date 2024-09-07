@@ -1,11 +1,11 @@
 "use client";
 
-import * as React from "react"
-import { Check, ChevronsUpDown } from "lucide-react"
+import * as React from "react";
+import { Check, ChevronsUpDown } from "lucide-react";
 import { ChangeEvent, useEffect, useState } from "react";
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -13,12 +13,12 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command"
+} from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 import { Column } from "../common/constants";
 import { formatDate } from "../common/utils";
 
@@ -26,37 +26,47 @@ interface DropDownProps {
   column: Column;
   rowNumber: number;
   onBaseProjectChange?: Function;
-  onNameChange?:Function;
+  onNameChange?: Function;
   onProductionRoleChange?: Function;
   onWorkFlowChange?: Function;
   onQTypeChange?: Function;
+  clearfilter?: boolean;
 }
 
-const Dropdown = ({ column, rowNumber, onBaseProjectChange, onNameChange, onProductionRoleChange, onWorkFlowChange, onQTypeChange}: DropDownProps) => {
-  const [open, setOpen] = useState(false)
-  const [value, setValue] = useState(column.value || "")
+const Dropdown = ({
+  column,
+  rowNumber,
+  onBaseProjectChange,
+  onNameChange,
+  onProductionRoleChange,
+  onWorkFlowChange,
+  onQTypeChange,
+  clearfilter
+}: DropDownProps) => {
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(column.value || "");
   useEffect(() => {
     setValue(column.value || "");
   }, [column.value]);
 
   const handleTextChange = async (currentValue: string) => {
-    setValue(currentValue === value ? "" : currentValue)
-    if (onBaseProjectChange){
+    setValue(currentValue === value ? "" : currentValue);
+    if (onBaseProjectChange) {
       onBaseProjectChange(currentValue === value ? "" : currentValue);
     }
-    if (onNameChange){
+    if (onNameChange) {
       onNameChange(currentValue === value ? "" : currentValue);
     }
-    if (onProductionRoleChange){
+    if (onProductionRoleChange) {
       onProductionRoleChange(currentValue === value ? "" : currentValue);
     }
-    if (onWorkFlowChange){
+    if (onWorkFlowChange) {
       onWorkFlowChange(currentValue === value ? "" : currentValue);
     }
-    if (onQTypeChange){
+    if (onQTypeChange) {
       onQTypeChange(currentValue === value ? "" : currentValue);
     }
-    setOpen(false)
+    setOpen(false);
     if (!column.columnNum) {
       return;
     }
@@ -64,9 +74,7 @@ const Dropdown = ({ column, rowNumber, onBaseProjectChange, onNameChange, onProd
     const req1 = new Request(
       `/api/roster?range=${column.columnNum}${rowNumber}`
     );
-    const req2 = new Request(
-      `/api/roster?range=AI${rowNumber}`
-    );
+    const req2 = new Request(`/api/roster?range=AI${rowNumber}`);
     const response1 = await fetch(req1, {
       method: "PUT",
       headers: {
@@ -82,10 +90,19 @@ const Dropdown = ({ column, rowNumber, onBaseProjectChange, onNameChange, onProd
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(`Field: ${column.label}, Date:${ formatDate(new Date(Date.now()))}`),
+      body: JSON.stringify(
+        `Field: ${column.label}, Date:${formatDate(new Date(Date.now()))}`
+      ),
     });
 
     return response1;
+  };
+
+  const getValue = () => {
+    if(clearfilter) return column.placeHolder;
+    return value
+      ? (column.options || []).find((o) => o.value === value)?.label
+      : column.placeHolder;
   };
 
   return (
@@ -97,9 +114,7 @@ const Dropdown = ({ column, rowNumber, onBaseProjectChange, onNameChange, onProd
           aria-expanded={open}
           className="w-[200px] justify-between"
         >
-          {value
-            ? (column.options || []).find((o) => o.value === value)?.label
-            : column.placeHolder}
+          {getValue()}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -129,7 +144,7 @@ const Dropdown = ({ column, rowNumber, onBaseProjectChange, onNameChange, onProd
         </Command>
       </PopoverContent>
     </Popover>
-  )
-}
+  );
+};
 
-export default Dropdown
+export default Dropdown;

@@ -17,8 +17,13 @@ import {
   ACTIVEPROJECT_CONFIG,
   ValueRange,
   Record,
+  Column,
+  PROJECT_TAB_CONFIG,
+  QTYPE_CONFIG,
+  Topprojectfilter,
+  WORKFLOWFILTER_CONFIG
 } from "../common/constants";
-import { titleToNumber, getRowNumber } from "../common/utils";
+import { titleToNumber, getRowNumber, getOptions} from "../common/utils";
 import loading from "../../public/loading.gif";
 import Addprojectrow from "../components/Addprojectrow";
 
@@ -30,6 +35,27 @@ const Activeprojects = () => {
   const [offset, setOffset] = useState(0);
   const [saveValues, setSaveValues] = useState(false);
   const [updates, setUpdates] = useState({} as Record);
+  const [topprojectfilterconfig, setTopprojectfilterconfig] = useState([
+    PROJECT_TAB_CONFIG[0],
+    WORKFLOWFILTER_CONFIG,
+    QTYPE_CONFIG,
+  ]);
+  const [topprojectfilter, setTopprojectfilter] = useState({
+    baseproject: "",
+    workflow: "",
+    qtype: "",
+  });
+  const [clearfilter, setClearfilter] = useState(false);
+  const updatefilterconfig = (rows: ActiveProjectRow[]) => {
+    const [projectconfig, workflowconfig, qtypeconfig] = topprojectfilterconfig;
+    const projectoptions = getOptions(rows.map(row=>row.project.value||''));
+    const workflowoptions = getOptions(rows.map(row=>row.workflow.value||''));
+    const qtypeoptions = getOptions(rows.map(row=>row.qType.value||''));
+    projectconfig.options = projectoptions;
+    workflowconfig.options = workflowoptions
+    qtypeconfig.options = qtypeoptions;
+    setTopprojectfilterconfig([projectconfig, workflowconfig, qtypeconfig]);
+  };
   useEffect(() => {
     const fetchData = async () => {
       const queryParams = "range=Sheet2!B7:AS1132";
@@ -145,6 +171,7 @@ const Activeprojects = () => {
             };
           });
           setDataWithFilter({ data: rows, filtered: rows });
+          updatefilterconfig(rows);
           return res.data.values;
         });
     };
@@ -172,35 +199,42 @@ const Activeprojects = () => {
     });
   }, [saveValues]);
 
-  const handleTopFilterBaseProjectChange = (baseProject: string) => {
-    const prefix = baseProject.slice(0, 4);
-    const filtered = dataWithFilter.data.filter((r) =>
-      (r.project.value || "").startsWith(prefix)
-    );
+  const applyfilter = (filter: Topprojectfilter) => {
+    const filtered = dataWithFilter.data
+      .filter((r) => (r.project.value || "").startsWith(filter.baseproject))
+      .filter((r) => (r.workflow.value || "").startsWith(filter.workflow))
+      .filter((r) => (r.qType.value || "").startsWith(filter.qtype));
     setDataWithFilter({ ...dataWithFilter, filtered });
-  };
-  const handleTopFilterProjectChange = (project: string) => {
-    const prefix = project.slice(0, 4);
-    const filtered = dataWithFilter.data.filter((r) =>
-      (r.workflow.value || "").startsWith(prefix)
-    );
-    setDataWithFilter({ ...dataWithFilter, filtered });
+    updatefilterconfig(filtered);
   };
 
+  const handleTopFilterBaseProjectChange = (baseProject: string) => {
+    setClearfilter(false);
+    const prefix = baseProject.slice(0, 4);
+    setTopprojectfilter({ ...topprojectfilter, baseproject: prefix });
+    applyfilter({ ...topprojectfilter, baseproject: prefix });
+  };
+  const handleTopFilterProjectChange = (project: string) => {};
+
   const handleWorkFlowChange = (workflow: string) => {
+    setClearfilter(false);
     const prefix = workflow.slice(0, 8);
-    const filtered = dataWithFilter.data.filter((r) =>
-      (r.workflow.value || "").startsWith(prefix)
-    );
-    setDataWithFilter({ ...dataWithFilter, filtered });
+    setTopprojectfilter({ ...topprojectfilter, workflow: prefix });
+    applyfilter({ ...topprojectfilter, workflow: prefix });
   };
 
   const handleQTypeChange = (qtype: string) => {
+    setClearfilter(false);
     const prefix = qtype.slice(0, 8);
-    const filtered = dataWithFilter.data.filter((r) =>
-      (r.qType.value || "").startsWith(prefix)
-    );
-    setDataWithFilter({ ...dataWithFilter, filtered });
+    setTopprojectfilter({ ...topprojectfilter, qtype: prefix });
+    applyfilter({ ...topprojectfilter, qtype: prefix });
+  };
+
+  const clearFilter = () => {
+    setClearfilter(true);
+    setTopprojectfilter({baseproject: '', workflow:'', qtype:""});
+    setDataWithFilter({...dataWithFilter, filtered: dataWithFilter.data});
+    updatefilterconfig(dataWithFilter.data);
   };
 
   const edit = () => {
@@ -263,7 +297,12 @@ const Activeprojects = () => {
           onWorkFlowChange={handleWorkFlowChange}
           onQTypeChange={handleQTypeChange}
           activeProjectFilter={true}
+          topprojectfilterconfig={topprojectfilterconfig}
+          clearfilter ={clearfilter}
         />
+        <Button onClick={clearFilter} className="bg-blue-100 mr-8">
+          Clear Filter
+        </Button>
       </div>
       <div className="grid justify-items-center">
         {dataWithFilter.filtered ? (
@@ -293,7 +332,7 @@ const Activeprojects = () => {
           >
             Save
           </Button>
-          <Addprojectrow/>
+          <Addprojectrow />
         </div>
         <div className="flex flex-row mr-16">
           <div className="text-sm font-medium mr-16 mt-2">
