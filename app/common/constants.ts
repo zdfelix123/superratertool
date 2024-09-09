@@ -979,6 +979,7 @@ export const WORKFLOWFILTER_CONFIG = {
   placeHolder: "Select A Work Flow",
   type: QuestionType.SELECTOR,
   options: getWorkFlowOptions(),
+  width: "400px",
 };
 
 export const QTYPE_CONFIG = {
@@ -987,6 +988,7 @@ export const QTYPE_CONFIG = {
   placeHolder: "Select A Question Type",
   type: QuestionType.SELECTOR,
   options: getQTypeOptions(),
+  width: "400px",
 };
 
 export interface Topprojectfilter {

@@ -19,11 +19,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Column } from "../common/constants";
+import { Cell } from "../common/constants";
 import { formatDate } from "../common/utils";
 
 interface DropDownProps {
-  column: Column;
+  column: Cell;
   rowNumber: number;
   onBaseProjectChange?: Function;
   onNameChange?: Function;
@@ -112,13 +112,13 @@ const Dropdown = ({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between"
+          className={`w-[${column.width ? column.width : "200px"}] justify-between`}
         >
           {getValue()}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className={`w-[${column.width ? "230px" : "200px"}] p-0`}>
         <Command>
           <CommandInput placeholder={column.placeHolder} />
           <CommandList>
